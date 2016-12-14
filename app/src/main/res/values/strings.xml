@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">简豆</string>
+    <string name="nav_menu_movie">电影</string>
+    <string name="nav_menu_book">图书</string>
+    <string name="nav_menu_list">电影榜单</string>
+    <string name="nav_menu_robot">聊天机器人</string>
+</resources>

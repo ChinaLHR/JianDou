@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/nav_menu_movie"
+            android:checkable="true"
+            android:icon="@mipmap/movie"
+            android:title="@string/nav_menu_movie"/>
+        <item
+            android:id="@+id/nav_menu_book"
+            android:checkable="true"
+            android:icon="@mipmap/books"
+            android:title="@string/nav_menu_book"/>
+        <item
+            android:id="@+id/nav_menu_list"
+            android:checkable="true"
+            android:icon="@mipmap/list"
+            android:title="@string/nav_menu_list"/>
+        <item
+            android:id="@+id/nav_menu_robot"
+            android:checkable="true"
+            android:icon="@mipmap/robot"
+            android:title="@string/nav_menu_robot"/>
+    </group>
+</menu>

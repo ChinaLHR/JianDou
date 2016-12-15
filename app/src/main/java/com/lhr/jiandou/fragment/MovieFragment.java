@@ -41,6 +41,8 @@ public class MovieFragment extends BaseFragment {
 
     private void initData() {
         fragmentmovievp.setAdapter(new MoviePagerAdapter(getChildFragmentManager()));
+        //viewpager的初始化长度
+        fragmentmovievp.setOffscreenPageLimit(Constants.MOVIETITLE.length);
         fragmentmovietab.setupWithViewPager(fragmentmovievp);
 
     }

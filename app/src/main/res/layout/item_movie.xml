@@ -20,6 +20,7 @@
         android:padding="4dp">
 
         <ImageView
+            android:id="@+id/item_movie_iv"
             android:layout_width="100dp"
             android:layout_height="145dp"
             android:layout_gravity="center_horizontal"

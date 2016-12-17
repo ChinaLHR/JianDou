@@ -13,6 +13,8 @@
         <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="android:minHeight">16dp</item>
         <item name="android:maxHeight">16dp</item>
-        <item name="android:progressDrawable">@drawable/myratingbar</item>>
+        <item name="android:progressDrawable">@drawable/myratingbar</item>
     </style>
+
+
 </resources>

@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lhr.jiandou.R;
-import com.lhr.jiandou.fragment.factory.BaseFragment;
 import com.lhr.jiandou.fragment.pagerfragment.MoviePagerFragment;
 import com.lhr.jiandou.utils.Constants;
 
@@ -39,7 +38,7 @@ public class MovieFragment extends BaseFragment {
 
     }
 
-    private void initData() {
+    public void initData() {
         fragmentmovievp.setAdapter(new MoviePagerAdapter(getChildFragmentManager()));
         //viewpager的初始化长度
         fragmentmovievp.setOffscreenPageLimit(Constants.MOVIETITLE.length);

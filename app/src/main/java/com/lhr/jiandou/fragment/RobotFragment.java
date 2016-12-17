@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lhr.jiandou.R;
-import com.lhr.jiandou.fragment.factory.BaseFragment;
 import com.lhr.jiandou.utils.LogUtils;
 
 /**

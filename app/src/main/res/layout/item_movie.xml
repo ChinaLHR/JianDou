@@ -10,6 +10,7 @@
     android:padding="4dp"
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp"
+    android:id="@+id/item_movie_cardview"
     >
 
     <LinearLayout

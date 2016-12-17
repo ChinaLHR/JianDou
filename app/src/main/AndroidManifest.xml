@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.lhr.jiandou">
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/jb_ico"
@@ -19,7 +20,10 @@
         </activity>
         <activity
             android:name=".activity.SearchActivity"
-            android:exported="false"
+            android:screenOrientation="nosensor"
+            />
+        <activity
+            android:name=".activity.MovieDetailsActivity"
             android:screenOrientation="nosensor"
             />
     </application>

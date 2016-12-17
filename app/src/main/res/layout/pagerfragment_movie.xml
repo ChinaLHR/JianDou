@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/pager_movie_fresh"
@@ -16,9 +16,8 @@
             android:id="@+id/pager_movie_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="60dp"
-            android:background="?android:colorBackground"/>
-
+            android:background="?android:colorBackground"
+            android:paddingBottom="60dp"/>
 
 
     </android.support.v4.widget.SwipeRefreshLayout>
@@ -34,4 +33,29 @@
         app:layout_anchorGravity="bottom|right"
         app:layout_behavior="com.lhr.jiandou.view.ScrollAwareFABBehavior"
         />
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/pager_movie_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/toast_background"
+        android:layout_gravity="center"
+        android:padding="8dp">
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/toast_ico"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="点击重新刷新"
+            android:textColor="#fff"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
 </android.support.design.widget.CoordinatorLayout>

@@ -1,7 +1,12 @@
 package com.lhr.jiandou.utils;
 
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.lhr.jiandou.R;
 
 /**
  * Created by ChinaLHR on 2016/12/13.
@@ -10,83 +15,30 @@ import android.widget.Toast;
 
 public class ToastUtils {
 
-    private ToastUtils()
-    {
+    private ToastUtils() {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
+
     public static boolean isShow = true;
+    public static Toast toast;
 
     /**
-     * 短时间显示Toast
+     * 显示Toast
      *
      * @param context
      * @param message
      */
-    public static void showShort(Context context, CharSequence message)
-    {
-        if (isShow)
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * 短时间显示Toast
-     *
-     * @param context
-     * @param message
-     */
-    public static void showShort(Context context, int message)
-    {
-        if (isShow)
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * 长时间显示Toast
-     *
-     * @param context
-     * @param message
-     */
-    public static void showLong(Context context, CharSequence message)
-    {
-        if (isShow)
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-    }
-
-    /**
-     * 长时间显示Toast
-     *
-     * @param context
-     * @param message
-     */
-    public static void showLong(Context context, int message)
-    {
-        if (isShow)
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-    }
-
-    /**
-     * 自定义显示Toast时间
-     *
-     * @param context
-     * @param message
-     * @param duration
-     */
-    public static void show(Context context, CharSequence message, int duration)
-    {
-        if (isShow)
-            Toast.makeText(context, message, duration).show();
-    }
-
-    /**
-     * 自定义显示Toast时间
-     *
-     * @param context
-     * @param message
-     * @param duration
-     */
-    public static void show(Context context, int message, int duration)
-    {
-        if (isShow)
-            Toast.makeText(context, message, duration).show();
+    public static void show(Context context, String message) {
+        if (isShow) {
+            toast = new Toast(context);
+            LayoutInflater inflater = LayoutInflater.from(context);
+            View view = inflater.inflate(R.layout.mtoast_layout, null);
+            TextView tv = (TextView) view.findViewById(R.id.toast_tv);
+            if (message != null) {
+                tv.setText(message);
+            }
+            toast.setView(view);
+            toast.show();
+        }
     }
 }

@@ -4,4 +4,7 @@
     <string name="nav_menu_book">图书</string>
     <string name="nav_menu_list">电影榜单</string>
     <string name="nav_menu_robot">聊天机器人</string>
+
+
+    <string name="more_summart">更多</string>
 </resources>

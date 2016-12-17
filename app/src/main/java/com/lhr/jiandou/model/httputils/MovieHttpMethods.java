@@ -3,7 +3,6 @@ package com.lhr.jiandou.model.httputils;
 import com.lhr.jiandou.doubanservice.DouBanService;
 import com.lhr.jiandou.model.bean.MovieHttpResult;
 import com.lhr.jiandou.model.bean.SubjectsBean;
-import com.lhr.jiandou.model.error.ApiException;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -53,8 +52,14 @@ public class MovieHttpMethods {
      * 根据tag,start与count获取豆瓣电影
      */
     public void getMovieByTag(Subscriber<List<SubjectsBean>> subscriber, String tag, int start, int count) {
-        mDouBanService.getMovieByTag(tag,start,count)
+        mDouBanService.getMovieByTag(tag, start, count)
                 .map(new HttpResultFunc<List<SubjectsBean>>())
+                .onErrorReturn(new Func1<Throwable, List<SubjectsBean>>() {
+                    @Override
+                    public List<SubjectsBean> call(Throwable throwable) {
+                        return null;
+                    }
+                })
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -69,11 +74,25 @@ public class MovieHttpMethods {
     private class HttpResultFunc<T> implements Func1<MovieHttpResult<T>, T> {
         @Override
         public T call(MovieHttpResult<T> httpResult) {
-            if (httpResult.getCount() == 0) {
-                throw new ApiException(100);
+            if (httpResult != null) {
+                return httpResult.getSubjects();
+            } else {
+                throw new RuntimeException("出错了");
             }
-            return httpResult.getSubjects();
         }
     }
+
+    /**
+     * 处理Http请求错误
+     * @param <T>
+     */
+    private class HttpErrorFunc<T> implements Func1<MovieHttpResult<T>, T>{
+
+        @Override
+        public T call(MovieHttpResult<T> tMovieHttpResult) {
+          throw new RuntimeException("出错了");
+        }
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.lhr.jiandou.fragment.factory;
 
+import com.lhr.jiandou.fragment.BaseFragment;
 import com.lhr.jiandou.fragment.BookFragment;
 import com.lhr.jiandou.fragment.LeaderboardFragment;
 import com.lhr.jiandou.fragment.MovieFragment;

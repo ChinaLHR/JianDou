@@ -28,14 +28,16 @@ public class MovieHttpMethods {
     private DouBanService mDouBanService;
 
     private MovieHttpMethods() {
+
+
         //手动创建一个OkHttpClient并设置超时时间
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         retrofit = new Retrofit.Builder()
-                .client(httpClientBuilder.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .baseUrl(BASE_URL)
+                .client(httpClientBuilder.build())
                 .build();
         mDouBanService = retrofit.create(DouBanService.class);
     }
@@ -84,13 +86,14 @@ public class MovieHttpMethods {
 
     /**
      * 处理Http请求错误
+     *
      * @param <T>
      */
-    private class HttpErrorFunc<T> implements Func1<MovieHttpResult<T>, T>{
+    private class HttpErrorFunc<T> implements Func1<MovieHttpResult<T>, T> {
 
         @Override
         public T call(MovieHttpResult<T> tMovieHttpResult) {
-          throw new RuntimeException("出错了");
+            throw new RuntimeException("出错了");
         }
     }
 

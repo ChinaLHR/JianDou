@@ -69,12 +69,25 @@ public class PageMovieAdapter extends RecyclerView.Adapter<PageMovieAdapter.MyVi
         notifyDataSetChanged();
     }
 
+    /**
+     * 升级数据
+     */
+    public void upDates(List<SubjectsBean> date){
+        mDate = date;
+        notifyDataSetChanged();
+    }
 
+    /**
+     * 获得start
+     */
+    public int getStart(){
+        return mDate.size();
+    }
     /**
      * 点击与长按的回调
      */
     public interface OnItemClickListener {
-        void ItemClickListener(View view, int postion);
+        void ItemClickListener(View view, int postion,String id);
 
         void ItemLongClickListener(View view, int postion);
     }
@@ -101,7 +114,7 @@ public class PageMovieAdapter extends RecyclerView.Adapter<PageMovieAdapter.MyVi
 
         Glide.with(mContext)
                 .load(mDate.get(position).getImages().getLarge())
-
+                .error(R.mipmap.movie_error)
                 .into(holder.item_movie_iv);
 
         //设置点击事件
@@ -110,7 +123,7 @@ public class PageMovieAdapter extends RecyclerView.Adapter<PageMovieAdapter.MyVi
                 @Override
                 public void onClick(View view) {
                     int position = holder.getLayoutPosition();
-                    mListener.ItemClickListener(holder.itemView, position);
+                    mListener.ItemClickListener(holder.itemView, position,mDate.get(position).getTitle());
                 }
             });
 

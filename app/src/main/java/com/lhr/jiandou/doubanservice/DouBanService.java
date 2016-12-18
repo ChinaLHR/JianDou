@@ -20,6 +20,7 @@ public interface DouBanService {
      * https://api.douban.com/v2/movie/search?tag=喜剧&start=20
      * @return
      */
+
     @GET("search")
     Observable<MovieHttpResult<List<SubjectsBean>>> getMovieByTag
     (@Query("tag") String tag, @Query("start") int start, @Query("count") int count);

@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-
 android {
     compileSdkVersion 24
     buildToolsVersion "23.0.3"
@@ -41,6 +40,9 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     //glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
+
     testCompile 'junit:junit:4.12'
+
+
 
 }

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.lhr.jiandou.MyApplication;
 import com.lhr.jiandou.R;
+import com.lhr.jiandou.activity.MovieDetailsActivity;
 import com.lhr.jiandou.adapter.PageMovieAdapter;
 import com.lhr.jiandou.model.bean.SubjectsBean;
 import com.lhr.jiandou.model.httputils.MovieHttpMethods;
@@ -40,7 +41,6 @@ public class MoviePagerFragment extends Fragment {
     private int mStart = 0;
     private View footer;
     private List<SubjectsBean> mdate;
-    private boolean isFirstonResume = true;
 
     private android.support.v7.widget.RecyclerView pagermovierv;
     private android.support.v4.widget.SwipeRefreshLayout pagermoviefresh;
@@ -96,6 +96,7 @@ public class MoviePagerFragment extends Fragment {
      */
     private void initData() {
         pagermoviefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
+        pagermoviefresh.setProgressViewOffset(false, 0, 48);
         initRecyclerView();
 
     }
@@ -109,9 +110,10 @@ public class MoviePagerFragment extends Fragment {
          * RecyclerView单击与长按监听
          */
         mAdapter.setOnClickListener(new PageMovieAdapter.OnItemClickListener() {
+
             @Override
-            public void ItemClickListener(View view, int postion, String id) {
-                ToastUtils.show(getActivity(), id);
+            public void ItemClickListener(View view, int postion, SubjectsBean bean) {
+                MovieDetailsActivity.toActivity(getActivity(), bean.getId(), bean.getImages().getLarge());
             }
 
             @Override
@@ -170,7 +172,7 @@ public class MoviePagerFragment extends Fragment {
         pagermovierv.setLayoutManager(mLayoutManager);
         mAdapter = new PageMovieAdapter(getContext(), mSubjectbean);
         footer = LayoutInflater.from(this.getActivity()).inflate(R.layout.item_footer, pagermovierv, false);
-        mdate = CacheUtils.readbean(getActivity(), Constants.MOVIETITLE[position]);
+        mdate = CacheUtils.readbean(getActivity(), CacheUtils.DataCache_movie, Constants.MOVIETITLE[position]);
         if (mdate != null) {
             mAdapter.upDates(mdate);
         }
@@ -208,7 +210,7 @@ public class MoviePagerFragment extends Fragment {
             public void onNext(List<SubjectsBean> subjectsBeen) {
                 if (subjectsBeen != null) {
                     mAdapter.upDates(subjectsBeen);
-                    CacheUtils.savebean(getActivity(), subjectsBeen, Constants.MOVIETITLE[position]);
+                    CacheUtils.savebean(getActivity(), subjectsBeen, CacheUtils.DataCache_movie, Constants.MOVIETITLE[position]);
                 }
             }
         };

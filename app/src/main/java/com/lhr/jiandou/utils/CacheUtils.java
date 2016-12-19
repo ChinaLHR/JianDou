@@ -13,23 +13,24 @@ import java.util.List;
 /**
  * Created by ChinaLHR on 2016/12/18.
  * Email:13435500980@163.com
- *
+ * <p>
  * 序列化缓存List<bean>
  */
 
 public class CacheUtils {
-    private static String DataCache = "Data_Cache_File";
+    public static final String DataCache_movie = "Cache_File_movie";
+    public static final String DataCache_book = "Cache_File_book";
 
     /**
      * 序列化List
      */
-    public static <T> void savebean(Context context, List<T> list, String name) {
+    public static <T> void savebean(Context context, List<T> list, String Cache_type, String name) {
         if (context == null) {
             return;
         }
         File file;
-        if (!DataCache.isEmpty()) {
-            File fileDir = new File(context.getFilesDir(), DataCache);
+        if (!Cache_type.isEmpty()) {
+            File fileDir = new File(context.getFilesDir(), Cache_type);
             if (!fileDir.exists() || !fileDir.isDirectory()) {
                 fileDir.mkdir();
             }
@@ -52,16 +53,17 @@ public class CacheUtils {
 
     /**
      * 反序列化
+     *
      * @param context
      * @param name
      * @param <E>
      * @return
      */
-    public static <E> List<E> readbean(Context context, String name) {
+    public static <E> List<E> readbean(Context context, String Cache_type, String name) {
 
         File file;
-        if (!DataCache.isEmpty()) {
-            File fileDir = new File(context.getFilesDir(), DataCache);
+        if (!Cache_type.isEmpty()) {
+            File fileDir = new File(context.getFilesDir(), Cache_type);
             if (!fileDir.exists() || !fileDir.isDirectory()) {
                 fileDir.mkdir();
             }

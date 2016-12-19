@@ -87,7 +87,7 @@ public class PageMovieAdapter extends RecyclerView.Adapter<PageMovieAdapter.MyVi
      * 点击与长按的回调
      */
     public interface OnItemClickListener {
-        void ItemClickListener(View view, int postion,String id);
+        void ItemClickListener(View view, int postion,SubjectsBean bean);
 
         void ItemLongClickListener(View view, int postion);
     }
@@ -123,7 +123,7 @@ public class PageMovieAdapter extends RecyclerView.Adapter<PageMovieAdapter.MyVi
                 @Override
                 public void onClick(View view) {
                     int position = holder.getLayoutPosition();
-                    mListener.ItemClickListener(holder.itemView, position,mDate.get(position).getTitle());
+                    mListener.ItemClickListener(holder.itemView, position,mDate.get(position));
                 }
             });
 

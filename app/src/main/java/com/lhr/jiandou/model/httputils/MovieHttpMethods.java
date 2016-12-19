@@ -1,6 +1,7 @@
 package com.lhr.jiandou.model.httputils;
 
 import com.lhr.jiandou.doubanservice.DouBanService;
+import com.lhr.jiandou.model.bean.MovieDetailsBean;
 import com.lhr.jiandou.model.bean.MovieHttpResult;
 import com.lhr.jiandou.model.bean.SubjectsBean;
 
@@ -24,22 +25,24 @@ import rx.schedulers.Schedulers;
 public class MovieHttpMethods {
     public static final String BASE_URL = "https://api.douban.com/v2/movie/";
     private static final int DEFAULT_TIMEOUT = 5;
-    private Retrofit retrofit;
+
+    private Retrofit retrofit_movie;
     private DouBanService mDouBanService;
 
     private MovieHttpMethods() {
-
-
         //手动创建一个OkHttpClient并设置超时时间
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        retrofit = new Retrofit.Builder()
+
+        retrofit_movie = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .baseUrl(BASE_URL)
                 .client(httpClientBuilder.build())
                 .build();
-        mDouBanService = retrofit.create(DouBanService.class);
+        mDouBanService = retrofit_movie.create(DouBanService.class);
+
+
     }
 
     private static class Holder {
@@ -70,6 +73,23 @@ public class MovieHttpMethods {
     }
 
     /**
+     * 根据Id获取电影详情
+     */
+    public void getMovieById(Subscriber<MovieDetailsBean> subscriber, String id){
+        mDouBanService.getMovieDetails(id)
+                .onErrorReturn(new Func1<Throwable, MovieDetailsBean>() {
+                    @Override
+                    public MovieDetailsBean call(Throwable throwable) {
+                        return null;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    /**
      * 相同格式的Http请求数据统一进行预处理，将HttpResult的Data部分剥离出来给subseriber
      * T为真正需要的类型，也就是Data部分
      */
@@ -84,18 +104,7 @@ public class MovieHttpMethods {
         }
     }
 
-    /**
-     * 处理Http请求错误
-     *
-     * @param <T>
-     */
-    private class HttpErrorFunc<T> implements Func1<MovieHttpResult<T>, T> {
 
-        @Override
-        public T call(MovieHttpResult<T> tMovieHttpResult) {
-            throw new RuntimeException("出错了");
-        }
-    }
 
 
 }

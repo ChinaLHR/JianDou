@@ -16,17 +16,20 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/activity_md_appbar"
             android:layout_width="match_parent"
-            android:layout_height="320dp"
+            android:layout_height="300dp"
             android:fitsSystemWindows="true"
+
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/activity_md_colltl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/toolbarColor"
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+                app:layout_scrollFlags="scroll|snap"
+                >
 
                 <ImageView
                     android:id="@+id/activity_md_iv"
@@ -52,6 +55,7 @@
                     />
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
+
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/activity_movie_nested"
             android:layout_width="match_parent"
@@ -66,10 +70,14 @@
                 android:layout_height="match_parent"
                 android:background="?android:colorBackground"
                 android:orientation="vertical"
-                android:visibility="gone"
-                android:padding="8dp">
+                android:padding="8dp"
+                android:visibility="gone">
 
-                <include layout="@layout/include_movie_title"/>
+                <include
+                    android:id="@+id/activity_md_include"
+                    layout="@layout/include_movie_title"
+                    />
+
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
@@ -80,8 +88,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:textColor="@color/graytext"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
                     />
+
                 <TextView
                     android:id="@+id/activity_md_summary"
                     android:layout_width="match_parent"
@@ -90,9 +100,11 @@
                     android:layout_marginTop="6dp"
                     android:lineSpacingExtra="6dp"
                     android:lines="5"
+                    android:ellipsize="end"
                     android:textColor="?android:attr/textColorPrimary"
                     android:textSize="14sp"
                     />
+
                 <TextView
                     android:id="@+id/activity_md_summart_more"
                     android:layout_width="match_parent"
@@ -100,20 +112,24 @@
                     android:layout_marginBottom="6dp"
                     android:gravity="center"
                     android:singleLine="true"
-                    android:text="@string/more_summart"
                     android:textColor="@color/greentext"
                     android:textSize="14sp"
+                    android:textStyle="bold"
                     />
+
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"/>
+
                 <TextView
                     android:id="@+id/activity_md_actor_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:textColor="@color/graytext"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/activity_md_rv_actor"
                     android:layout_width="match_parent"
@@ -122,28 +138,10 @@
                     android:paddingRight="-2dp"
                     android:visibility="gone"
                     />
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    />
-                <TextView
-                    android:id="@+id/activity_md_recommend_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:textColor="@color/graytext"
-                    />
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/activity_md_rv_recommend"
-                    android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    android:paddingLeft="-2dp"
-                    android:paddingRight="-2dp"
-                    android:visibility="gone"
-                    />
 
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/activity_md_fab"
             android:layout_width="48dp"

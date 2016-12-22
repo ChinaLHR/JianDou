@@ -41,7 +41,6 @@ public class MoviePagerFragment extends Fragment {
     private int mStart = 0;
     private View footer;
     private List<SubjectsBean> mdate;
-
     private android.support.v7.widget.RecyclerView pagermovierv;
     private android.support.v4.widget.SwipeRefreshLayout pagermoviefresh;
     private android.support.design.widget.FloatingActionButton pagermoviefab;
@@ -172,7 +171,10 @@ public class MoviePagerFragment extends Fragment {
         pagermovierv.setLayoutManager(mLayoutManager);
         mAdapter = new PageMovieAdapter(getContext(), mSubjectbean);
         footer = LayoutInflater.from(this.getActivity()).inflate(R.layout.item_footer, pagermovierv, false);
+
         mdate = CacheUtils.readbean(getActivity(), CacheUtils.DataCache_movie, Constants.MOVIETITLE[position]);
+
+
         if (mdate != null) {
             mAdapter.upDates(mdate);
         }
@@ -212,10 +214,13 @@ public class MoviePagerFragment extends Fragment {
                     mAdapter.upDates(subjectsBeen);
                     CacheUtils.savebean(getActivity(), subjectsBeen, CacheUtils.DataCache_movie, Constants.MOVIETITLE[position]);
                 }
+
             }
         };
 
+
         MovieHttpMethods.getInstance().getMovieByTag(mListSubscriber, Constants.MOVIETITLE[position], 0, RECORD_COUNT);
+
 
     }
 
@@ -250,4 +255,6 @@ public class MoviePagerFragment extends Fragment {
         MovieHttpMethods.getInstance().getMovieByTag(mListSubscriber, Constants.MOVIETITLE[position], mStart, RECORD_COUNT);
 
     }
+
+
 }

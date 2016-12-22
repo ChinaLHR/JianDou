@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lhr.jiandou.R;
+import com.lhr.jiandou.fragment.base.BaseFragment;
 import com.lhr.jiandou.utils.LogUtils;
 
 /**
@@ -15,7 +16,7 @@ import com.lhr.jiandou.utils.LogUtils;
  * Email:13435500980@163.com
  */
 
-public class RobotFragment extends BaseFragment {
+public class CollectionFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         LogUtils.e("初始化RobotFragment");
@@ -27,7 +28,7 @@ public class RobotFragment extends BaseFragment {
 
         View view = inflater.inflate(R.layout.test_layout, container, false);
         TextView tv = (TextView) view.findViewById(R.id.test_tv);
-        tv.setText("RobotFragment");
+        tv.setText("CollectionFragment");
         return view;
     }
 }

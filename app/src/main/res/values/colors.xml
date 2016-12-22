@@ -7,4 +7,9 @@
     <color name="movieTitleColor">#121212</color>
     <color name="greentext">#00bfa5</color>
 
+    <color name="alpha_gray_800">#77424242</color>
+    <color name="gray_white_1000">#ffffff</color>
+
+    <color name="actorbg">#757575</color>
+    <color name="alpha_actorbg">#77C2C2C2</color>
 </resources>

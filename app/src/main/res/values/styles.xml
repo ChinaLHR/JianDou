@@ -16,5 +16,13 @@
         <item name="android:progressDrawable">@drawable/myratingbar</item>
     </style>
 
+    <!--沉浸式-->
+    <style name="TranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+
 
 </resources>

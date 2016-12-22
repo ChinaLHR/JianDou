@@ -60,26 +60,32 @@ public class CacheUtils {
      * @return
      */
     public static <E> List<E> readbean(Context context, String Cache_type, String name) {
-
-        File file;
-        if (!Cache_type.isEmpty()) {
-            File fileDir = new File(context.getFilesDir(), Cache_type);
-            if (!fileDir.exists() || !fileDir.isDirectory()) {
-                fileDir.mkdir();
-            }
-            file = new File(fileDir, name);
-        } else {
-            file = new File(context.getFilesDir(), name);
-        }
-        try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
-            List<E> list = (List<E>) ois.readObject();
-            ois.close();
-            return list;
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (name == null) {
             return null;
+        } else {
+            File file;
+            if (!Cache_type.isEmpty()) {
+                File fileDir = new File(context.getFilesDir(), Cache_type);
+                if (!fileDir.exists() || !fileDir.isDirectory()) {
+                    fileDir.mkdir();
+                }
+
+                file = new File(fileDir, name);
+
+            } else {
+                file = new File(context.getFilesDir(), name);
+            }
+            try {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+                List<E> list = (List<E>) ois.readObject();
+                ois.close();
+                return list;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
         }
+
 
     }
 }

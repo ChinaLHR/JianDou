@@ -1,4 +1,4 @@
-package com.lhr.jiandou.fragment;
+package com.lhr.jiandou.fragment.base;
 
 import android.app.Activity;
 import android.content.Context;

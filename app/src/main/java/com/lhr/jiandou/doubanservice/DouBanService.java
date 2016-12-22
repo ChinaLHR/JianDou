@@ -1,5 +1,6 @@
 package com.lhr.jiandou.doubanservice;
 
+import com.lhr.jiandou.model.bean.ActorDetailsBean;
 import com.lhr.jiandou.model.bean.MovieDetailsBean;
 import com.lhr.jiandou.model.bean.MovieHttpResult;
 import com.lhr.jiandou.model.bean.SubjectsBean;
@@ -32,4 +33,8 @@ public interface DouBanService {
     @GET("subject/{MovieId}")
     Observable<MovieDetailsBean> getMovieDetails
             (@Path("MovieId") String MovieId);
+
+    @GET("celebrity/{actorId}")
+    Observable<ActorDetailsBean> getActorDetails
+            (@Path("actorId") String actorId);
 }

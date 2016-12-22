@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.lhr.jiandou">
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
+        android:name="com.lhr.jiandou.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/jb_ico"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name="com.lhr.jiandou.MyApplication"
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
@@ -24,11 +26,19 @@
         <activity
             android:name=".activity.SearchActivity"
             android:screenOrientation="nosensor"
+            android:theme="@style/TranslucentTheme"
             />
         <activity
+            android:theme="@style/TranslucentTheme"
             android:name=".activity.MovieDetailsActivity"
             android:screenOrientation="nosensor"
             />
+        <activity
+            android:theme="@style/TranslucentTheme"
+            android:name=".activity.ActorDetailsActivity"
+            android:screenOrientation="nosensor"
+            />
+
     </application>
 
 </manifest>

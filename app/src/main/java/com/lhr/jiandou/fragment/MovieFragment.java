@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lhr.jiandou.R;
+import com.lhr.jiandou.fragment.base.BaseFragment;
 import com.lhr.jiandou.fragment.pagerfragment.MoviePagerFragment;
 import com.lhr.jiandou.utils.Constants;
 
@@ -26,6 +27,11 @@ public class MovieFragment extends BaseFragment {
     private android.support.design.widget.TabLayout fragmentmovietab;
     private android.support.v4.view.ViewPager fragmentmovievp;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,9 +39,9 @@ public class MovieFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
         this.fragmentmovievp = (ViewPager) view.findViewById(R.id.fragment_movie_vp);
         this.fragmentmovietab = (TabLayout) view.findViewById(R.id.fragment_movie_tab);
+
         initData();
         return view;
-
     }
 
     public void initData() {
@@ -59,12 +65,17 @@ public class MovieFragment extends BaseFragment {
 
         @Override
         public int getCount() {
+
             return Constants.MOVIETITLE.length;
+
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
+
+
             return Constants.MOVIETITLE[position];
+
         }
     }
 

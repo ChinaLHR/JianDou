@@ -114,7 +114,6 @@ public class PageMovieAdapter extends RecyclerView.Adapter<PageMovieAdapter.MyVi
 
         Glide.with(mContext)
                 .load(mDate.get(position).getImages().getLarge())
-                .error(R.mipmap.movie_error)
                 .into(holder.item_movie_iv);
 
         //设置点击事件

@@ -17,9 +17,26 @@
             android:icon="@mipmap/list"
             android:title="@string/nav_menu_list"/>
         <item
-            android:id="@+id/nav_menu_robot"
+            android:id="@+id/nav_menu_collection"
             android:checkable="true"
-            android:icon="@mipmap/robot"
-            android:title="@string/nav_menu_robot"/>
+            android:icon="@mipmap/collection"
+            android:title="@string/nav_menu_Collection"/>
     </group>
+    <item android:title="@string/nav_menu_system">
+        <menu>
+            <item
+                android:id="@+id/nav_menu_change"
+                android:checkable="true"
+                android:icon="@mipmap/label"
+                android:title="@string/nav_menu_ChangeSection"
+                />
+            <item
+                android:id="@+id/nav_menu_setting"
+                android:checkable="true"
+                android:icon="@mipmap/setting"
+                android:title="@string/nav_menu_Settings"
+                />
+
+        </menu>
+    </item>
 </menu>

@@ -1,6 +1,7 @@
 package com.lhr.jiandou.model.httputils;
 
 import com.lhr.jiandou.doubanservice.DouBanService;
+import com.lhr.jiandou.model.bean.ActorDetailsBean;
 import com.lhr.jiandou.model.bean.MovieDetailsBean;
 import com.lhr.jiandou.model.bean.MovieHttpResult;
 import com.lhr.jiandou.model.bean.SubjectsBean;
@@ -80,6 +81,22 @@ public class MovieHttpMethods {
                 .onErrorReturn(new Func1<Throwable, MovieDetailsBean>() {
                     @Override
                     public MovieDetailsBean call(Throwable throwable) {
+                        return null;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+    /**
+     * 根据Id获取影人信息
+     */
+    public void getActorById(Subscriber<ActorDetailsBean> subscriber,String id){
+        mDouBanService.getActorDetails(id)
+                .onErrorReturn(new Func1<Throwable, ActorDetailsBean>() {
+                    @Override
+                    public ActorDetailsBean call(Throwable throwable) {
                         return null;
                     }
                 })

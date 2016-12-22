@@ -1,10 +1,35 @@
 <resources>
+
+    <!--Nav-->
     <string name="app_name">简豆</string>
     <string name="nav_menu_movie">电影</string>
     <string name="nav_menu_book">图书</string>
     <string name="nav_menu_list">电影榜单</string>
-    <string name="nav_menu_robot">聊天机器人</string>
+    <string name="nav_menu_Collection">我的收藏</string>
+    <string name="nav_menu_system">系统</string>
+    <string name="nav_menu_ChangeSection">更改标签</string>
+    <string name="nav_menu_Settings">设置</string>
+    <!--Error-->
+    <string name="error">加载出错</string>
+    <!--MovieDetails-->
+    <string name="md_more">更多</string>
+    <string name="md_put">收起</string>
+    <string name="md_movie_type">电影类型：</string>
+    <string name="md_movie_country">上映国家：</string>
+    <string name="md_movie_year">上映时间：</string>
+    <string name="md_movie_original">原名：</string>
+    <string name="md_movie_brief">简介</string>
+    <string name="md_movie_actor">影人</string>
+    <string name="md_movie_evaluation">人评价</string>
+    <string name="actor_title">影人</string>
+    <string name="md_load_likemovie">喜欢这部电影的人也喜欢...</string>
+    <string name="md_load_error">加载失败...</string>
+    <string name="md_load_ing">加载中...</string>
 
-
-    <string name="more_summart">更多</string>
+    <!--ActorDetils-->
+   <string name="ad_nomore">暂时没有简介...</string>
+    <string name="ad_brief">个人简介</string>
+    <string name="ad_works">代表作品</string>
+    <string name="ad_sex">性别：</string>
+    <string name="ad_country">出生地：</string>
 </resources>

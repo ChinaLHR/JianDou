@@ -1,10 +1,11 @@
 package com.lhr.jiandou.fragment.factory;
 
-import com.lhr.jiandou.fragment.BaseFragment;
 import com.lhr.jiandou.fragment.BookFragment;
+import com.lhr.jiandou.fragment.ChangeLabelFragment;
+import com.lhr.jiandou.fragment.CollectionFragment;
 import com.lhr.jiandou.fragment.LeaderboardFragment;
 import com.lhr.jiandou.fragment.MovieFragment;
-import com.lhr.jiandou.fragment.RobotFragment;
+import com.lhr.jiandou.fragment.base.BaseFragment;
 import com.lhr.jiandou.utils.Constants;
 
 /**
@@ -25,8 +26,11 @@ public class FragmentFactory {
             case Constants.LIST:
                 fragment = new LeaderboardFragment();
                 break;
-            case Constants.ROBOT:
-                fragment = new RobotFragment();
+            case Constants.COLLECTION:
+                fragment = new CollectionFragment();
+                break;
+            case Constants.CHANGESECTION:
+                fragment = new ChangeLabelFragment();
                 break;
         }
         return fragment;

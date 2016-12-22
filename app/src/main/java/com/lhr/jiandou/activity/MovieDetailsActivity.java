@@ -3,6 +3,7 @@ package com.lhr.jiandou.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -12,6 +13,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -26,10 +28,15 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.lhr.jiandou.R;
+import com.lhr.jiandou.adapter.ActorAdapter;
+import com.lhr.jiandou.adapter.LikeMovieAdapter;
+import com.lhr.jiandou.adapter.base.BaseRecyclerAdapter;
 import com.lhr.jiandou.model.bean.MovieDetailsBean;
 import com.lhr.jiandou.model.httputils.MovieHttpMethods;
 import com.lhr.jiandou.utils.ImageUtils;
-import com.lhr.jiandou.utils.ToastUtils;
+import com.lhr.jiandou.utils.SnackBarUtils;
+import com.lhr.jiandou.utils.UIUtils;
+import com.lhr.jiandou.utils.jsoupUtils.GetLikeMovie;
 
 import java.util.List;
 
@@ -38,7 +45,6 @@ import rx.Subscriber;
 /**
  * Created by ChinaLHR on 2016/12/17.
  * Email:13435500980@163.com
- * <p>
  * 电影详情页
  */
 
@@ -65,17 +71,23 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
     private RatingBar activity_md_ratingbar;
     private TextView activity_md_ratings_count;
     private TextView activity_md_ratingnumber;
+    private TextView activity_md_recommend_movie;
+    private RecyclerView activity_md_rv_movie;
 
     private MovieDetailsBean mSubject;
     private Subscriber<MovieDetailsBean> mSubscriber;
     private static final String KEY_MOVIE_ID = "movie_id";
     private static final String KEY_IMAGE_URL = "image_url";
 
+    private List<String> movieTitle;
+    private List<String> movieId;
+    private List<String> movieimg;
     private String MovieId;
     private String imageUrl;
-
+    private ActorAdapter mAdapter;
+    private LikeMovieAdapter mLikeAdapter;
+    private AsyncTask masyn;
     private boolean isCollection = false;
-    private float titleDy = Float.MAX_VALUE;
     boolean isOpenSummary = false;
 
     public static void toActivity(Activity activity, String id, String imageUrl) {
@@ -109,6 +121,13 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
         activity_md_ratingbar = (RatingBar) activity_md_include.findViewById(R.id.activity_md_ratingbar);
         activity_md_ratings_count = (TextView) activity_md_include.findViewById(R.id.activity_md_ratings_count);
         activity_md_ratingnumber = (TextView) activity_md_include.findViewById(R.id.activity_md_ratingnumber);
+        activity_md_recommend_movie = (TextView) findViewById(R.id.activity_md_recommend_movie);
+        activity_md_rv_movie = (RecyclerView) findViewById(R.id.activity_md_rv_movie);
+
+        activitymdrefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
+        activitymdrefresh.setProgressViewOffset(false, 0, 48);
+        activitymdtoolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        activitymdtoolbar.inflateMenu(R.menu.menu_moviedetails_toolbar);
 
     }
 
@@ -120,23 +139,17 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
         imageUrl = getIntent().getStringExtra(KEY_IMAGE_URL);
         init();
         initView();
-        initListener();
         initData();
+        initListener();
     }
 
     /**
      * 初始化View
      */
     private void initView() {
-        activitymdrefresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorAccent, R.color.colorPrimaryDark);
-        activitymdrefresh.setProgressViewOffset(false, 0, 48);
-        activitymdtoolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        activitymdtoolbar.inflateMenu(R.menu.menu_moviedetails_toolbar);
-
         Glide.with(this)
                 .load(imageUrl)
                 .asBitmap()
-                .error(R.mipmap.movie_error)
                 .listener(new RequestListener<String, Bitmap>() {
                     @Override
                     public boolean onException(Exception e, String model, Target<Bitmap> target, boolean isFirstResource) {
@@ -152,6 +165,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                 })
                 .into(activitymdiv);
 
+
     }
 
     private void initData() {
@@ -166,7 +180,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
             @Override
             public void onError(Throwable e) {
                 activitymdrefresh.setRefreshing(false);
-                ToastUtils.show(MovieDetailsActivity.this, "加载出错");
+                SnackBarUtils.showSnackBar(activitymdcoorl,UIUtils.getString(MovieDetailsActivity.this,R.string.error));
             }
 
             @Override
@@ -175,7 +189,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                     mSubject = movieDetailsBean;
                     updateView();
                 } else {
-                    ToastUtils.show(MovieDetailsActivity.this, "加载出错");
+                    SnackBarUtils.showSnackBar(activitymdcoorl,UIUtils.getString(MovieDetailsActivity.this,R.string.error));
                 }
             }
         };
@@ -198,27 +212,47 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
 
         activity_md_subject_title.setText(mSubject.getTitle());
         if (mSubject.getGenres() != null) {
+            activity_md_subject_genres.setText("");
             List<String> genres = mSubject.getGenres();
-            activity_md_subject_genres.append("电影类型：");
+            activity_md_subject_genres.append(UIUtils.getString(this, R.string.md_movie_type));
             addViewString(genres, activity_md_subject_genres);
         }
         if (mSubject.getCountries() != null) {
+            activity_md_subject_countries.setText("");
             List<String> countries = mSubject.getCountries();
-            activity_md_subject_countries.append("上映国家：");
+            activity_md_subject_countries.append(UIUtils.getString(this, R.string.md_movie_country));
             addViewString(countries, activity_md_subject_countries);
 
         }
-        activity_md_subject_year.setText("上映时间：" + mSubject.getYear());
+        activity_md_subject_year.setText(UIUtils.getString(this, R.string.md_movie_year) + mSubject.getYear());
         if (mSubject.getAka() != null) {
+            activity_md_subject_aka.setText("");
             List<String> aka = mSubject.getAka();
-            activity_md_subject_aka.append("原名：");
+            activity_md_subject_aka.append(UIUtils.getString(this, R.string.md_movie_original));
             addViewString(aka, activity_md_subject_aka);
         }
         if (mSubject.getSummary() != null) {
-            activitymdsummarytitle.setText("简介");
+            activitymdsummarytitle.setText(UIUtils.getString(this, R.string.md_movie_brief));
             activitymdsummary.setText(mSubject.getSummary());
-            activitymdsummartmore.setText("更多");
+            activitymdsummartmore.setText(UIUtils.getString(this, R.string.md_more));
         }
+
+        activitymdactortitle.setText(UIUtils.getString(this, R.string.md_movie_actor));
+
+        activitymdrvactor.setVisibility(View.VISIBLE);
+        activitymdrvactor.setLayoutManager(new LinearLayoutManager(MovieDetailsActivity.this,
+                LinearLayoutManager.HORIZONTAL, false));
+        mAdapter = new ActorAdapter(this, mSubject);
+        activitymdrvactor.setAdapter(mAdapter);
+
+        mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String id, String url) {
+                ActorDetailsActivity.toActivity(MovieDetailsActivity.this,id,url);
+            }
+        });
+        activity_md_recommend_movie.setText(UIUtils.getString(MovieDetailsActivity.this,R.string.md_load_ing));
+        masyn = new MAsyncTask().execute();
     }
 
     private void addViewString(List<String> list, TextView view) {
@@ -267,15 +301,24 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                 if (isOpenSummary) {
                     activitymdsummary.setLines(5);
                     activitymdsummary.setEllipsize(TextUtils.TruncateAt.END);
-                    activitymdsummartmore.setText("更多");
+                    activitymdsummartmore.setText(UIUtils.getString(MovieDetailsActivity.this, R.string.md_more));
                     isOpenSummary = false;
                 } else {
                     activitymdsummary.setSingleLine(false);
                     activitymdsummary.setEllipsize(null);
-                    activitymdsummartmore.setText("收起");
+                    activitymdsummartmore.setText(UIUtils.getString(MovieDetailsActivity.this, R.string.md_put));
                     isOpenSummary = true;
                 }
 
+            }
+        });
+
+        activitymdrefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                activitymdrefresh.setRefreshing(true);
+                initView();
+                initData();
             }
         });
     }
@@ -291,5 +334,57 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
     protected void onDestroy() {
         super.onDestroy();
         mSubscriber.unsubscribe();
+    }
+
+    @Override
+    protected void onPause() {
+        //判断是否有正在运行的AsyncTask
+        if (masyn != null && masyn.getStatus() == AsyncTask.Status.RUNNING) {
+            //cancel方法只是将对应的AsynTask标记为cancel状态，并不是真正的取消
+            masyn.cancel(true);
+        }
+        super.onPause();
+    }
+
+    class MAsyncTask extends AsyncTask {
+
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            if (isCancelled()) {
+                return null;
+            } else {
+                GetLikeMovie movie = new GetLikeMovie(mSubject.getId());
+                movieId = movie.getmovieId();
+                movieTitle = movie.getMovieTitle();
+                movieimg = movie.getmovieimg();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            if (movieId != null && movieTitle != null && movieimg != null) {
+                activity_md_recommend_movie.setText(UIUtils.getString(MovieDetailsActivity.this,R.string.md_load_likemovie));
+                activity_md_rv_movie.setVisibility(View.VISIBLE);
+                activity_md_rv_movie.setLayoutManager(new LinearLayoutManager(MovieDetailsActivity.this,
+                        LinearLayoutManager.HORIZONTAL, false));
+                mLikeAdapter = new LikeMovieAdapter(MovieDetailsActivity.this, movieTitle, movieimg, movieId);
+                activity_md_rv_movie.setAdapter(mLikeAdapter);
+
+                mLikeAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(String id, String url) {
+                        if (id != null && url != null) {
+                            MovieDetailsActivity.toActivity(MovieDetailsActivity.this, id, url);
+                        } else {
+                            SnackBarUtils.showSnackBar(activitymdcoorl,UIUtils.getString(MovieDetailsActivity.this,R.string.error));
+                        }
+                    }
+                });
+
+            } else {
+                activity_md_recommend_movie.setText(UIUtils.getString(MovieDetailsActivity.this,R.string.md_load_error));
+            }
+        }
     }
 }

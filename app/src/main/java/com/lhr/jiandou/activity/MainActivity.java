@@ -17,6 +17,8 @@ import android.widget.RelativeLayout;
 import com.lhr.jiandou.R;
 import com.lhr.jiandou.fragment.MovieFragment;
 import com.lhr.jiandou.fragment.factory.FragmentFactory;
+import com.lhr.jiandou.utils.Constants;
+import com.lhr.jiandou.utils.SpUtils;
 import com.lhr.jiandou.utils.UIUtils;
 
 import java.util.List;
@@ -38,8 +40,11 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         initView();
         initToolbar();
         setupDrawerContent();
-
         initFragment();
+        String[] stringArray = SpUtils.getStringArray(this, Constants.MOVIEKEY);
+        if(stringArray!=null&&stringArray.length>1){
+            Constants.MOVIETITLE = SpUtils.getStringArray(this,Constants.MOVIEKEY);
+        }
 
     }
 
@@ -59,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                 maindrawerlayout.openDrawer(GravityCompat.START);
             }
         });
-
 
     }
 

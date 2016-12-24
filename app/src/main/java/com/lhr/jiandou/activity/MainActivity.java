@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         setupDrawerContent();
         initFragment();
         String[] stringArray = SpUtils.getStringArray(this, Constants.MOVIEKEY);
-        if(stringArray!=null&&stringArray.length>1){
-            Constants.MOVIETITLE = SpUtils.getStringArray(this,Constants.MOVIEKEY);
+        if (stringArray != null && stringArray.length > 1) {
+            Constants.MOVIETITLE = SpUtils.getStringArray(this, Constants.MOVIEKEY);
         }
 
     }
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
     /**
      * 清空其他Fragment
      */
-    private void removeFragment(String title) {
+    public void removeFragment(String title) {
         mFragmentManager = getSupportFragmentManager();
         List<Fragment> fragments = mFragmentManager.getFragments();
         if (fragments == null) {
@@ -131,7 +131,9 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                 String title = (String) menuItem.getTitle();
                 main_toolbar.setTitle(title);
                 //根据menu的Title开启Fragment
+
                 switchFragment(title);
+
                 return true;
             }
         });
@@ -143,20 +145,27 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
      * @param title
      */
     private void switchFragment(String title) {
-        //根据Tag判断是否已经开启了Fragment，如果开启了就直接复用，没开启就创建
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
-        Fragment fragment = mFragmentManager.findFragmentByTag(title);
-        if (fragment == null) {
+        if (title.equals(UIUtils.getString(this,R.string.nav_menu_movie))&&Constants.CHANGELABEL_MOVIE) {
+            Fragment movieFragment = createFragmentByTitle(title);
             transaction.hide(DefaultFragment);
-            fragment = createFragmentByTitle(title);
-            transaction.add(R.id.main_container, fragment, title);
-            DefaultFragment = fragment;
-        } else if (fragment != null) {
-            transaction.hide(DefaultFragment).show(fragment);
-            DefaultFragment = fragment;
+            transaction.replace(R.id.main_container, movieFragment, title).commit();
+            DefaultFragment = movieFragment;
+        } else {
+            //根据Tag判断是否已经开启了Fragment，如果开启了就直接复用，没开启就创建
+            Fragment fragment = mFragmentManager.findFragmentByTag(title);
+            if (fragment == null) {
+                transaction.hide(DefaultFragment);
+                fragment = createFragmentByTitle(title);
+                transaction.add(R.id.main_container, fragment, title);
+                DefaultFragment = fragment;
+            } else if (fragment != null) {
+                transaction.hide(DefaultFragment).show(fragment);
+                DefaultFragment = fragment;
+            }
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).
+                    commit();
         }
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).
-                commit();
     }
 
     /**

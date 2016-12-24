@@ -12,4 +12,8 @@
 
     <color name="actorbg">#757575</color>
     <color name="alpha_actorbg">#77C2C2C2</color>
+
+    <color name="tip">#9c9c9c</color>
+    <color name="bg_focus">#DDDDDD</color>
+    <color name="red_500">#ef4836</color>
 </resources>

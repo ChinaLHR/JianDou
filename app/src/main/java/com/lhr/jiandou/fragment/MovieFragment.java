@@ -15,6 +15,7 @@ import com.lhr.jiandou.R;
 import com.lhr.jiandou.fragment.base.BaseFragment;
 import com.lhr.jiandou.fragment.pagerfragment.MoviePagerFragment;
 import com.lhr.jiandou.utils.Constants;
+import com.lhr.jiandou.utils.SpUtils;
 
 import rx.Observable;
 
@@ -30,6 +31,12 @@ public class MovieFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String[] stringArray = SpUtils.getStringArray(getActivity(), Constants.MOVIEKEY);
+        if(stringArray!=null&&stringArray.length>1){
+            Constants.MOVIETITLE = SpUtils.getStringArray(getActivity(),Constants.MOVIEKEY);
+            Constants.CHANGELABEL = false;
+        }
+
     }
 
     @Nullable
@@ -39,6 +46,11 @@ public class MovieFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_movie, container, false);
         this.fragmentmovievp = (ViewPager) view.findViewById(R.id.fragment_movie_vp);
         this.fragmentmovietab = (TabLayout) view.findViewById(R.id.fragment_movie_tab);
+        if (Constants.MOVIETITLE.length<=5){
+            fragmentmovietab.setTabMode(TabLayout.MODE_FIXED);
+        }else {
+            fragmentmovietab.setTabMode(TabLayout.MODE_SCROLLABLE);
+        }
 
         initData();
         return view;
@@ -73,11 +85,14 @@ public class MovieFragment extends BaseFragment {
         @Override
         public CharSequence getPageTitle(int position) {
 
-
             return Constants.MOVIETITLE[position];
 
         }
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
 
+    }
 }

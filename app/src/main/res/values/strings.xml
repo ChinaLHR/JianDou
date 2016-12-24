@@ -32,4 +32,11 @@
     <string name="ad_works">代表作品</string>
     <string name="ad_sex">性别：</string>
     <string name="ad_country">出生地：</string>
+
+    <!--LabelFragment-->
+    <string name="tip_drag">长按编辑,点击删添,拖拽排序</string>
+    <string name="my_label">我的标签</string>
+    <string name="other_label">其他标签</string>
+    <string name="edit">编辑</string>
+    <string name="finish">完成</string>
 </resources>

@@ -2,14 +2,13 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
     android:orientation="vertical"
     android:padding="4dp"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="5dp"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="4dp"
     android:id="@+id/item_movie_cardview"
     >
 
@@ -35,9 +34,10 @@
 
             <LinearLayout
                 android:id="@+id/item_movie_ll"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:padding="0.5dp"
                 android:orientation="horizontal">
 
                 <RatingBar
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:background="?android:colorBackground"
-                android:singleLine="true"
+                android:lines="1"
                 android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>

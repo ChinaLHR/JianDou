@@ -9,6 +9,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Test"
-        android:textSize="36sp"/>
+        android:textSize="32sp"/>
 
 </LinearLayout>

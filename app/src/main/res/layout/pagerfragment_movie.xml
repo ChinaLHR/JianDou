@@ -16,8 +16,7 @@
             android:id="@+id/pager_movie_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?android:colorBackground"
-            android:paddingBottom="60dp"/>
+            android:background="?android:colorBackground"/>
 
 
     </android.support.v4.widget.SwipeRefreshLayout>
@@ -26,7 +25,7 @@
         android:id="@+id/pager_movie_fab"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:src="@drawable/ic_fab_24dp"
         app:layout_anchor="@id/pager_movie_rv"

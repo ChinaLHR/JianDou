@@ -38,6 +38,7 @@ public class ToastUtils {
                 tv.setText(message);
             }
             toast.setView(view);
+            toast.setDuration(Toast.LENGTH_SHORT);
             toast.show();
         }
     }

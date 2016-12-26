@@ -7,13 +7,13 @@
     android:orientation="vertical">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/pager_movie_fresh"
+        android:id="@+id/pager_base_fresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/pager_movie_rv"
+            android:id="@+id/pager_base_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?android:colorBackground"/>
@@ -22,13 +22,13 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/pager_movie_fab"
+        android:id="@+id/pager_base_fab"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:src="@drawable/ic_fab_24dp"
-        app:layout_anchor="@id/pager_movie_rv"
+        app:layout_anchor="@id/pager_base_rv"
         app:layout_anchorGravity="bottom|right"
         app:layout_behavior="com.lhr.jiandou.view.ScrollAwareFABBehavior"
         />

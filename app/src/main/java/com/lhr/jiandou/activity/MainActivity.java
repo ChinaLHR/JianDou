@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -18,10 +19,11 @@ import com.lhr.jiandou.R;
 import com.lhr.jiandou.fragment.MovieFragment;
 import com.lhr.jiandou.fragment.factory.FragmentFactory;
 import com.lhr.jiandou.utils.Constants;
-import com.lhr.jiandou.utils.SpUtils;
+import com.lhr.jiandou.utils.ToastUtils;
 import com.lhr.jiandou.utils.UIUtils;
 
 import java.util.List;
+import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
 
@@ -33,6 +35,11 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
     private String title;
     private Fragment DefaultFragment;
 
+    private static Boolean isQuit = false;
+    private long mExitTime = 0;
+
+    private Timer timer = new Timer();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,10 +48,6 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         initToolbar();
         setupDrawerContent();
         initFragment();
-        String[] stringArray = SpUtils.getStringArray(this, Constants.MOVIEKEY);
-        if (stringArray != null && stringArray.length > 1) {
-            Constants.MOVIETITLE = SpUtils.getStringArray(this, Constants.MOVIEKEY);
-        }
 
     }
 
@@ -151,7 +154,12 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
             transaction.hide(DefaultFragment);
             transaction.replace(R.id.main_container, movieFragment, title).commit();
             DefaultFragment = movieFragment;
-        } else {
+        } else if(title.equals(UIUtils.getString(this,R.string.nav_menu_book))&&Constants.CHANGELABEL_BOOK){
+            Fragment bookFragment = createFragmentByTitle(title);
+            transaction.hide(DefaultFragment);
+            transaction.replace(R.id.main_container,bookFragment, title).commit();
+            DefaultFragment = bookFragment;
+        }else {
             //根据Tag判断是否已经开启了Fragment，如果开启了就直接复用，没开启就创建
             Fragment fragment = mFragmentManager.findFragmentByTag(title);
             if (fragment == null) {
@@ -201,11 +209,22 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
      */
     @Override
     public void onBackPressed() {
-        if (!maindrawerlayout.isDrawerOpen(GravityCompat.START)) {
-            super.onBackPressed();
-        } else {
-            maindrawerlayout.closeDrawers();
-        }
+    }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode== KeyEvent.KEYCODE_BACK){
+            if (!maindrawerlayout.isDrawerOpen(GravityCompat.START)){
+                if ((System.currentTimeMillis() - mExitTime) > 2000){
+                    ToastUtils.show(MainActivity.this,"再按一次退出程序");
+                    mExitTime = System.currentTimeMillis();
+                }else{
+                    finish();
+                }
+            }else {
+                maindrawerlayout.closeDrawers();
+            }
+        }
+        return true;
     }
 }

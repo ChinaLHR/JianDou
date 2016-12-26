@@ -1,6 +1,9 @@
 package com.lhr.jiandou.doubanservice;
 
 import com.lhr.jiandou.model.bean.ActorDetailsBean;
+import com.lhr.jiandou.model.bean.BookDetailsBean;
+import com.lhr.jiandou.model.bean.BookHttpResult;
+import com.lhr.jiandou.model.bean.BooksBean;
 import com.lhr.jiandou.model.bean.MovieDetailsBean;
 import com.lhr.jiandou.model.bean.MovieHttpResult;
 import com.lhr.jiandou.model.bean.SubjectsBean;
@@ -29,6 +32,15 @@ public interface DouBanService {
     Observable<MovieHttpResult<List<SubjectsBean>>> getMovieByTag
     (@Query("tag") String tag, @Query("start") int start, @Query("count") int count);
 
+    /**
+     * 根据tag获取图书
+     * https://api.douban.com/v2/book/search?tag=日本文学&start=20&count=60
+     * @return
+     */
+    @GET("search")
+    Observable<BookHttpResult<List<BooksBean>>> getBooksByTag
+    (@Query("tag") String tag, @Query("start") int start, @Query("count") int count);
+
 
     @GET("subject/{MovieId}")
     Observable<MovieDetailsBean> getMovieDetails
@@ -37,4 +49,8 @@ public interface DouBanService {
     @GET("celebrity/{actorId}")
     Observable<ActorDetailsBean> getActorDetails
             (@Path("actorId") String actorId);
+
+    @GET("{BookId}")
+    Observable<BookDetailsBean> getBookDetails
+            (@Path("BookId") String BookId);
 }

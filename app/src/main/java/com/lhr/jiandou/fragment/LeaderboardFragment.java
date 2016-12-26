@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.lhr.jiandou.R;
 import com.lhr.jiandou.fragment.base.BaseFragment;
-import com.lhr.jiandou.utils.LogUtils;
 
 /**
  * Created by ChinaLHR on 2016/12/13.
@@ -21,7 +20,6 @@ public class LeaderboardFragment extends BaseFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        LogUtils.e("初始化LeaderboardFragment");
         super.onCreate(savedInstanceState);
     }
     @Nullable
@@ -33,4 +31,5 @@ public class LeaderboardFragment extends BaseFragment {
         testtv.setText("LeaderboardFragment");
         return view;
     }
+
 }

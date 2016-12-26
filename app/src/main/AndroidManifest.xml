@@ -38,7 +38,11 @@
             android:name=".activity.ActorDetailsActivity"
             android:screenOrientation="nosensor"
             />
-
+        <activity
+            android:theme="@style/TranslucentTheme"
+            android:name=".activity.BookDetailsActivity"
+            android:screenOrientation="nosensor"
+            />
     </application>
 
 </manifest>

@@ -1,18 +1,16 @@
 package com.lhr.jiandou.model.bean;
 
 /**
- * Created by ChinaLHR on 2016/12/15.
+ * Created by ChinaLHR on 2016/12/24.
  * Email:13435500980@163.com
  */
 
-public class MovieHttpResult<T> {
+public class BookHttpResult<T> {
 
     private int count;
     private int start;
     private int total;
-
-    //模仿Data
-    private T subjects;
+    private T books;
 
     public int getCount() {
         return count;
@@ -38,11 +36,13 @@ public class MovieHttpResult<T> {
         this.total = total;
     }
 
-    public T getSubjects() {
-        return subjects;
+    public T getBooks() {
+        return books;
     }
-    public void setSubjects(T subjects) {
-        this.subjects = subjects;
+
+    public void setBooks(T books) {
+        this.books = books;
     }
+
 
 }

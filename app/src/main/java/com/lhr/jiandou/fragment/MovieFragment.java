@@ -34,7 +34,7 @@ public class MovieFragment extends BaseFragment {
         String[] stringArray = SpUtils.getStringArray(getActivity(), Constants.MOVIEKEY);
         if(stringArray!=null&&stringArray.length>1){
             Constants.MOVIETITLE = SpUtils.getStringArray(getActivity(),Constants.MOVIEKEY);
-            Constants.CHANGELABEL = false;
+            Constants.CHANGELABEL_MOVIE = false;
         }
 
     }
@@ -56,12 +56,12 @@ public class MovieFragment extends BaseFragment {
         return view;
     }
 
+
     public void initData() {
         fragmentmovievp.setAdapter(new MoviePagerAdapter(getChildFragmentManager()));
         //viewpager的初始化长度
         fragmentmovievp.setOffscreenPageLimit(Constants.MOVIETITLE.length);
         fragmentmovietab.setupWithViewPager(fragmentmovievp);
-
     }
 
     class MoviePagerAdapter extends FragmentStatePagerAdapter {
@@ -90,9 +90,4 @@ public class MovieFragment extends BaseFragment {
         }
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-
-    }
 }

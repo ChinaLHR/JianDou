@@ -159,7 +159,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                     @Override
                     public boolean onResourceReady(Bitmap resource, String model, Target<Bitmap> target, boolean isFromMemoryCache, boolean isFirstResource) {
                         int color = ImageUtils.getColor(resource);
+                        activitymdcolltl.setContentScrimColor(color);
                         activitymdcolltl.setBackgroundColor(color);
+
                         return false;
                     }
                 })

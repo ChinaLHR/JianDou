@@ -52,7 +52,7 @@ public class LabelPagerMovieFragment extends Fragment {
         final ItemTouchHelper helper = new ItemTouchHelper(callback);
         helper.attachToRecyclerView(pager_f_labelmovie);
 
-        adapter = new LabelAdapter(getActivity(), helper, mLabel, oLabel);
+        adapter = new LabelAdapter(getActivity(), helper, mLabel, oLabel,Constants.MOVIEKEY);
         adapter.setOnMyChannelItemClickListener(new LabelAdapter.OnMyChannelItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
@@ -69,6 +69,7 @@ public class LabelPagerMovieFragment extends Fragment {
         });
 
         pager_f_labelmovie.setAdapter(adapter);
+
     }
 
     private void initdata() {

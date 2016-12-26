@@ -20,7 +20,7 @@
         android:padding="4dp">
 
         <ImageView
-            android:id="@+id/item_movie_iv"
+            android:id="@+id/item_base_iv"
             android:layout_width="100dp"
             android:layout_height="145dp"
             android:layout_gravity="center_horizontal"
@@ -33,7 +33,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/item_movie_ll"
+                android:id="@+id/item_base_ll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -41,7 +41,7 @@
                 android:orientation="horizontal">
 
                 <RatingBar
-                    android:id="@+id/item_movie_ratingbar"
+                    android:id="@+id/item_base_ratingbar"
                     android:isIndicator="true"
                     style="@style/MovieRatingBar"
                     android:layout_width="wrap_content"
@@ -49,20 +49,21 @@
                     android:numStars="5"/>
 
                 <TextView
-                    android:id="@+id/item_movie_tv_number"
+                    android:id="@+id/item_base_tv_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:textSize="12sp"/>
             </LinearLayout>
             <TextView
-                android:id="@+id/item_movie_tv_title"
+                android:id="@+id/item_base_tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:background="?android:colorBackground"
+                android:ellipsize="end"
                 android:lines="1"
-                android:textSize="15sp" />
+                android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>

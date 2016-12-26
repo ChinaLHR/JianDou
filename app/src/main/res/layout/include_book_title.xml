@@ -15,24 +15,30 @@
         >
 
         <TextView
-            android:id="@+id/activity_md_subject_title"
+            android:id="@+id/atv_book_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:textColor="@color/movieTitleColor"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/activity_md_subject_genres"
+            android:id="@+id/atv_book_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:textSize="12sp"
             />
-
         <TextView
-            android:id="@+id/activity_md_subject_aka"
+            android:id="@+id/atv_book_pub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="2dp"
+            android:textSize="12sp"
+            />
+        <TextView
+            android:id="@+id/atv_book_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="2dp"
@@ -40,15 +46,7 @@
             />
 
         <TextView
-            android:id="@+id/activity_md_subject_countries"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="2dp"
-            android:textSize="12sp"
-            />
-
-        <TextView
-            android:id="@+id/activity_md_subject_year"
+            android:id="@+id/atv_book_pages"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="2dp"
@@ -76,7 +74,7 @@
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/activity_md_ratingnumber"
+                android:id="@+id/atv_book_ratingnumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -85,7 +83,7 @@
                 />
 
             <RatingBar
-                android:id="@+id/activity_md_ratingbar"
+                android:id="@+id/atv_book_ratingbar"
                 style="@style/MovieRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,7 +92,7 @@
                 android:numStars="5"/>
 
             <TextView
-                android:id="@+id/activity_md_ratings_count"
+                android:id="@+id/atv_book_ratings_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

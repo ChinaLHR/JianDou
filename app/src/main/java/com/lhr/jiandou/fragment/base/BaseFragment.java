@@ -9,8 +9,10 @@ import android.support.v4.app.Fragment;
  * Email:13435500980@163.com
  */
 
-public class BaseFragment extends Fragment {
+public  class BaseFragment extends Fragment {
     public Activity mActivity;
+
+
     /**
      * 避免getActivity空指针
      * @param context

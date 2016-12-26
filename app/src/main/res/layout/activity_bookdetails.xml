@@ -2,35 +2,36 @@
 <android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/activity_md_refresh"
+    android:id="@+id/atv_book_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/activity_md_coorl"
+        android:id="@+id/atv_book_coorl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:colorBackground"
         >
 
         <android.support.design.widget.AppBarLayout
-            android:id="@+id/activity_md_appbar"
+            android:id="@+id/atv_book_appbar"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:fitsSystemWindows="true"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
             <android.support.design.widget.CollapsingToolbarLayout
-                android:id="@+id/activity_md_colltl"
+                android:id="@+id/atv_book_colltl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/toolbarColor"
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|snap"
                 >
 
                 <ImageView
-                    android:id="@+id/activity_md_iv"
+                    android:id="@+id/atv_book_iv"
                     android:layout_width="160dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -43,10 +44,11 @@
                     />
 
                 <android.support.v7.widget.Toolbar
-                    android:id="@+id/activity_md_toolbar"
+                    android:id="@+id/atv_book_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_collapseMode="pin"
+
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                     />
@@ -54,7 +56,7 @@
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.NestedScrollView
-            android:id="@+id/activity_movie_nested"
+            android:id="@+id/atv_book_nested"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
@@ -62,20 +64,23 @@
             >
 
             <LinearLayout
-                android:id="@+id/activity_md_ll"
+                android:id="@+id/atv_book_ll"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="?android:colorBackground"
                 android:orientation="vertical"
                 android:padding="5dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                >
+
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="10dp"
                     />
+
                 <include
-                    android:id="@+id/activity_md_include"
-                    layout="@layout/include_movie_title"
+                    android:id="@+id/atv_book_include"
+                    layout="@layout/include_book_title"
                     />
 
                 <Space
@@ -84,7 +89,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/activity_md_summary_title"
+                    android:id="@+id/atv_book_summary_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
@@ -93,20 +98,20 @@
                     />
 
                 <TextView
-                    android:id="@+id/activity_md_summary"
+                    android:id="@+id/atv_book_summary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="6dp"
                     android:layout_marginTop="6dp"
                     android:ellipsize="end"
                     android:lineSpacingExtra="6dp"
-                    android:lines="5"
+                    android:lines="4"
                     android:textColor="?android:attr/textColorPrimary"
                     android:textSize="14sp"
                     />
 
                 <TextView
-                    android:id="@+id/activity_md_summart_more"
+                    android:id="@+id/atv_book_summary_more"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="6dp"
@@ -119,19 +124,114 @@
 
                 <Space
                     android:layout_width="wrap_content"
-                    android:layout_height="24dp"/>
+                    android:layout_height="24dp"
+                    />
 
                 <TextView
-                    android:id="@+id/activity_md_actor_title"
+                    android:id="@+id/atv_book_author_intro_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
-                    android:textSize="16sp"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/atv_book_author_ll">
+
+                    <TextView
+                        android:id="@+id/atv_book_author_intro"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_weight="15"
+                        android:ellipsize="end"
+                        android:lineSpacingExtra="6dp"
+                        android:lines="4"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="14sp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/atv_book_iv_author"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_chevron_right_black_24dp"/>
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        />
+                </LinearLayout>
+
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    />
+                <TextView
+                    android:id="@+id/atv_book_author_list_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/atv_book_list_ll"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/atv_book_list"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:layout_marginTop="6dp"
+                        android:layout_weight="15"
+                        android:ellipsize="end"
+                        android:lineSpacingExtra="6dp"
+                        android:lines="4"
+                        android:textColor="?android:attr/textColorPrimary"
+                        android:textSize="14sp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/atv_book_iv_list"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_chevron_right_black_24dp"/>
+                    <Space
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"/>
+                </LinearLayout>
+
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    />
+                <TextView
+                    android:id="@+id/atv_book_like_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:textSize="16dp"
                     android:textStyle="bold"
                     />
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/activity_md_rv_actor"
+                    android:id="@+id/atv_book_rv_like"
                     android:layout_width="match_parent"
                     android:layout_height="240dp"
                     android:overScrollMode="never"
@@ -139,41 +239,17 @@
                     android:paddingRight="-2dp"
                     android:visibility="gone"
                     />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"/>
-
-                <TextView
-                    android:id="@+id/activity_md_recommend_movie"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/activity_md_rv_movie"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:overScrollMode="never"
-                    android:paddingLeft="-2dp"
-                    android:paddingRight="-2dp"
-                    android:visibility="gone"
-                    />
-
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/activity_md_fab"
+            android:id="@+id/atv_book_fab"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="16dp"
             android:src="@drawable/ic_movie_toweb_24dp"
-            app:layout_anchor="@id/activity_md_appbar"
             app:backgroundTint="@color/colorAccent"
+            app:layout_anchor="@id/atv_book_appbar"
             app:layout_anchorGravity="bottom|right|end"
             />
     </android.support.design.widget.CoordinatorLayout>

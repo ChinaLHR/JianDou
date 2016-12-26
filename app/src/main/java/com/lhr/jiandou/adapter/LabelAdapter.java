@@ -22,6 +22,7 @@ import com.lhr.jiandou.adapter.helper.OnDragVHListener;
 import com.lhr.jiandou.adapter.helper.OnItemMoveListener;
 import com.lhr.jiandou.utils.Constants;
 import com.lhr.jiandou.utils.SpUtils;
+import com.lhr.jiandou.utils.ToastUtils;
 
 import java.util.List;
 
@@ -61,6 +62,7 @@ public class LabelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private List<String> mMyLabel, mOtherLabel;
 
+    public String KEY;
     // 我的标签点击事件
     private OnMyChannelItemClickListener mChannelItemClickListener;
 
@@ -72,12 +74,13 @@ public class LabelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.mChannelItemClickListener = listener;
     }
 
-    public LabelAdapter(Context context, ItemTouchHelper helper, List<String> mMyLabel, List<String> mOtherLabel) {
+    public LabelAdapter(Context context, ItemTouchHelper helper, List<String> mMyLabel, List<String> mOtherLabel, String key) {
         mContext = context;
         this.mInflater = LayoutInflater.from(context);
         this.mItemTouchHelper = helper;
         this.mMyLabel = mMyLabel;
         this.mOtherLabel = mOtherLabel;
+        KEY = key;
     }
 
     @Override
@@ -127,36 +130,41 @@ public class LabelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                         int position = myHolder.getAdapterPosition();
                         //开启编辑模式
                         if (isEditMode) {
-                            RecyclerView recyclerView = ((RecyclerView) parent);
-                            View targetView = recyclerView.getLayoutManager().findViewByPosition(mMyLabel.size() + COUNT_PRE_OTHER_HEADER);
-                            View currentView = recyclerView.getLayoutManager().findViewByPosition(position);
-                            // 如果targetView不在屏幕内,则indexOfChild为-1  此时不需要添加动画,因为此时notifyItemMoved自带一个向目标移动的动画
-                            // 如果在屏幕内,则添加一个位移动画
-                            if (recyclerView.indexOfChild(targetView) >= 0) {
-                                int targetX, targetY;
+                            if (mMyLabel.size() > 2) {
+                                RecyclerView recyclerView = ((RecyclerView) parent);
+                                View targetView = recyclerView.getLayoutManager().findViewByPosition(mMyLabel.size() + COUNT_PRE_OTHER_HEADER);
+                                View currentView = recyclerView.getLayoutManager().findViewByPosition(position);
+                                // 如果targetView不在屏幕内,则indexOfChild为-1  此时不需要添加动画,因为此时notifyItemMoved自带一个向目标移动的动画
+                                // 如果在屏幕内,则添加一个位移动画
+                                if (recyclerView.indexOfChild(targetView) >= 0) {
+                                    int targetX, targetY;
 
-                                RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
-                                int spanCount = ((GridLayoutManager) manager).getSpanCount();
+                                    RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
+                                    int spanCount = ((GridLayoutManager) manager).getSpanCount();
 
-                                // 移动后 高度将变化 (我的频道Grid 最后一个item在新的一行第一个)
-                                if ((mMyLabel.size() - COUNT_PRE_MY_HEADER) % spanCount == 0) {
-                                    View preTargetView = recyclerView.getLayoutManager().findViewByPosition(mMyLabel.size() + COUNT_PRE_OTHER_HEADER - 1);
-                                    targetX = preTargetView.getLeft();
-                                    targetY = preTargetView.getTop();
+                                    // 移动后 高度将变化 (我的频道Grid 最后一个item在新的一行第一个)
+                                    if ((mMyLabel.size() - COUNT_PRE_MY_HEADER) % spanCount == 0) {
+                                        View preTargetView = recyclerView.getLayoutManager().findViewByPosition(mMyLabel.size() + COUNT_PRE_OTHER_HEADER - 1);
+                                        targetX = preTargetView.getLeft();
+                                        targetY = preTargetView.getTop();
+                                    } else {
+                                        targetX = targetView.getLeft();
+                                        targetY = targetView.getTop();
+                                    }
+
+                                    moveMyToOther(myHolder);
+                                    startAnimation(recyclerView, currentView, targetX, targetY);
+
                                 } else {
-                                    targetX = targetView.getLeft();
-                                    targetY = targetView.getTop();
+                                    moveMyToOther(myHolder);
                                 }
-
-                                moveMyToOther(myHolder);
-                                startAnimation(recyclerView, currentView, targetX, targetY);
-
                             } else {
-                                moveMyToOther(myHolder);
+                                ToastUtils.show(mContext,"标签不可以少于两个");
                             }
                         } else {
                             mChannelItemClickListener.onItemClick(v, position - COUNT_PRE_MY_HEADER);
                         }
+
                     }
                 });
 
@@ -300,12 +308,22 @@ public class LabelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
      * 更改sp储存
      */
     public void changeSp() {
-        String[] strs = new String[mMyLabel.size()];
-        for (int i = 0; i < mMyLabel.size(); i++) {
-            strs[i] = mMyLabel.get(i);
+        if (KEY.equals(Constants.MOVIEKEY)) {
+            String[] strs = new String[mMyLabel.size()];
+            for (int i = 0; i < mMyLabel.size(); i++) {
+                strs[i] = mMyLabel.get(i);
+            }
+            SpUtils.saveStringArray(mContext, Constants.MOVIEKEY, strs);
+            Constants.CHANGELABEL_MOVIE = true;
+        } else {
+            String[] strs = new String[mMyLabel.size()];
+            for (int i = 0; i < mMyLabel.size(); i++) {
+                strs[i] = mMyLabel.get(i);
+            }
+            SpUtils.saveStringArray(mContext, Constants.BOOKKEY, strs);
+            Constants.CHANGELABEL_BOOK = true;
         }
-        SpUtils.saveStringArray(mContext, Constants.MOVIEKEY, strs);
-        Constants.CHANGELABEL_MOVIE =true;
+
     }
 
     @Override

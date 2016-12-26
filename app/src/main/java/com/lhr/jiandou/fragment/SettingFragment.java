@@ -11,22 +11,25 @@ import com.lhr.jiandou.R;
 import com.lhr.jiandou.fragment.base.BaseFragment;
 
 /**
- * Created by ChinaLHR on 2016/12/13.
+ * Created by ChinaLHR on 2016/12/25.
  * Email:13435500980@163.com
  */
 
-public class CollectionFragment extends BaseFragment {
+public class SettingFragment extends BaseFragment {
+    private TextView testtv;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.test_layout, container, false);
-        TextView tv = (TextView) view.findViewById(R.id.test_tv);
-        tv.setText("CollectionFragment");
+        this.testtv = (TextView) view.findViewById(R.id.test_tv);
+        testtv.setText("SettingFragment");
         return view;
     }
 

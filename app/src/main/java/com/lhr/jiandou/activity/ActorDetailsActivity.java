@@ -206,6 +206,7 @@ public class ActorDetailsActivity extends AppCompatActivity {
      * 初始化View
      */
     private void initView() {
+        actactorcoll.setContentScrimColor(getResources().getColor(R.color.actorbg));
         Glide.with(this)
                 .load(imageUrl)
                 .into(atvactoriv1);

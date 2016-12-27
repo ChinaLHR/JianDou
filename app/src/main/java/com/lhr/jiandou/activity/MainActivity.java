@@ -204,12 +204,6 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         return fragment;
     }
 
-    /**
-     * 监听返回按钮
-     */
-    @Override
-    public void onBackPressed() {
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

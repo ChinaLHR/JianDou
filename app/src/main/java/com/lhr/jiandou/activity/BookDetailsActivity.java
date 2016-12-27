@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -16,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -33,8 +35,8 @@ import com.lhr.jiandou.adapter.base.BaseRecyclerAdapter;
 import com.lhr.jiandou.model.bean.BookDetailsBean;
 import com.lhr.jiandou.model.httputils.BookHttpMethods;
 import com.lhr.jiandou.utils.ImageUtils;
-import com.lhr.jiandou.utils.LogUtils;
 import com.lhr.jiandou.utils.SnackBarUtils;
+import com.lhr.jiandou.utils.StringUtils;
 import com.lhr.jiandou.utils.UIUtils;
 import com.lhr.jiandou.utils.jsoupUtils.GetBookInfo;
 
@@ -47,7 +49,7 @@ import rx.Subscriber;
  * Email:13435500980@163.com
  */
 
-public class BookDetailsActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener,View.OnClickListener {
+public class BookDetailsActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener, View.OnClickListener {
 
     private android.widget.ImageView atvbookiv;
     private android.support.v7.widget.Toolbar atvbooktoolbar;
@@ -84,6 +86,9 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
 
     private static final String KEY_BOOK_ID = "movie_id";
     private static final String KEY_IMAGE_URL = "image_url";
+    private static final String TYPE_AUTHOR = "作者简介";
+    private static final String TYPE_LIST = "目录";
+
     private boolean isOpenSummary = false;
     private boolean isCollection = false;
     private String BookId;
@@ -97,6 +102,12 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
     private List<String> LikeBookImage;
     private List<String> LikeBookId;
     private LikeMovieAdapter mLikeAdapter;
+    private TextView btndialog_title;
+    private TextView btndialog_cate;
+    private ImageView btndialog_close;
+    private TextView btdialog_tv;
+    private BottomSheetBehavior behavior;
+
     public static void toActivity(Activity activity, String id, String img) {
         Intent intent = new Intent(activity, BookDetailsActivity.class);
         intent.putExtra(KEY_BOOK_ID, id);
@@ -140,6 +151,14 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
         atvbookrefresh.setProgressViewOffset(false, 0, 48);
         atvbooktoolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         atvbooktoolbar.inflateMenu(R.menu.menu_moviedetails_toolbar);
+
+        btndialog_title = (TextView) findViewById(R.id.btndialog_title);
+        btndialog_cate = (TextView) findViewById(R.id.btndialog_cate);
+        btndialog_close = (ImageView) findViewById(R.id.btndialog_close);
+        btdialog_tv = (TextView) findViewById(R.id.btdialog_tv);
+
+        View bottomSheet = findViewById(R.id.btndialog_nes);
+        behavior = BottomSheetBehavior.from(bottomSheet);
     }
 
     @Override
@@ -192,37 +211,38 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
             float rate = Float.parseFloat(mBookBean.getRating().getAverage()) / 2;
             atv_book_ratingbar.setRating(rate);
             atv_book_ratingnumber.setText(rate * 2 + "");
-            atv_book_ratings_count.setText(mBookBean.getRating().getNumRaters() + "人评价");
+            atv_book_ratings_count.setText(mBookBean.getRating().getNumRaters() + UIUtils.getString(this, R.string.md_movie_evaluation));
         }
 
         atv_book_title.setText(mBookBean.getTitle());
-        atv_book_author.setText("作者：" + mBookBean.getAuthor().toString());
-        atv_book_pub.setText("出版社：" + mBookBean.getPublisher() + "/" + mBookBean.getPubdate());
+        atv_book_author.setText(UIUtils.getString(this, R.string.book_author));
+        StringUtils.addViewString(mBookBean.getAuthor(), atv_book_author);
+        atv_book_pub.setText(UIUtils.getString(this, R.string.book_press) + mBookBean.getPublisher() + "/" + mBookBean.getPubdate());
 
         if (!mBookBean.getSubtitle().trim().equals("")) {
-            atv_book_subtitle.setText("副标题：" + mBookBean.getSubtitle());
+            atv_book_subtitle.setText(UIUtils.getString(this, R.string.book_subtitle) + mBookBean.getSubtitle());
         } else {
             atv_book_subtitle.setVisibility(View.GONE);
         }
 
         if (!mBookBean.getPages().trim().equals("")) {
-            atv_book_pages.setText("页数：" + mBookBean.getPages());
+            atv_book_pages.setText(UIUtils.getString(this, R.string.book_pages) + mBookBean.getPages());
         } else {
             atv_book_pages.setVisibility(View.GONE);
         }
 
         if (!mBookBean.getSummary().trim().equals("")) {
-            atvbooksummarytitle.setText("简介");
+            atvbooksummarytitle.setText(UIUtils.getString(this, R.string.md_movie_brief));
             atvbooksummary.setText(mBookBean.getSummary());
-            atvbooksummarymore.setText("更多");
+            atvbooksummarymore.setText(UIUtils.getString(this, R.string.md_more));
         } else {
-            atvbooksummarytitle.setText("没有简介");
+            atvbooksummarytitle.setText(UIUtils.getString(this, R.string.ad_nomore));
             atvbooksummary.setVisibility(View.GONE);
             atvbooksummarymore.setVisibility(View.GONE);
         }
 
         if (!mBookBean.getAuthor_intro().trim().equals("")) {
-            atvbookauthorintrotitle.setText("作者简介");
+            atvbookauthorintrotitle.setText(UIUtils.getString(this, R.string.book_actor_info));
             atvbookauthorintro.setText(mBookBean.getAuthor_intro());
         } else {
             atv_book_author_ll.setVisibility(View.GONE);
@@ -319,12 +339,48 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.atv_book_iv_author:
+                showbuttondialog(TYPE_AUTHOR, mBookBean.getAuthor_intro());
                 break;
             case R.id.atv_book_iv_list:
+                showbuttondialog(TYPE_LIST, mBookBean.getAuthor_intro());
                 break;
         }
+    }
+
+    /**
+     * 显示ButtonDialog
+     */
+    private void showbuttondialog(String TYPE, String author_intro) {
+        atvbookappbar.setExpanded(false);
+        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        if (TYPE.equals(TYPE_AUTHOR)) {
+            btndialog_cate.setText(TYPE_AUTHOR);
+            btndialog_title.setText("");
+            StringUtils.addViewString(mBookBean.getAuthor(), btndialog_title);
+            btdialog_tv.setText(author_intro);
+        }else {
+            btndialog_cate.setText(TYPE_LIST);
+            for (int i = 0; i < booklist.size(); i++) {
+                if (!booklist.get(i).trim().equals("")) {
+                    btdialog_tv.append(booklist.get(i));
+                }
+            }
+
+        }
+
+
+        btndialog_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                    behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+        });
+
+
     }
 
 
@@ -350,9 +406,8 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
             super.onPostExecute(o);
             //初始化试读目录
             if (booklist != null) {
-                LogUtils.e(booklist.toString());
                 atv_book_list_ll.setVisibility(View.VISIBLE);
-                atvbookauthorlisttitle.setText("目录/试读");
+                atvbookauthorlisttitle.setText(UIUtils.getString(BookDetailsActivity.this, R.string.book_list));
                 for (int i = 0; i < booklist.size(); i++) {
                     if (!booklist.get(i).trim().equals("")) {
                         atvbooklist.append(booklist.get(i));
@@ -361,8 +416,8 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
             }
 
             //初始化RecyclerView
-            if(LikeBookTitle!=null&&LikeBookId!=null&&LikeBookImage!=null){
-              atvbookliketitle.setText("喜欢读这本书的人也喜欢...");
+            if (LikeBookTitle != null && LikeBookId != null && LikeBookImage != null) {
+                atvbookliketitle.setText(UIUtils.getString(BookDetailsActivity.this, R.string.book_like));
                 atvbookrvlike.setVisibility(View.VISIBLE);
                 atvbookrvlike.setLayoutManager(new LinearLayoutManager(BookDetailsActivity.this,
                         LinearLayoutManager.HORIZONTAL, false));
@@ -375,12 +430,12 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
                         if (id != null && url != null) {
                             BookDetailsActivity.toActivity(BookDetailsActivity.this, id, url);
                         } else {
-                            SnackBarUtils.showSnackBar(atvbookcoorl,UIUtils.getString(BookDetailsActivity.this,R.string.error));
+                            SnackBarUtils.showSnackBar(atvbookcoorl, UIUtils.getString(BookDetailsActivity.this, R.string.error));
                         }
                     }
                 });
-            }else{
-                atvbookliketitle.setText("加载失败...");
+            } else {
+                atvbookliketitle.setText(UIUtils.getString(BookDetailsActivity.this, R.string.error));
             }
 
         }
@@ -398,5 +453,19 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
     protected void onDestroy() {
         super.onDestroy();
         mSubscriber.unsubscribe();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (behavior.getState() == BottomSheetBehavior.STATE_EXPANDED) {
+                behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                return true;
+            } else {
+                return super.onKeyDown(keyCode, event);
+            }
+        } else {
+            return super.onKeyDown(keyCode, event);
+        }
     }
 }

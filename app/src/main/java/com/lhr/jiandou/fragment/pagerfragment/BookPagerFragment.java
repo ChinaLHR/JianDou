@@ -32,8 +32,6 @@ import rx.schedulers.Schedulers;
 public class BookPagerFragment extends BasePagerFragment {
     private List<BooksBean> mdate;
     private Subscriber<List<BooksBean>> mListSubscriber;
-    private Subscriber subscriber;
-    private Subscriber<List<BooksBean>> subscriber2;
     public BookPagerFragment(Observable<Integer> observable) {
         super(observable);
     }
@@ -59,7 +57,9 @@ public class BookPagerFragment extends BasePagerFragment {
                     }
                 });
 
-
+        if (mdate != null) {
+            mAdapter.upDates(mdate);
+        }
         mAdapter.setFooterView(footer);
         pagerbaserv.setAdapter(mAdapter);
     }
@@ -84,7 +84,6 @@ public class BookPagerFragment extends BasePagerFragment {
             @Override
             public void onNext(List<BooksBean> subjectsBeen) {
                 if (subjectsBeen != null) {
-                    LogUtils.e("获取数据成功");
                     mAdapter.addDatas(subjectsBeen);
                 }
             }
@@ -110,7 +109,6 @@ public class BookPagerFragment extends BasePagerFragment {
             @Override
             public void onNext(List<BooksBean> booksBeen) {
                 if (booksBeen != null) {
-                    LogUtils.e("获取图书成功");
                     mAdapter.upDates(booksBeen);
 
                     Observable.just(booksBeen)
@@ -153,7 +151,11 @@ public class BookPagerFragment extends BasePagerFragment {
 
     @Override
     public void onDestroy() {
-        mListSubscriber.unsubscribe();
+        if (mListSubscriber!=null){
+            mListSubscriber.unsubscribe();
+
+        }
+
         super.onDestroy();
     }
 }

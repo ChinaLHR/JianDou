@@ -18,6 +18,7 @@ public class Constants {
 
     public static String[] BOOKTITLE = {"小说", "名著", "科幻", "历史", "爱情", "编程"};
 
+    public static String[] LEADERBOARD = {"正在热映","即将上映","Top250"};
     public static String[] ALLMOVIE = {
             "爱情", "喜剧", "动画", "剧情",
             "科幻", "动作", "经典", "悬疑",

@@ -32,8 +32,6 @@ import rx.schedulers.Schedulers;
 public class MoviePagerFragment extends BasePagerFragment {
     private List<SubjectsBean> mdate;
     private Subscriber<List<SubjectsBean>> mListSubscriber;
-    private Subscriber subscriberread;
-    private Subscriber<List<SubjectsBean>> subscribersave;
     public MoviePagerFragment(Observable<Integer> observable) {
         super(observable);
     }
@@ -56,7 +54,6 @@ public class MoviePagerFragment extends BasePagerFragment {
 
     @Override
     public void updateMovieData() {
-        LogUtils.e("updateMovieData");
         if (mAdapter.getStart() == mStart) return;
         mStart = mAdapter.getStart();
 
@@ -144,6 +141,10 @@ public class MoviePagerFragment extends BasePagerFragment {
                     }
                 });
 
+        if (mdate != null) {
+            mAdapter.upDates(mdate);
+        }
+
 
         mAdapter.setFooterView(footer);
         pagerbaserv.setAdapter(mAdapter);
@@ -152,7 +153,9 @@ public class MoviePagerFragment extends BasePagerFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mListSubscriber.unsubscribe();
+        if (mListSubscriber!=null){
+            mListSubscriber.unsubscribe();
+        }
 
     }
 }

@@ -23,7 +23,6 @@ import com.lhr.jiandou.utils.ToastUtils;
 import com.lhr.jiandou.utils.UIUtils;
 
 import java.util.List;
-import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
 
@@ -34,11 +33,8 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
     private FragmentManager mFragmentManager;
     private String title;
     private Fragment DefaultFragment;
-
-    private static Boolean isQuit = false;
     private long mExitTime = 0;
 
-    private Timer timer = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
      */
     private Fragment createFragmentByTitle(String title) {
         Fragment fragment = FragmentFactory.getFragment(title);
+
         return fragment;
     }
 

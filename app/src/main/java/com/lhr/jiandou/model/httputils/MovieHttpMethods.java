@@ -31,7 +31,10 @@ public class MovieHttpMethods {
     private DouBanService mDouBanService;
 
     private MovieHttpMethods() {
-        //手动创建一个OkHttpClient并设置超时时间
+        /**
+         *  手动创建一个OkHttpClient并设置超时时间
+         */
+
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
 
@@ -97,6 +100,71 @@ public class MovieHttpMethods {
                 .onErrorReturn(new Func1<Throwable, ActorDetailsBean>() {
                     @Override
                     public ActorDetailsBean call(Throwable throwable) {
+                        return null;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+    /**
+     * 获取正在热映
+     * @param subscriber
+     * @param start
+     * @param count
+     */
+    public void getMovieHot(Subscriber<List<SubjectsBean>> subscriber,int start, int count){
+        mDouBanService.getMovieByHot(start,count)
+                .map(new HttpResultFunc<List<SubjectsBean>>())
+                .onErrorReturn(new Func1<Throwable, List<SubjectsBean>>() {
+                    @Override
+                    public List<SubjectsBean> call(Throwable throwable) {
+                        return null;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+
+    }
+
+    /**
+     * 即将上映
+     * @param subscriber
+     * @param start
+     * @param count
+     */
+    public void getMovieNew(Subscriber<List<SubjectsBean>> subscriber,int start, int count){
+        mDouBanService.getMovieByNew(start,count)
+                .map(new HttpResultFunc<List<SubjectsBean>>())
+                .onErrorReturn(new Func1<Throwable, List<SubjectsBean>>() {
+                    @Override
+                    public List<SubjectsBean> call(Throwable throwable) {
+                        return null;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+
+    }
+
+    /**
+     * Top250
+     * @param subscriber
+     * @param start
+     * @param count
+     */
+    public void getMovieTop250(Subscriber<List<SubjectsBean>> subscriber,int start,int count){
+        mDouBanService.getMovieByTop(start,count)
+                .map(new HttpResultFunc<List<SubjectsBean>>())
+                .onErrorReturn(new Func1<Throwable, List<SubjectsBean>>() {
+                    @Override
+                    public List<SubjectsBean> call(Throwable throwable) {
                         return null;
                     }
                 })

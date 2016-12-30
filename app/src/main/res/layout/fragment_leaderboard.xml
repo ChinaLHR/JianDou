@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.lhr.jiandou.view.StickyNavLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/leaderboard_topview"
+        android:layout_width="match_parent"
+        android:layout_height="165dp">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/leaderboard_topvp"
+            android:layout_width="match_parent"
+            android:layout_height="165dp"/>
+        <LinearLayout
+            android:id="@+id/leaderboard_point_ll"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="#66000000"
+            android:padding="5dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/leaderboard_ll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/leaderboard_tabLayout"
+            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:itemTextColor="?android:textColorPrimary"
+            app:tabMode="fixed"
+            />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/leaderboard_vp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+
+</com.lhr.jiandou.view.StickyNavLayout>

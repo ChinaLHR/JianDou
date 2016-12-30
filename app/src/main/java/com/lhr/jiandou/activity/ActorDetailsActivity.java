@@ -285,6 +285,7 @@ public class ActorDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onPause() {
+
         if (mAsyncTask != null && mAsyncTask.getStatus() == android.os.AsyncTask.Status.RUNNING) {
             mAsyncTask.cancel(true);
         }

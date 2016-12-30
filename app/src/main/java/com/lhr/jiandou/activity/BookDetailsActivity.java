@@ -28,7 +28,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
-import com.lhr.jiandou.MyApplication;
 import com.lhr.jiandou.R;
 import com.lhr.jiandou.adapter.LikeMovieAdapter;
 import com.lhr.jiandou.adapter.base.BaseRecyclerAdapter;
@@ -193,6 +192,9 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
                 if (bookDetailsBean != null) {
                     mBookBean = bookDetailsBean;
                     updateView();
+                    mAsyncTask = new AsyncTask();
+                    mAsyncTask.execute();
+
                 } else {
                     SnackBarUtils.showSnackBar(atvbookcoorl, UIUtils.getString(BookDetailsActivity.this, R.string.error));
                 }
@@ -269,10 +271,7 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
                 })
                 .into(atvbookiv);
 
-        if (MyApplication.isNetworkAvailable(this)) {
-            mAsyncTask = new AsyncTask();
-            mAsyncTask.execute();
-        }
+
     }
 
     private void initListener() {
@@ -303,7 +302,7 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
             public void onClick(View view) {
 
                 if (isOpenSummary) {
-                    atvbooksummary.setLines(5);
+                    atvbooksummary.setLines(4);
                     atvbooksummary.setEllipsize(TextUtils.TruncateAt.END);
                     atvbooksummarymore.setText(UIUtils.getString(BookDetailsActivity.this, R.string.md_more));
                     isOpenSummary = false;
@@ -360,8 +359,10 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
             btndialog_title.setText("");
             StringUtils.addViewString(mBookBean.getAuthor(), btndialog_title);
             btdialog_tv.setText(author_intro);
-        }else {
+        } else {
             btndialog_cate.setText(TYPE_LIST);
+            btndialog_title.setText("");
+            btdialog_tv.setText("");
             for (int i = 0; i < booklist.size(); i++) {
                 if (!booklist.get(i).trim().equals("")) {
                     btdialog_tv.append(booklist.get(i));
@@ -443,6 +444,7 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
 
     @Override
     protected void onPause() {
+
         if (mAsyncTask != null && mAsyncTask.getStatus() == android.os.AsyncTask.Status.RUNNING) {
             mAsyncTask.cancel(true);
         }

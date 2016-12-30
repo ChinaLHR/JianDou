@@ -45,6 +45,7 @@ public class CacheUtils {
             ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
             oos.writeObject(list);
             oos.flush();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

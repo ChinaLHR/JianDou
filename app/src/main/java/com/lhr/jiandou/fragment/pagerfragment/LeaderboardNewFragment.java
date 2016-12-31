@@ -20,7 +20,6 @@ import com.lhr.jiandou.model.bean.SubjectsBean;
 import com.lhr.jiandou.model.httputils.MovieHttpMethods;
 import com.lhr.jiandou.utils.CacheUtils;
 import com.lhr.jiandou.utils.Constants;
-import com.lhr.jiandou.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -154,7 +153,6 @@ public class LeaderboardNewFragment extends Fragment {
             @Override
             public void onNext(List<SubjectsBean> subjectsBeen) {
                 if (subjectsBeen != null) {
-                    LogUtils.e("获取数据成功");
                     mAdapter.addDatas(subjectsBeen);
 
                 }
@@ -223,12 +221,6 @@ public class LeaderboardNewFragment extends Fragment {
                         }
                     }
                 });
-
-        if (mdate != null) {
-            mAdapter.upDates(mdate);
-        }
-
-
         mAdapter.setFooterView(footer);
         pagerleadeaderboardrv.setAdapter(mAdapter);
     }

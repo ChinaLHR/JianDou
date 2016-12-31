@@ -35,16 +35,81 @@ public class PageTopAdapter extends BasePagerAdapter<SubjectsBean> {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (getItemViewType(position) == TYPE_FOOTER) return;
-        Glide.with(mContext)
-                .load(mDate.get(position).getImages().getLarge())
-                .into( ((TopHolder)holder).top_img);
-        ((TopHolder)holder).top_movie_title.setText(mDate.get(position).getTitle());
-        ((TopHolder)holder).top_num.setText(position);
-        ((TopHolder)holder).top_movie_ratingnum.setText(mDate.get(position).getRating().getAverage() + "");
-        ((TopHolder)holder).top_movie_ratingbar.setRating((float) mDate.get(position).getRating().getAverage() / 2);
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        if (mDate.size()>1) {
+            if (getItemViewType(position) == TYPE_FOOTER) return;
+            ((TopHolder)holder).top_movie_brief.setText("");
+            Glide.with(mContext)
+                    .load(mDate.get(position).getImages().getLarge())
+                    .into(((TopHolder) holder).top_img);
+            ((TopHolder) holder).top_movie_title.setText(mDate.get(position).getTitle());
+            ((TopHolder) holder).top_num.setText(position+1+"");
+            ((TopHolder) holder).top_movie_ratingnum.setText(mDate.get(position).getRating().getAverage() + "");
+            ((TopHolder) holder).top_movie_ratingbar.setRating((float) mDate.get(position).getRating().getAverage() / 2);
 
+            /**
+             * 上映时间
+             */
+            if (!mDate.get(position).getYear().trim().equals("")) {
+                ((TopHolder) holder).top_movie_brief.append("上映时间：");
+                ((TopHolder) holder).top_movie_brief.append(mDate.get(position).getYear() + "\n");
+            }
+            /**
+             * 导演信息
+             */
+            if (mDate.get(position).getDirectors() != null) {
+                ((TopHolder) holder).top_movie_brief.append("导演：");
+                for (int i = 0; i < mDate.get(position).getDirectors().size(); i++) {
+
+                    if (i == mDate.get(position).getDirectors().size() - 1) {
+                        ((TopHolder) holder).top_movie_brief.append(mDate.get(position).getDirectors().get(i).getName());
+                    } else {
+                        ((TopHolder) holder).top_movie_brief.append(mDate.get(position).getDirectors().get(i).getName() + "/");
+                    }
+                }
+
+                ((TopHolder) holder).top_movie_brief.append("\n");
+
+            }
+            /**
+             * 演员信息
+             */
+            if (mDate.get(position).getCasts() != null) {
+                ((TopHolder) holder).top_movie_brief.append("演员：");
+                for (int i = 0; i < mDate.get(position).getCasts().size(); i++) {
+                    if (i == mDate.get(position).getDirectors().size() - 1) {
+                        ((TopHolder) holder).top_movie_brief.append(mDate.get(position).getCasts().get(i).getName());
+                    } else {
+                        ((TopHolder) holder).top_movie_brief.append(mDate.get(position).getCasts().get(i).getName() + "/");
+                    }
+                }
+                ((TopHolder) holder).top_movie_brief.append("\n");
+            }
+            /**
+             * 类型信息
+             */
+            if (mDate.get(position).getCasts() != null) {
+                ((TopHolder) holder).top_movie_brief.append("类型：");
+                for (int i = 0; i < mDate.get(position).getGenres().size(); i++) {
+                    if (i == mDate.get(position).getGenres().size() - 1) {
+                        ((TopHolder) holder).top_movie_brief.append(mDate.get(position).getGenres().get(i));
+                    } else {
+                        ((TopHolder) holder).top_movie_brief.append(mDate.get(position).getGenres().get(i) + "/");
+                    }
+                }
+                ((TopHolder) holder).top_movie_brief.append("\n");
+            }
+
+        }
+        if (mListener!=null){
+            ((TopHolder)holder).top_card.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = holder.getLayoutPosition();
+                    mListener.ItemClickListener(holder.itemView, mDate.get(position).getId(),mDate.get(position).getImages().getLarge());
+                }
+            });
+        }
     }
 
     class TopHolder extends RecyclerView.ViewHolder {

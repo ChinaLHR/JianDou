@@ -8,7 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <!---->
+    <!--RatingBar样式-->
     <style name="MovieRatingBar" >
         <item name="colorControlActivated">@color/colorPrimary</item>
         <item name="android:minHeight">16dp</item>
@@ -23,6 +23,8 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-
-
+    <!--Toolbar样式-->
+    <style name="ToolbarTextAppearanceText">
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>

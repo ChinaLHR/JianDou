@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.OverScroller;
 
 import com.lhr.jiandou.R;
-import com.lhr.jiandou.utils.LogUtils;
 
 /**
  * Created by 发条橙 on 2016/11/7.
@@ -49,7 +48,6 @@ public class StickyNavLayout extends LinearLayout implements NestedScrollingPare
     public void onNestedPreScroll(View target, int dx, int dy, int[] consumed) {
         //getScrollY：返回视图滚动的最高位置
         //dy:垂直方向嵌套滑动的子View滑动的距离
-        LogUtils.e("dx==="+dx+";dy==="+dy);
         boolean hiddenTop = dy > 0 && getScrollY() < mTopViewHeight;
         boolean showTop = dy < 0 && getScrollY() >= 0 && !ViewCompat.canScrollVertically(target, -1);
         if (hiddenTop || showTop) {

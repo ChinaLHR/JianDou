@@ -141,7 +141,13 @@ public class ActorDetailsActivity extends AppCompatActivity {
 
             }
         });
-
+        atvactorfab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WebViewActivity webViewActivity = new WebViewActivity();
+                webViewActivity.toWebActivity(ActorDetailsActivity.this,mActorBean.getMobile_url(),mActorBean.getName());
+            }
+        });
 
     }
 

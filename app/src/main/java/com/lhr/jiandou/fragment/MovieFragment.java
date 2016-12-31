@@ -16,6 +16,7 @@ import com.lhr.jiandou.fragment.base.BaseFragment;
 import com.lhr.jiandou.fragment.pagerfragment.MoviePagerFragment;
 import com.lhr.jiandou.utils.Constants;
 import com.lhr.jiandou.utils.SpUtils;
+import com.lhr.jiandou.view.animation.DepthPageTransformer;
 
 import rx.Observable;
 
@@ -61,6 +62,7 @@ public class MovieFragment extends BaseFragment {
         fragmentmovievp.setAdapter(new MoviePagerAdapter(getChildFragmentManager()));
         //viewpager的初始化长度
         fragmentmovievp.setOffscreenPageLimit(Constants.MOVIETITLE.length);
+        fragmentmovievp.setPageTransformer(true,new DepthPageTransformer());
         fragmentmovietab.setupWithViewPager(fragmentmovievp);
     }
 

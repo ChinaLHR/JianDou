@@ -16,6 +16,7 @@ import com.lhr.jiandou.fragment.base.BaseFragment;
 import com.lhr.jiandou.fragment.pagerfragment.BookPagerFragment;
 import com.lhr.jiandou.utils.Constants;
 import com.lhr.jiandou.utils.SpUtils;
+import com.lhr.jiandou.view.animation.DepthPageTransformer;
 
 import rx.Observable;
 
@@ -59,6 +60,7 @@ public class BookFragment extends BaseFragment {
         fragmentbookvp.setAdapter(new BookPagerAdapter(getChildFragmentManager()));
         //viewpager的初始化长度
         fragmentbookvp.setOffscreenPageLimit(Constants.BOOKTITLE.length);
+        fragmentbookvp.setPageTransformer(true,new DepthPageTransformer());
         fragmentbooktab.setupWithViewPager(fragmentbookvp);
     }
 

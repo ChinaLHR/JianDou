@@ -194,6 +194,7 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
                     updateView();
                     mAsyncTask = new AsyncTask();
                     mAsyncTask.execute();
+                    atvbookliketitle.setText("正在加载中...");
 
                 } else {
                     SnackBarUtils.showSnackBar(atvbookcoorl, UIUtils.getString(BookDetailsActivity.this, R.string.error));
@@ -327,7 +328,7 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
 
         atv_book_iv_author.setOnClickListener(this);
         atv_book_iv_list.setOnClickListener(this);
-
+        atvbookfab.setOnClickListener(this);
     }
 
     @Override
@@ -344,6 +345,10 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
                 break;
             case R.id.atv_book_iv_list:
                 showbuttondialog(TYPE_LIST, mBookBean.getAuthor_intro());
+                break;
+            case R.id.atv_book_fab:
+                WebViewActivity WebViewActivity = new WebViewActivity();
+                WebViewActivity.toWebActivity(BookDetailsActivity.this, mBookBean.getAlt(), mBookBean.getTitle());
                 break;
         }
     }
@@ -446,6 +451,7 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
     protected void onPause() {
 
         if (mAsyncTask != null && mAsyncTask.getStatus() == android.os.AsyncTask.Status.RUNNING) {
+
             mAsyncTask.cancel(true);
         }
         super.onPause();

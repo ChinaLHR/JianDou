@@ -29,18 +29,23 @@
             android:theme="@style/TranslucentTheme"
             />
         <activity
-            android:theme="@style/TranslucentTheme"
             android:name=".activity.MovieDetailsActivity"
             android:screenOrientation="nosensor"
+            android:theme="@style/TranslucentTheme"
             />
         <activity
-            android:theme="@style/TranslucentTheme"
             android:name=".activity.ActorDetailsActivity"
             android:screenOrientation="nosensor"
+            android:theme="@style/TranslucentTheme"
             />
         <activity
-            android:theme="@style/TranslucentTheme"
             android:name=".activity.BookDetailsActivity"
+            android:screenOrientation="nosensor"
+            android:theme="@style/TranslucentTheme"
+            />
+
+        <activity
+            android:name=".activity.WebViewActivity"
             android:screenOrientation="nosensor"
             />
     </application>

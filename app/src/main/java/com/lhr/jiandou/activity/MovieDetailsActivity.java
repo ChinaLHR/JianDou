@@ -323,6 +323,15 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                 initData();
             }
         });
+
+        activitymdfab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WebViewActivity webactivity = new WebViewActivity();
+                webactivity.toWebActivity(MovieDetailsActivity.this,mSubject.getMobile_url(),mSubject.getTitle());
+            }
+        });
+
     }
 
 

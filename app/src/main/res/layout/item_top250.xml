@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical"
     >
     <Space
@@ -16,7 +16,7 @@
 
         <View
             android:layout_width="50dp"
-            android:layout_height="3dp"
+            android:layout_height="2dp"
             android:layout_gravity="center_vertical"
             android:background="@color/actorbg"
             />
@@ -26,7 +26,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="1"
             android:textColor="@color/red_500"
             android:textSize="20sp"
             android:textStyle="italic|bold"
@@ -34,7 +33,7 @@
 
         <View
             android:layout_width="50dp"
-            android:layout_height="3dp"
+            android:layout_height="2dp"
             android:layout_gravity="center_vertical"
             android:background="@color/actorbg"
             />
@@ -43,8 +42,8 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="2dp"
-        app:cardElevation="5dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="3dp"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -62,7 +61,6 @@
                 android:layout_height="145dp"
                 android:layout_marginRight="10dp"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/nav_bg"
                 />
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -72,8 +70,7 @@
                     android:id="@+id/top_movie_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:text="这个杀手不太冷"
+                    android:textSize="16sp"
                     android:textColor="@color/movieTitleColor"
                     android:textStyle="bold"
                     android:paddingBottom="10dp"
@@ -95,15 +92,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:textSize="12sp"
-                        android:text="9.0"/>
+                        android:textSize="12sp"/>
                 </LinearLayout>
                 <TextView
                     android:id="@+id/top_movie_brief"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
-                    android:text="导演....../演员......../剧情,传记,家庭/2006"
                     />
 
             </LinearLayout>

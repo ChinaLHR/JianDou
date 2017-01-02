@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:layout="@layout/preference_category_widget"
+        android:title="个性化"
+        >
+        <ListPreference
+            android:defaultValue="1"
+            android:entries="@array/setting_entries_theme"
+            android:entryValues="@array/setting_entry_value"
+            android:key="pref_key_theme"
+            android:layout="@layout/preference_item"
+            android:summary="白天"
+            android:title="更换主题模式"
+            />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="pref_key_auto_img"
+            android:layout="@layout/preference_item"
+            android:summaryOff="关闭"
+            android:summaryOn="打开"
+            android:title="自动更换主题图片"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout="@layout/preference_category_widget"
+        android:title="缓存管理"
+        >
+        <Preference
+            android:key="pref_key_cache"
+            android:layout="@layout/preference_item"
+            android:summary="缓存大小:0B"
+            android:title="清除缓存"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout="@layout/preference_category_widget"
+        android:title="关于"
+        >
+        <Preference
+            android:key="pref_key_code"
+            android:layout="@layout/preference_item"
+            android:summary="开源仓库地址"
+            android:title="源代码"
+            >
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/ChinaLHR/JianDou"/>
+        </Preference>
+        <Preference
+            android:key="pref_key_protocol"
+            android:layout="@layout/preference_item"
+            android:summary="请遵守开源协议"
+            android:title="开源许可"
+            />
+        <Preference
+            android:key="pref_key_feedback"
+            android:layout="@layout/preference_item"
+            android:summary="13435500980@163.com"
+            android:title="反馈与建议"
+            />
+
+
+    </PreferenceCategory>
+</PreferenceScreen>

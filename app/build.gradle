@@ -30,6 +30,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.0.0'
     compile 'com.android.support:design:24.0.0'
     compile 'com.android.support:palette-v7:24.0.0'
+    compile 'com.android.support:preference-v7:24.0.0'
     //RxJava
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
@@ -41,6 +42,7 @@ dependencies {
     //glide
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
+    compile('de.psdev.licensesdialog:licensesdialog:1.8.1')
     testCompile 'junit:junit:4.12'
 
 

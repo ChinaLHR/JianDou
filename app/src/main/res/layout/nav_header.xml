@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="220dp"
-              android:background="@mipmap/nav_bg"
-              android:gravity="bottom"
               android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:paddingLeft="8dp"
-        android:text="简豆，简而美的app"
-        android:textColor="#fff"
-        android:textSize="16sp"
-        android:textStyle="bold"/>
-</LinearLayout>
+        <ImageView
+            android:id="@+id/nav_header_img"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:scaleType="centerCrop"/>
+        <TextView
+            android:id="@+id/nav_header_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textColor="#fff"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:layout_gravity="bottom"/>
+
+</FrameLayout>

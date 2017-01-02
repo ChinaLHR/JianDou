@@ -5,7 +5,6 @@ import com.lhr.jiandou.fragment.ChangeLabelFragment;
 import com.lhr.jiandou.fragment.CollectionFragment;
 import com.lhr.jiandou.fragment.LeaderboardFragment;
 import com.lhr.jiandou.fragment.MovieFragment;
-import com.lhr.jiandou.fragment.SettingFragment;
 import com.lhr.jiandou.fragment.base.BaseFragment;
 import com.lhr.jiandou.utils.Constants;
 
@@ -32,9 +31,6 @@ public class FragmentFactory {
                 break;
             case Constants.CHANGESECTION:
                 fragment = new ChangeLabelFragment();
-                break;
-            case Constants.SETTING:
-                fragment = new SettingFragment();
                 break;
         }
         return fragment;

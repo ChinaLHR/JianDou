@@ -2,6 +2,7 @@ package com.lhr.jiandou.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -21,6 +22,7 @@ import com.lhr.jiandou.R;
 import com.lhr.jiandou.adapter.helper.OnDragVHListener;
 import com.lhr.jiandou.adapter.helper.OnItemMoveListener;
 import com.lhr.jiandou.utils.Constants;
+import com.lhr.jiandou.utils.PreferncesUtils;
 import com.lhr.jiandou.utils.SpUtils;
 import com.lhr.jiandou.utils.ToastUtils;
 
@@ -40,7 +42,7 @@ public class LabelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public static final int TYPE_OTHER_CHANNEL_HEADER = 2;
     // 其他标签
     public static final int TYPE_OTHER = 3;
-
+    private String nowtheme;
 
     // 我的标签之前的header数量  该demo中 即标题部分 为 1
     private static final int COUNT_PRE_MY_HEADER = 1;
@@ -81,6 +83,7 @@ public class LabelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         this.mMyLabel = mMyLabel;
         this.mOtherLabel = mOtherLabel;
         KEY = key;
+        nowtheme = PreferncesUtils.getString(mContext, Constants.PREF_KEY_THEME, "1");
     }
 
     @Override
@@ -502,6 +505,10 @@ public class LabelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.tv);
             imgEdit = (ImageView) itemView.findViewById(R.id.img_edit);
+
+            if (nowtheme.equals("2")){
+                textView.setTextColor(Color.BLACK);
+            }
         }
 
         /**
@@ -530,6 +537,9 @@ public class LabelAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         public OtherViewHolder(View itemView) {
             super(itemView);
             textView = (TextView) itemView.findViewById(R.id.tv);
+            if (nowtheme.equals("2")){
+                textView.setTextColor(Color.BLACK);
+            }
         }
     }
 

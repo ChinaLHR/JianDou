@@ -18,7 +18,7 @@ public class Constants {
 
     public static String[] BOOKTITLE = {"小说", "名著", "科幻", "历史", "爱情", "编程"};
 
-    public static String[] LEADERBOARD = {"正在热映","即将上映","Top250"};
+    public static String[] LEADERBOARD = {"正在热映", "即将上映", "Top250"};
     public static String[] ALLMOVIE = {
             "爱情", "喜剧", "动画", "剧情",
             "科幻", "动作", "经典", "悬疑",
@@ -31,7 +31,7 @@ public class Constants {
             "史诗", "童话", "烂片", "cult"
     };
 
-   public static String[] ALLBOOK = {
+    public static String[] ALLBOOK = {
             "小说", "日本", "历史", "外国文学",
             "漫画", "文学", "中国", "心理学",
             "随笔", "哲学", "绘本", "中国文学",
@@ -61,4 +61,15 @@ public class Constants {
      */
     public static String MOVIEKEY = "moviekey";
     public static String BOOKKEY = "bookkey";
+    public static String NAVKEY = "navkey";
+
+    /**
+     * SP key
+     */
+    public static String PREF_KEY_THEME = "pref_key_theme";
+    public static String PREF_KEY_AUTO_IMG = "pref_key_auto_img";
+    public static String PREF_KEY_CACHE = "pref_key_cache";
+    public static String PREF_KEY_CODE = "pref_key_code";
+    public static String PREF_KEY_PROTOCOL = "pref_key_protocol";
+    public static String PREF_KEY_FEEDBACK = "pref_key_feedback";
 }

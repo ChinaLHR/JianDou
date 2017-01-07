@@ -21,6 +21,7 @@
             android:summaryOn="打开"
             android:title="自动更换主题图片"
             />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -60,7 +61,5 @@
             android:summary="13435500980@163.com"
             android:title="反馈与建议"
             />
-
-
     </PreferenceCategory>
 </PreferenceScreen>

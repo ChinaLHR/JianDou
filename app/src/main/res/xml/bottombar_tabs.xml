@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_movie"
+        icon="@drawable/tab_movie_24dp"
+        barColorWhenSelected="@color/color_tab_movie"
+        title="电影"/>
+
+    <tab
+        id="@+id/tab_book"
+        title="图书"
+        icon="@drawable/tab_book_24dp"
+        barColorWhenSelected="@color/color_tab_movie"
+        />
+    <tab
+        id="@+id/tab_actor"
+        title="影人"
+        icon="@drawable/tab_actor_24dp"
+        barColorWhenSelected="@color/color_tab_movie"
+        />
+</tabs>

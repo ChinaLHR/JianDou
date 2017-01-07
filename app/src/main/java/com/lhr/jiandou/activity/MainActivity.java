@@ -324,32 +324,31 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         super.onPause();
     }
 
-    class mAsyncTask extends AsyncTask {
+    class mAsyncTask extends AsyncTask<Void,Void,List<String>> {
+        @Override
+        protected void onPostExecute(List<String> list) {
+
+            if (list.size() >= 2) {
+                if (PreferncesUtils.getBoolean(MainActivity.this, Constants.PREF_KEY_AUTO_IMG, false)) {
+                    Glide.with(MainActivity.this)
+                            .load(list.get(1))
+                            .placeholder(R.drawable.nav_bg)
+                            .into(nav_header_img);
+                    nav_header_title.setText("每日一图：" + list.get(0));
+                } else {
+                    setDefaultNav();
+                }
+            }
+        }
 
         @Override
-        protected Object doInBackground(Object[] objects) {
+        protected List<String> doInBackground(Void... voids) {
             if (isCancelled()) {
                 return null;
             } else {
                 GetNavImage getimage = new GetNavImage();
                 navList = getimage.getImage();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Object o) {
-
-            if (navList.size() >= 2) {
-                if (PreferncesUtils.getBoolean(MainActivity.this, Constants.PREF_KEY_AUTO_IMG, false)) {
-                    Glide.with(MainActivity.this)
-                            .load(navList.get(1))
-                            .placeholder(R.drawable.nav_bg)
-                            .into(nav_header_img);
-                    nav_header_title.setText("每日一图：" + navList.get(0));
-                } else {
-                    setDefaultNav();
-                }
+                return navList;
             }
         }
     }

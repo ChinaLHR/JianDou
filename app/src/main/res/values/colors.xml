@@ -20,4 +20,10 @@
     <color name="colorPrimary_Light">#212121</color>
     <color name="colorPrimaryDark_Light">#000000</color>
     <color name="colorAccent_Light">#e65600</color>
+
+    <color name="alpha_settingbg">#77eaeaea</color>
+    <!--select bottom color-->
+    <color name="color_tab_movie">#ffffff</color>
+    <color name="color_tab_book">#8bc64a</color>
+    <color name="color_tab_actor">#cddc39</color>
 </resources>

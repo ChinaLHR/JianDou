@@ -10,7 +10,7 @@
         android:id="@+id/activity_md_coorl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?android:colorBackground"
+        android:background="@color/gray_white_1000"
         >
 
         <android.support.design.widget.AppBarLayout
@@ -24,8 +24,9 @@
                 android:id="@+id/activity_md_colltl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/toolbarColor"
                 android:fitsSystemWindows="true"
-                app:contentScrim="?attr/colorPrimary"
+                app:contentScrim="@color/gray_white_1000"
                 app:layout_scrollFlags="scroll|snap"
                 >
 
@@ -69,10 +70,12 @@
                 android:orientation="vertical"
                 android:padding="5dp"
                 android:visibility="gone">
+
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="10dp"
                     />
+
                 <include
                     android:id="@+id/activity_md_include"
                     layout="@layout/include_movie_title"
@@ -172,8 +175,8 @@
             android:layout_height="48dp"
             android:layout_margin="16dp"
             android:src="@drawable/ic_movie_toweb_24dp"
-            app:layout_anchor="@id/activity_md_appbar"
             app:backgroundTint="@color/colorAccent"
+            app:layout_anchor="@id/activity_md_appbar"
             app:layout_anchorGravity="bottom|right|end"
             />
     </android.support.design.widget.CoordinatorLayout>

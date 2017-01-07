@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/myScrollingContent"
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <com.lhr.jiandou.view.NoScrollViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/collection_vp"
+            />
+
+    </android.support.v4.widget.NestedScrollView>
+    <com.roughike.bottombar.BottomBar
+        android:id="@+id/collection_tab"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        app:bb_behavior="shy"
+        app:bb_tabXmlResource="@xml/bottombar_tabs"
+        />
+
+
+</android.support.design.widget.CoordinatorLayout>

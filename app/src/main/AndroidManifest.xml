@@ -16,7 +16,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="nosensor">
+            android:screenOrientation="nosensor"
+           >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -26,25 +27,22 @@
         <activity
             android:name=".activity.SearchActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/TranslucentTheme"
             />
         <activity
             android:name=".activity.MovieDetailsActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/TranslucentTheme"
             />
         <activity
             android:name=".activity.ActorDetailsActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/TranslucentTheme"
             />
         <activity
             android:name=".activity.BookDetailsActivity"
             android:screenOrientation="nosensor"
-            android:theme="@style/TranslucentTheme"
             />
 
         <activity
+            android:theme="@style/AppTheme_NOTransluce"
             android:name=".activity.WebViewActivity"
             android:screenOrientation="nosensor"
             />

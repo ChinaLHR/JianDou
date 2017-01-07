@@ -73,7 +73,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
     private TextView activity_md_ratingnumber;
     private TextView activity_md_recommend_movie;
     private RecyclerView activity_md_rv_movie;
-
+    private View activity_md_include;
     private MovieDetailsBean mSubject;
     private Subscriber<MovieDetailsBean> mSubscriber;
     private static final String KEY_MOVIE_ID = "movie_id";
@@ -97,6 +97,19 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
         activity.startActivity(intent);
     }
 
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_moviedetails);
+        MovieId = getIntent().getStringExtra(KEY_MOVIE_ID);
+        imageUrl = getIntent().getStringExtra(KEY_IMAGE_URL);
+        init();
+        initView();
+        initData();
+        initListener();
+    }
+
     private void init() {
         this.activitymdrefresh = (SwipeRefreshLayout) findViewById(R.id.activity_md_refresh);
         this.activitymdcoorl = (CoordinatorLayout) findViewById(R.id.activity_md_coorl);
@@ -112,7 +125,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
         this.activitymdcolltl = (CollapsingToolbarLayout) findViewById(R.id.activity_md_colltl);
         this.activitymdtoolbar = (Toolbar) findViewById(R.id.activity_md_toolbar);
         this.activitymdiv = (ImageView) findViewById(R.id.activity_md_iv);
-        View activity_md_include = findViewById(R.id.activity_md_include);
+        activity_md_include = findViewById(R.id.activity_md_include);
         activity_md_subject_title = (TextView) activity_md_include.findViewById(R.id.activity_md_subject_title);
         activity_md_subject_aka = (TextView) activity_md_include.findViewById(R.id.activity_md_subject_aka);
         activity_md_subject_countries = (TextView) activity_md_include.findViewById(R.id.activity_md_subject_countries);
@@ -129,18 +142,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
         activitymdtoolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         activitymdtoolbar.inflateMenu(R.menu.menu_moviedetails_toolbar);
 
-    }
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_moviedetails);
-        MovieId = getIntent().getStringExtra(KEY_MOVIE_ID);
-        imageUrl = getIntent().getStringExtra(KEY_IMAGE_URL);
-        init();
-        initView();
-        initData();
-        initListener();
     }
 
     /**
@@ -182,7 +183,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
             @Override
             public void onError(Throwable e) {
                 activitymdrefresh.setRefreshing(false);
-                SnackBarUtils.showSnackBar(activitymdcoorl,UIUtils.getString(MovieDetailsActivity.this,R.string.error));
+                SnackBarUtils.showSnackBar(activitymdcoorl, UIUtils.getString(MovieDetailsActivity.this, R.string.error));
             }
 
             @Override
@@ -191,7 +192,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                     mSubject = movieDetailsBean;
                     updateView();
                 } else {
-                    SnackBarUtils.showSnackBar(activitymdcoorl,UIUtils.getString(MovieDetailsActivity.this,R.string.error));
+                    SnackBarUtils.showSnackBar(activitymdcoorl, UIUtils.getString(MovieDetailsActivity.this, R.string.error));
                 }
             }
         };
@@ -250,10 +251,10 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
         mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(String id, String url) {
-                ActorDetailsActivity.toActivity(MovieDetailsActivity.this,id,url);
+                ActorDetailsActivity.toActivity(MovieDetailsActivity.this, id, url);
             }
         });
-        activity_md_recommend_movie.setText(UIUtils.getString(MovieDetailsActivity.this,R.string.md_load_ing));
+        activity_md_recommend_movie.setText(UIUtils.getString(MovieDetailsActivity.this, R.string.md_load_ing));
         masyn = new MAsyncTask().execute();
     }
 
@@ -328,7 +329,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
             @Override
             public void onClick(View view) {
                 WebViewActivity webactivity = new WebViewActivity();
-                webactivity.toWebActivity(MovieDetailsActivity.this,mSubject.getMobile_url(),mSubject.getTitle());
+                webactivity.toWebActivity(MovieDetailsActivity.this, mSubject.getMobile_url(), mSubject.getTitle());
             }
         });
 
@@ -344,7 +345,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mSubscriber.unsubscribe();
+        if (mSubscriber != null) {
+            mSubscriber.unsubscribe();
+        }
     }
 
     @Override
@@ -375,7 +378,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
         @Override
         protected void onPostExecute(Object o) {
             if (movieId != null && movieTitle != null && movieimg != null) {
-                activity_md_recommend_movie.setText(UIUtils.getString(MovieDetailsActivity.this,R.string.md_load_likemovie));
+                activity_md_recommend_movie.setText(UIUtils.getString(MovieDetailsActivity.this, R.string.md_load_likemovie));
                 activity_md_rv_movie.setVisibility(View.VISIBLE);
                 activity_md_rv_movie.setLayoutManager(new LinearLayoutManager(MovieDetailsActivity.this,
                         LinearLayoutManager.HORIZONTAL, false));
@@ -388,13 +391,13 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                         if (id != null && url != null) {
                             MovieDetailsActivity.toActivity(MovieDetailsActivity.this, id, url);
                         } else {
-                            SnackBarUtils.showSnackBar(activitymdcoorl,UIUtils.getString(MovieDetailsActivity.this,R.string.error));
+                            SnackBarUtils.showSnackBar(activitymdcoorl, UIUtils.getString(MovieDetailsActivity.this, R.string.error));
                         }
                     }
                 });
 
             } else {
-                activity_md_recommend_movie.setText(UIUtils.getString(MovieDetailsActivity.this,R.string.md_load_error));
+                activity_md_recommend_movie.setText(UIUtils.getString(MovieDetailsActivity.this, R.string.md_load_error));
             }
         }
     }

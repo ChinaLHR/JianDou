@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
-
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -13,7 +12,6 @@
         android:padding="5dp"
         android:layout_weight="5"
         >
-
         <TextView
             android:id="@+id/activity_md_subject_title"
             android:layout_width="wrap_content"
@@ -27,7 +25,7 @@
             android:id="@+id/activity_md_subject_genres"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="5dp"
+            android:paddingTop="2dp"
             android:textSize="12sp"
             />
 
@@ -36,6 +34,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="2dp"
+            android:maxLines="2"
+            android:ellipsize="end"
             android:textSize="12sp"
             />
 
@@ -55,8 +55,6 @@
             android:textSize="12sp"
             />
     </LinearLayout>
-
-
     <android.support.v7.widget.CardView
         android:layout_width="0dp"
         android:layout_weight="2"

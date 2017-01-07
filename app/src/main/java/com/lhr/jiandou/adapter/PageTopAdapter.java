@@ -77,12 +77,13 @@ public class PageTopAdapter extends BasePagerAdapter<SubjectsBean> {
             if (mDate.get(position).getCasts() != null) {
                 ((TopHolder) holder).top_movie_brief.append("演员：");
                 for (int i = 0; i < mDate.get(position).getCasts().size(); i++) {
-                    if (i == mDate.get(position).getDirectors().size() - 1) {
+                    if (i == mDate.get(position).getCasts().size()-1) {
                         ((TopHolder) holder).top_movie_brief.append(mDate.get(position).getCasts().get(i).getName());
                     } else {
                         ((TopHolder) holder).top_movie_brief.append(mDate.get(position).getCasts().get(i).getName() + "/");
                     }
                 }
+
                 ((TopHolder) holder).top_movie_brief.append("\n");
             }
             /**

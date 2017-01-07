@@ -72,4 +72,9 @@ public class Constants {
     public static String PREF_KEY_CODE = "pref_key_code";
     public static String PREF_KEY_PROTOCOL = "pref_key_protocol";
     public static String PREF_KEY_FEEDBACK = "pref_key_feedback";
+
+    /**
+     * Collect
+     */
+    public static String[] COLLECTION_TYPE = {"电影","图书","影人"};
 }

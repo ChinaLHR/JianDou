@@ -9,7 +9,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/alpha_actorbg">
+        android:background="@color/alpha_settingbg">
 
         <TextView
             android:id="@android:id/title"

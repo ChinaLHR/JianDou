@@ -18,6 +18,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,6 +33,8 @@ import com.lhr.jiandou.R;
 import com.lhr.jiandou.adapter.LikeMovieAdapter;
 import com.lhr.jiandou.adapter.base.BaseRecyclerAdapter;
 import com.lhr.jiandou.model.bean.BookDetailsBean;
+import com.lhr.jiandou.model.db.Book_db;
+import com.lhr.jiandou.model.db.GreenDaoUtils;
 import com.lhr.jiandou.model.httputils.BookHttpMethods;
 import com.lhr.jiandou.utils.ImageUtils;
 import com.lhr.jiandou.utils.SnackBarUtils;
@@ -39,9 +42,13 @@ import com.lhr.jiandou.utils.StringUtils;
 import com.lhr.jiandou.utils.UIUtils;
 import com.lhr.jiandou.utils.jsoupUtils.GetBookInfo;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import rx.Subscriber;
+
+import static com.lhr.jiandou.R.drawable.collection_false;
 
 /**
  * Created by ChinaLHR on 2016/12/25.
@@ -90,6 +97,7 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
 
     private boolean isOpenSummary = false;
     private boolean isCollection = false;
+    boolean lockCollection = false;
     private String BookId;
     private String imageUrl;
     private BookDetailsBean mBookBean;
@@ -158,6 +166,15 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
 
         View bottomSheet = findViewById(R.id.btndialog_nes);
         behavior = BottomSheetBehavior.from(bottomSheet);
+        //初始化Menu
+        Menu menu = atvbooktoolbar.getMenu();
+        if (GreenDaoUtils.queryBook(Long.valueOf(BookId))) {
+            menu.getItem(0).setIcon(R.drawable.collection_true);
+            isCollection = true;
+        } else {
+            menu.getItem(0).setIcon(R.drawable.collection_false);
+            isCollection = false;
+        }
     }
 
     @Override
@@ -185,6 +202,7 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
             public void onError(Throwable e) {
                 atvbookrefresh.setRefreshing(false);
                 SnackBarUtils.showSnackBar(atvbookcoorl, UIUtils.getString(BookDetailsActivity.this, R.string.error));
+                lockCollection = false;
             }
 
             @Override
@@ -192,12 +210,14 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
                 if (bookDetailsBean != null) {
                     mBookBean = bookDetailsBean;
                     updateView();
+                    lockCollection = true;
                     mAsyncTask = new AsyncTask();
                     mAsyncTask.execute();
                     atvbookliketitle.setText("正在加载中...");
 
                 } else {
                     SnackBarUtils.showSnackBar(atvbookcoorl, UIUtils.getString(BookDetailsActivity.this, R.string.error));
+                    lockCollection = false;
                 }
 
             }
@@ -286,15 +306,35 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
         atvbooktoolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (isCollection) {
-                    item.setIcon(R.drawable.collection_false);
-                    isCollection = false;
 
+                if (lockCollection) {
+
+                    if (isCollection) {
+                        item.setIcon(collection_false);
+                        isCollection = false;
+                        boolean b = deleteCollection();
+                        if (b) {
+                            SnackBarUtils.showSnackBar(atvbookcoorl, "取消收藏成功!");
+                        } else {
+                            SnackBarUtils.showSnackBar(atvbookcoorl, "取消收藏失败!");
+                        }
+
+                    } else {
+                        item.setIcon(R.drawable.collection_true);
+                        isCollection = true;
+                        boolean b = collectionMovie();
+                        if (b) {
+                            SnackBarUtils.showSnackBar(atvbookcoorl, "收藏成功!");
+                        } else {
+                            SnackBarUtils.showSnackBar(atvbookcoorl, "收藏失败!");
+                        }
+
+                    }
+
+                    return true;
                 } else {
-                    item.setIcon(R.drawable.collection_true);
-                    isCollection = true;
+                    return false;
                 }
-                return true;
             }
         });
 
@@ -389,6 +429,35 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
 
     }
 
+    /**
+     * 删除收藏的图书
+     */
+    private boolean deleteCollection() {
+        boolean isdelete = GreenDaoUtils.deleteBook(Long.valueOf(BookId));
+        return isdelete;
+
+    }
+
+    /**
+     * 收藏图书
+     */
+    private boolean collectionMovie() {
+        Book_db book_db = new Book_db();
+        book_db.setId(Long.valueOf(BookId));
+        book_db.setImgurl(imageUrl);
+        book_db.setTitle(mBookBean.getTitle());
+        String s = StringUtils.SpliceString(mBookBean.getAuthor());
+        book_db.setAuthor(s);
+        book_db.setPublisher(mBookBean.getPublisher());
+        book_db.setRating(Float.valueOf(mBookBean.getRating().getAverage()));
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String time = dateFormat.format(now);
+        book_db.setTime(time);
+        boolean b = GreenDaoUtils.insertBook(book_db);
+        return b;
+
+    }
 
     class AsyncTask extends android.os.AsyncTask {
 

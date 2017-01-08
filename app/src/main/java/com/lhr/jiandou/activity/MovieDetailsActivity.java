@@ -17,6 +17,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -32,15 +33,22 @@ import com.lhr.jiandou.adapter.ActorAdapter;
 import com.lhr.jiandou.adapter.LikeMovieAdapter;
 import com.lhr.jiandou.adapter.base.BaseRecyclerAdapter;
 import com.lhr.jiandou.model.bean.MovieDetailsBean;
+import com.lhr.jiandou.model.db.GreenDaoUtils;
+import com.lhr.jiandou.model.db.Movie_db;
 import com.lhr.jiandou.model.httputils.MovieHttpMethods;
 import com.lhr.jiandou.utils.ImageUtils;
 import com.lhr.jiandou.utils.SnackBarUtils;
+import com.lhr.jiandou.utils.StringUtils;
 import com.lhr.jiandou.utils.UIUtils;
 import com.lhr.jiandou.utils.jsoupUtils.GetLikeMovie;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import rx.Subscriber;
+
+import static com.lhr.jiandou.R.drawable.collection_false;
 
 /**
  * Created by ChinaLHR on 2016/12/17.
@@ -88,7 +96,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
     private LikeMovieAdapter mLikeAdapter;
     private AsyncTask masyn;
     private boolean isCollection = false;
+    private boolean lockCollection = false;
     boolean isOpenSummary = false;
+
 
     public static void toActivity(Activity activity, String id, String imageUrl) {
         Intent intent = new Intent(activity, MovieDetailsActivity.class);
@@ -141,6 +151,15 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
         activitymdrefresh.setProgressViewOffset(false, 0, 48);
         activitymdtoolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         activitymdtoolbar.inflateMenu(R.menu.menu_moviedetails_toolbar);
+        //初始化Menu
+        Menu menu = activitymdtoolbar.getMenu();
+        if (GreenDaoUtils.queryMovie(Long.valueOf(MovieId))) {
+            menu.getItem(0).setIcon(R.drawable.collection_true);
+            isCollection = true;
+        } else {
+            menu.getItem(0).setIcon(R.drawable.collection_false);
+            isCollection = false;
+        }
 
     }
 
@@ -167,8 +186,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                     }
                 })
                 .into(activitymdiv);
-
-
     }
 
     private void initData() {
@@ -184,6 +201,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
             public void onError(Throwable e) {
                 activitymdrefresh.setRefreshing(false);
                 SnackBarUtils.showSnackBar(activitymdcoorl, UIUtils.getString(MovieDetailsActivity.this, R.string.error));
+                lockCollection = false;
             }
 
             @Override
@@ -191,8 +209,10 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                 if (movieDetailsBean != null) {
                     mSubject = movieDetailsBean;
                     updateView();
+                    lockCollection = true;
                 } else {
                     SnackBarUtils.showSnackBar(activitymdcoorl, UIUtils.getString(MovieDetailsActivity.this, R.string.error));
+                    lockCollection = false;
                 }
             }
         };
@@ -218,13 +238,13 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
             activity_md_subject_genres.setText("");
             List<String> genres = mSubject.getGenres();
             activity_md_subject_genres.append(UIUtils.getString(this, R.string.md_movie_type));
-            addViewString(genres, activity_md_subject_genres);
+            StringUtils.addViewString(genres, activity_md_subject_genres);
         }
         if (mSubject.getCountries() != null) {
             activity_md_subject_countries.setText("");
             List<String> countries = mSubject.getCountries();
             activity_md_subject_countries.append(UIUtils.getString(this, R.string.md_movie_country));
-            addViewString(countries, activity_md_subject_countries);
+            StringUtils.addViewString(countries, activity_md_subject_countries);
 
         }
         activity_md_subject_year.setText(UIUtils.getString(this, R.string.md_movie_year) + mSubject.getYear());
@@ -232,7 +252,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
             activity_md_subject_aka.setText("");
             List<String> aka = mSubject.getAka();
             activity_md_subject_aka.append(UIUtils.getString(this, R.string.md_movie_original));
-            addViewString(aka, activity_md_subject_aka);
+            StringUtils.addViewString(aka, activity_md_subject_aka);
         }
         if (mSubject.getSummary() != null) {
             activitymdsummarytitle.setText(UIUtils.getString(this, R.string.md_movie_brief));
@@ -255,18 +275,10 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
             }
         });
         activity_md_recommend_movie.setText(UIUtils.getString(MovieDetailsActivity.this, R.string.md_load_ing));
+
         masyn = new MAsyncTask().execute();
     }
 
-    private void addViewString(List<String> list, TextView view) {
-        for (int i = 0; i < list.size(); i++) {
-            if (i == list.size() - 1) {
-                view.append(list.get(i));
-            } else {
-                view.append(list.get(i) + "/");
-            }
-        }
-    }
 
     private void initListener() {
 
@@ -282,18 +294,34 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
         activitymdtoolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                if (lockCollection) {
 
+                    if (isCollection) {
+                        item.setIcon(collection_false);
+                        isCollection = false;
+                        boolean b = deleteCollection();
+                        if (b) {
+                            SnackBarUtils.showSnackBar(activitymdcoorl, "取消收藏成功!");
+                        } else {
+                            SnackBarUtils.showSnackBar(activitymdcoorl, "取消收藏失败!");
+                        }
 
-                if (isCollection) {
-                    item.setIcon(R.drawable.collection_false);
-                    isCollection = false;
+                    } else {
+                        item.setIcon(R.drawable.collection_true);
+                        isCollection = true;
+                        boolean b = collectionMovie();
+                        if (b) {
+                            SnackBarUtils.showSnackBar(activitymdcoorl, "收藏成功!");
+                        } else {
+                            SnackBarUtils.showSnackBar(activitymdcoorl, "收藏失败!");
+                        }
 
+                    }
+
+                    return true;
                 } else {
-                    item.setIcon(R.drawable.collection_true);
-                    isCollection = true;
+                    return false;
                 }
-
-                return true;
             }
         });
 
@@ -335,6 +363,38 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
 
     }
 
+    /**
+     * 删除收藏的电影
+     */
+    private boolean deleteCollection() {
+        boolean isdelete = GreenDaoUtils.deleteMovie(Long.valueOf(MovieId));
+        return isdelete;
+
+    }
+
+    /**
+     * 收藏电影
+     */
+    private boolean collectionMovie() {
+
+        Movie_db movie = new Movie_db();
+        movie.setId(Long.valueOf(MovieId));
+        movie.setTitle(mSubject.getTitle());
+        movie.setImgurl(imageUrl);
+        List<String> genres = mSubject.getGenres();
+        movie.setGenres(StringUtils.SpliceString(genres));
+        movie.setRating((float) (mSubject.getRating().getAverage()));
+        movie.setYear(mSubject.getYear());
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String time = dateFormat.format(now);
+        movie.setTime(time);
+        boolean b = GreenDaoUtils.insertMovie(movie);
+        return b;
+
+
+    }
+
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -359,6 +419,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
         }
         super.onPause();
     }
+
 
     class MAsyncTask extends AsyncTask {
 
@@ -401,4 +462,6 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
             }
         }
     }
+
+
 }

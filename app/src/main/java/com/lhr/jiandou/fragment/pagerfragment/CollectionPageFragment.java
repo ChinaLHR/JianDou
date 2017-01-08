@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.lhr.jiandou.R;
 import com.lhr.jiandou.utils.LogUtils;
 
+import java.util.Observer;
+
 import rx.Observable;
 import rx.Subscriber;
 
@@ -63,6 +65,15 @@ public class CollectionPageFragment extends Fragment {
         super.onDestroy();
         if (mSubscriber != null) {
             mSubscriber.unsubscribe();
+        }
+    }
+
+    class Demo implements Observer{
+
+
+        @Override
+        public void update(java.util.Observable observable, Object o) {
+
         }
     }
 }

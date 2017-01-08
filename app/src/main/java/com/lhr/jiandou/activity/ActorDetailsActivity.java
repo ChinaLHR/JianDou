@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -26,11 +27,15 @@ import com.lhr.jiandou.R;
 import com.lhr.jiandou.adapter.ActorMovieAdapter;
 import com.lhr.jiandou.adapter.base.BaseRecyclerAdapter;
 import com.lhr.jiandou.model.bean.ActorDetailsBean;
+import com.lhr.jiandou.model.db.Actor_db;
+import com.lhr.jiandou.model.db.GreenDaoUtils;
 import com.lhr.jiandou.model.httputils.MovieHttpMethods;
 import com.lhr.jiandou.utils.SnackBarUtils;
 import com.lhr.jiandou.utils.UIUtils;
 import com.lhr.jiandou.utils.jsoupUtils.GetActor;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import rx.Subscriber;
@@ -47,6 +52,7 @@ public class ActorDetailsActivity extends AppCompatActivity {
     private String imageUrl;
     private boolean isCollection = false;
     private boolean isOpenSummary = false;
+    private boolean lockCollection = false;
     private List<String> actorImage;
     private String actorSummary;
     private ImageView[] ivarray;
@@ -54,7 +60,6 @@ public class ActorDetailsActivity extends AppCompatActivity {
     private Subscriber mSubscriber;
     private ActorDetailsBean mActorBean;
     private ActorMovieAdapter mAdapter;
-
     private android.widget.ImageView atvactoriv1;
     private android.widget.ImageView atvactoriv2;
     private android.widget.ImageView atvactoriv3;
@@ -111,15 +116,32 @@ public class ActorDetailsActivity extends AppCompatActivity {
         atvactortoolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (isCollection) {
-                    item.setIcon(R.drawable.collection_false);
-                    isCollection = false;
+                if (lockCollection) {
+                    if (isCollection) {
+                        item.setIcon(R.drawable.collection_false);
+                        isCollection = false;
+                        boolean b = deleteCollection();
+                        if (b) {
+                            SnackBarUtils.showSnackBar(atvactorcoor, "取消收藏成功!");
+                        } else {
+                            SnackBarUtils.showSnackBar(atvactorcoor, "取消收藏失败!");
+                        }
 
+
+                    } else {
+                        item.setIcon(R.drawable.collection_true);
+                        isCollection = true;
+                        boolean b = collectionMovie();
+                        if (b) {
+                            SnackBarUtils.showSnackBar(atvactorcoor, "收藏成功!");
+                        } else {
+                            SnackBarUtils.showSnackBar(atvactorcoor, "收藏失败!");
+                        }
+                    }
+                    return true;
                 } else {
-                    item.setIcon(R.drawable.collection_true);
-                    isCollection = true;
+                    return false;
                 }
-                return true;
             }
         });
 
@@ -145,10 +167,41 @@ public class ActorDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 WebViewActivity webViewActivity = new WebViewActivity();
-                webViewActivity.toWebActivity(ActorDetailsActivity.this,mActorBean.getMobile_url(),mActorBean.getName());
+                webViewActivity.toWebActivity(ActorDetailsActivity.this, mActorBean.getMobile_url(), mActorBean.getName());
             }
         });
 
+    }
+
+    /**
+     * 取消收藏
+     *
+     * @return
+     */
+    private boolean deleteCollection() {
+        boolean isdelete = GreenDaoUtils.deletaActor(Long.valueOf(actorId));
+        return isdelete;
+    }
+
+    /**
+     * 收藏
+     *
+     * @return
+     */
+    private boolean collectionMovie() {
+        Actor_db actor = new Actor_db();
+        actor.setImgurl(imageUrl);
+        actor.setId(Long.valueOf(actorId));
+        actor.setTitle(mActorBean.getName());
+        actor.setBorn_place(mActorBean.getBorn_place());
+        actor.setGender(mActorBean.getGender());
+        Date now = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String time = dateFormat.format(now);
+        actor.setTime(time);
+
+        boolean isinsert = GreenDaoUtils.insertActor(actor);
+        return isinsert;
     }
 
     /**
@@ -164,16 +217,19 @@ public class ActorDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable e) {
-                SnackBarUtils.showSnackBar(atvactorcoor, UIUtils.getString(ActorDetailsActivity.this,R.string.error));
+                SnackBarUtils.showSnackBar(atvactorcoor, UIUtils.getString(ActorDetailsActivity.this, R.string.error));
+                lockCollection = false;
             }
 
             @Override
             public void onNext(ActorDetailsBean actorDetailsBean) {
                 if (actorDetailsBean != null) {
                     mActorBean = actorDetailsBean;
+                    lockCollection = true;
                     updateView();
                 } else {
-                    SnackBarUtils.showSnackBar(atvactorcoor, UIUtils.getString(ActorDetailsActivity.this,R.string.error));
+                    SnackBarUtils.showSnackBar(atvactorcoor, UIUtils.getString(ActorDetailsActivity.this, R.string.error));
+                    lockCollection = false;
                 }
             }
         };
@@ -189,12 +245,12 @@ public class ActorDetailsActivity extends AppCompatActivity {
         if (mActorBean.getName_en() != null) {
             atvactornameen.setText(mActorBean.getName_en());
         }
-        atvactorsex.setText(UIUtils.getString(this,R.string.ad_sex)+ mActorBean.getGender());
+        atvactorsex.setText(UIUtils.getString(this, R.string.ad_sex) + mActorBean.getGender());
         if (mActorBean.getBorn_place() != null) {
-            atvactorcounty.setText(UIUtils.getString(this,R.string.ad_country)+ mActorBean.getBorn_place());
+            atvactorcounty.setText(UIUtils.getString(this, R.string.ad_country) + mActorBean.getBorn_place());
         }
-        atvactorbrief.setText(UIUtils.getString(this,R.string.ad_brief));
-        atvactormovie.setText(UIUtils.getString(this,R.string.ad_works));
+        atvactorbrief.setText(UIUtils.getString(this, R.string.ad_brief));
+        atvactormovie.setText(UIUtils.getString(this, R.string.ad_works));
 
         atvactorrv.setVisibility(View.VISIBLE);
         atvactorrv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -203,7 +259,7 @@ public class ActorDetailsActivity extends AppCompatActivity {
         mAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(String id, String url) {
-                MovieDetailsActivity.toActivity(ActorDetailsActivity.this,id,url);
+                MovieDetailsActivity.toActivity(ActorDetailsActivity.this, id, url);
             }
         });
     }
@@ -250,6 +306,15 @@ public class ActorDetailsActivity extends AppCompatActivity {
         ivarray = new ImageView[]{atvactoriv2, atvactoriv3, atvactoriv4, atvactoriv5, atvactoriv6};
         atvactortoolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         atvactortoolbar.inflateMenu(R.menu.menu_moviedetails_toolbar);
+        //初始化Menu
+        Menu menu = atvactortoolbar.getMenu();
+        if (GreenDaoUtils.queryActor(Long.valueOf(actorId))) {
+            menu.getItem(0).setIcon(R.drawable.collection_true);
+            isCollection = true;
+        } else {
+            menu.getItem(0).setIcon(R.drawable.collection_false);
+            isCollection = false;
+        }
     }
 
 
@@ -277,13 +342,13 @@ public class ActorDetailsActivity extends AppCompatActivity {
                 }
             }
             if (actorSummary.trim() == null || actorSummary.length() < 10) {
-                atvactorsummary.setText(UIUtils.getString(ActorDetailsActivity.this,R.string.ad_nomore));
+                atvactorsummary.setText(UIUtils.getString(ActorDetailsActivity.this, R.string.ad_nomore));
                 atvactorsummary.setLines(1);
                 atvactorsummarymore.setVisibility(View.GONE);
             } else {
                 atvactorsummary.setText(actorSummary);
                 atvactorsummary.setLines(5);
-                atvactorsummarymore.setText(UIUtils.getString(ActorDetailsActivity.this,R.string.md_more));
+                atvactorsummarymore.setText(UIUtils.getString(ActorDetailsActivity.this, R.string.md_more));
             }
         }
     }

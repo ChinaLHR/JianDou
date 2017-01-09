@@ -28,6 +28,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.lhr.jiandou.MyApplication;
 import com.lhr.jiandou.R;
 import com.lhr.jiandou.adapter.ActorAdapter;
 import com.lhr.jiandou.adapter.LikeMovieAdapter;
@@ -98,7 +99,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
     private boolean isCollection = false;
     private boolean lockCollection = false;
     boolean isOpenSummary = false;
-
+    private GreenDaoUtils mDaoUtils;
 
     public static void toActivity(Activity activity, String id, String imageUrl) {
         Intent intent = new Intent(activity, MovieDetailsActivity.class);
@@ -114,6 +115,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
         setContentView(R.layout.activity_moviedetails);
         MovieId = getIntent().getStringExtra(KEY_MOVIE_ID);
         imageUrl = getIntent().getStringExtra(KEY_IMAGE_URL);
+        mDaoUtils = MyApplication.getDbUtils();
         init();
         initView();
         initData();
@@ -153,7 +155,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
         activitymdtoolbar.inflateMenu(R.menu.menu_moviedetails_toolbar);
         //初始化Menu
         Menu menu = activitymdtoolbar.getMenu();
-        if (GreenDaoUtils.queryMovie(Long.valueOf(MovieId))) {
+        if (mDaoUtils.queryMovie(MovieId)) {
             menu.getItem(0).setIcon(R.drawable.collection_true);
             isCollection = true;
         } else {
@@ -301,9 +303,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                         isCollection = false;
                         boolean b = deleteCollection();
                         if (b) {
-                            SnackBarUtils.showSnackBar(activitymdcoorl, "取消收藏成功!");
+                            SnackBarUtils.showSnackBar(activitymdcoorl,  UIUtils.getString(MovieDetailsActivity.this,R.string.collection_cancel));
                         } else {
-                            SnackBarUtils.showSnackBar(activitymdcoorl, "取消收藏失败!");
+                            SnackBarUtils.showSnackBar(activitymdcoorl, UIUtils.getString(MovieDetailsActivity.this,R.string.collection_cancel_fail));
                         }
 
                     } else {
@@ -311,9 +313,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                         isCollection = true;
                         boolean b = collectionMovie();
                         if (b) {
-                            SnackBarUtils.showSnackBar(activitymdcoorl, "收藏成功!");
+                            SnackBarUtils.showSnackBar(activitymdcoorl, UIUtils.getString(MovieDetailsActivity.this,R.string.collection_success));
                         } else {
-                            SnackBarUtils.showSnackBar(activitymdcoorl, "收藏失败!");
+                            SnackBarUtils.showSnackBar(activitymdcoorl,  UIUtils.getString(MovieDetailsActivity.this,R.string.collection_fail));
                         }
 
                     }
@@ -367,7 +369,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
      * 删除收藏的电影
      */
     private boolean deleteCollection() {
-        boolean isdelete = GreenDaoUtils.deleteMovie(Long.valueOf(MovieId));
+        boolean isdelete = mDaoUtils.deleteMovie(MovieId);
         return isdelete;
 
     }
@@ -378,7 +380,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
     private boolean collectionMovie() {
 
         Movie_db movie = new Movie_db();
-        movie.setId(Long.valueOf(MovieId));
+        movie.setMovieId(MovieId);
         movie.setTitle(mSubject.getTitle());
         movie.setImgurl(imageUrl);
         List<String> genres = mSubject.getGenres();
@@ -389,7 +391,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String time = dateFormat.format(now);
         movie.setTime(time);
-        boolean b = GreenDaoUtils.insertMovie(movie);
+        boolean b = mDaoUtils.insertMovie(movie);
         return b;
 
 

@@ -23,11 +23,6 @@ public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter<Recycl
     }
 
 
-    @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-    }
-
     public class Holder extends RecyclerView.ViewHolder {
         public Holder(View itemView) {
             super(itemView);

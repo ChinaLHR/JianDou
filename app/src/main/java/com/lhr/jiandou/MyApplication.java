@@ -5,6 +5,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.lhr.jiandou.model.db.GreenDaoUtils;
+
 /**
  * Created by ChinaLHR on 2016/12/13.
  * Email:13435500980@163.com
@@ -12,12 +14,13 @@ import android.net.NetworkInfo;
 
 public class MyApplication extends Application {
     private static Context context;
+    private static GreenDaoUtils mDaoUtils;
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-
+        mDaoUtils = new GreenDaoUtils(context);
     }
 
     public static Context getContext() {
@@ -41,5 +44,9 @@ public class MyApplication extends Application {
             }
         }
         return false;
+    }
+
+    public static GreenDaoUtils getDbUtils() {
+        return mDaoUtils;
     }
 }

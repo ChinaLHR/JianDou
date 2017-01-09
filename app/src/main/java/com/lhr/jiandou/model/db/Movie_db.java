@@ -1,9 +1,9 @@
 package com.lhr.jiandou.model.db;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.NotNull;
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by ChinaLHR on 2017/1/8.
@@ -11,8 +11,10 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 @Entity
 public class Movie_db {
-    @Id
+    @Id(autoincrement = true)
     private Long id;
+    @NotNull
+    private String movieId;
     @NotNull
     private String title;
     @NotNull
@@ -26,10 +28,12 @@ public class Movie_db {
 
     private String time;
 
-    @Generated(hash = 1898076406)
-    public Movie_db(Long id, @NotNull String title, @NotNull String imgurl,
-            float rating, String genres, String year, String time) {
+    @Generated(hash = 525101028)
+    public Movie_db(Long id, @NotNull String movieId, @NotNull String title,
+            @NotNull String imgurl, float rating, String genres, String year,
+            String time) {
         this.id = id;
+        this.movieId = movieId;
         this.title = title;
         this.imgurl = imgurl;
         this.rating = rating;
@@ -96,5 +100,13 @@ public class Movie_db {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(String movieId) {
+        this.movieId = movieId;
     }
 }

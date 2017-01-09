@@ -11,8 +11,20 @@ import org.greenrobot.greendao.annotation.Generated;
  */
 @Entity
 public class Actor_db {
-    @Id
+    @Id(autoincrement = true)
     private Long id;
+
+    @NotNull
+    private String actor_id;
+
+    public String getActor_id() {
+        return actor_id;
+    }
+
+    public void setActor_id(String actor_id) {
+        this.actor_id = actor_id;
+    }
+
     @NotNull
     private String title;
     @NotNull
@@ -24,10 +36,11 @@ public class Actor_db {
 
     private String time;
 
-    @Generated(hash = 138666452)
-    public Actor_db(Long id, @NotNull String title, @NotNull String imgurl,
-            String gender, String born_place, String time) {
+    @Generated(hash = 1006026375)
+    public Actor_db(Long id, @NotNull String actor_id, @NotNull String title,
+            @NotNull String imgurl, String gender, String born_place, String time) {
         this.id = id;
+        this.actor_id = actor_id;
         this.title = title;
         this.imgurl = imgurl;
         this.gender = gender;

@@ -25,7 +25,7 @@ android {
 
 }
 greendao {
-    schemaVersion 1
+    schemaVersion 2
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')

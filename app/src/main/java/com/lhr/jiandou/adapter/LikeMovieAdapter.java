@@ -33,7 +33,7 @@ public class LikeMovieAdapter extends BaseRecyclerAdapter<LikeMovieAdapter.MyHol
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position, List<Object> payloads) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         ((MyHolder)holder).item_like_title.setText(mTitle.get(position));
         Glide.with(mContext)
                 .load(mImg.get(position))

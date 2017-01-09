@@ -28,10 +28,9 @@ import static com.lhr.jiandou.utils.Constants.COLLECTION_TYPE;
  * Email:13435500980@163.com
  */
 
-public class CollectionFragment extends BaseFragment {
+public class CollectionFragment extends BaseFragment{
     private BottomBar collection_tab;
     private ViewPager collection_vp;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,5 +90,10 @@ public class CollectionFragment extends BaseFragment {
         public int getCount() {
             return Constants.COLLECTION_TYPE.length;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

@@ -162,7 +162,6 @@ public class LeaderboardTopFragment extends Fragment {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         pagertop250rv.setLayoutManager(mLayoutManager);
         mAdapter = new PageTopAdapter(getActivity(), mList);
-//        footer = LayoutInflater.from(this.getActivity()).inflate(R.layout.item_footer, pagertop250rv, false);
 
         Observable.just(mdate = CacheUtils.readbean(getActivity(), CacheUtils.DataCache_movie, Constants.LEADERBOARD[2]))
                 .subscribeOn(Schedulers.io())

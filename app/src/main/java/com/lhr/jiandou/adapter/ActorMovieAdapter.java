@@ -33,7 +33,6 @@ public class ActorMovieAdapter extends BaseRecyclerAdapter<ActorMovieAdapter.MyH
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        super.onBindViewHolder(holder, position);
         Glide.with(mContext)
                 .load(mdate.get(position).getSubject().getImages().getLarge())
                 .into(((MyHolder) holder).item_actor_movie_iv);

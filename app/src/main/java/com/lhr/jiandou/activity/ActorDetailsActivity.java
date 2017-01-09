@@ -82,6 +82,7 @@ public class ActorDetailsActivity extends AppCompatActivity {
     private android.support.v4.widget.NestedScrollView atvactornest;
     private android.support.design.widget.FloatingActionButton atvactorfab;
     private android.support.design.widget.CoordinatorLayout atvactorcoor;
+    private GreenDaoUtils mDaoUtils;
 
     public static void toActivity(Context context, String id, String img) {
         Intent intent = new Intent(context, ActorDetailsActivity.class);
@@ -96,6 +97,7 @@ public class ActorDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_actordetials);
         actorId = getIntent().getStringExtra(KEY_ACTOR_ID);
         imageUrl = getIntent().getStringExtra(KEY_ACTOR_IMG);
+        mDaoUtils = MyApplication.getDbUtils();
         init();
         initView();
         initData();
@@ -122,9 +124,9 @@ public class ActorDetailsActivity extends AppCompatActivity {
                         isCollection = false;
                         boolean b = deleteCollection();
                         if (b) {
-                            SnackBarUtils.showSnackBar(atvactorcoor, "取消收藏成功!");
+                            SnackBarUtils.showSnackBar(atvactorcoor, UIUtils.getString(ActorDetailsActivity.this,R.string.collection_cancel));
                         } else {
-                            SnackBarUtils.showSnackBar(atvactorcoor, "取消收藏失败!");
+                            SnackBarUtils.showSnackBar(atvactorcoor,UIUtils.getString(ActorDetailsActivity.this,R.string.collection_cancel_fail));
                         }
 
 
@@ -133,9 +135,9 @@ public class ActorDetailsActivity extends AppCompatActivity {
                         isCollection = true;
                         boolean b = collectionMovie();
                         if (b) {
-                            SnackBarUtils.showSnackBar(atvactorcoor, "收藏成功!");
+                            SnackBarUtils.showSnackBar(atvactorcoor, UIUtils.getString(ActorDetailsActivity.this,R.string.collection_success));
                         } else {
-                            SnackBarUtils.showSnackBar(atvactorcoor, "收藏失败!");
+                            SnackBarUtils.showSnackBar(atvactorcoor, UIUtils.getString(ActorDetailsActivity.this,R.string.collection_fail));
                         }
                     }
                     return true;
@@ -179,7 +181,7 @@ public class ActorDetailsActivity extends AppCompatActivity {
      * @return
      */
     private boolean deleteCollection() {
-        boolean isdelete = GreenDaoUtils.deletaActor(Long.valueOf(actorId));
+        boolean isdelete = mDaoUtils.deletaActor(actorId);
         return isdelete;
     }
 
@@ -191,7 +193,7 @@ public class ActorDetailsActivity extends AppCompatActivity {
     private boolean collectionMovie() {
         Actor_db actor = new Actor_db();
         actor.setImgurl(imageUrl);
-        actor.setId(Long.valueOf(actorId));
+        actor.setActor_id(actorId);
         actor.setTitle(mActorBean.getName());
         actor.setBorn_place(mActorBean.getBorn_place());
         actor.setGender(mActorBean.getGender());
@@ -200,7 +202,7 @@ public class ActorDetailsActivity extends AppCompatActivity {
         String time = dateFormat.format(now);
         actor.setTime(time);
 
-        boolean isinsert = GreenDaoUtils.insertActor(actor);
+        boolean isinsert = mDaoUtils.insertActor(actor);
         return isinsert;
     }
 
@@ -308,7 +310,7 @@ public class ActorDetailsActivity extends AppCompatActivity {
         atvactortoolbar.inflateMenu(R.menu.menu_moviedetails_toolbar);
         //初始化Menu
         Menu menu = atvactortoolbar.getMenu();
-        if (GreenDaoUtils.queryActor(Long.valueOf(actorId))) {
+        if (mDaoUtils.queryActor(actorId)) {
             menu.getItem(0).setIcon(R.drawable.collection_true);
             isCollection = true;
         } else {

@@ -29,6 +29,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.lhr.jiandou.MyApplication;
 import com.lhr.jiandou.R;
 import com.lhr.jiandou.adapter.LikeMovieAdapter;
 import com.lhr.jiandou.adapter.base.BaseRecyclerAdapter;
@@ -114,6 +115,7 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
     private ImageView btndialog_close;
     private TextView btdialog_tv;
     private BottomSheetBehavior behavior;
+    private GreenDaoUtils mDaoUtils;
 
     public static void toActivity(Activity activity, String id, String img) {
         Intent intent = new Intent(activity, BookDetailsActivity.class);
@@ -168,7 +170,7 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
         behavior = BottomSheetBehavior.from(bottomSheet);
         //初始化Menu
         Menu menu = atvbooktoolbar.getMenu();
-        if (GreenDaoUtils.queryBook(Long.valueOf(BookId))) {
+        if (mDaoUtils.queryBook(BookId)) {
             menu.getItem(0).setIcon(R.drawable.collection_true);
             isCollection = true;
         } else {
@@ -183,6 +185,7 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
         setContentView(R.layout.activity_bookdetails);
         BookId = getIntent().getStringExtra(KEY_BOOK_ID);
         imageUrl = getIntent().getStringExtra(KEY_IMAGE_URL);
+        mDaoUtils = MyApplication.getDbUtils();
         init();
         initView();
         initData();
@@ -314,9 +317,9 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
                         isCollection = false;
                         boolean b = deleteCollection();
                         if (b) {
-                            SnackBarUtils.showSnackBar(atvbookcoorl, "取消收藏成功!");
+                            SnackBarUtils.showSnackBar(atvbookcoorl, UIUtils.getString(BookDetailsActivity.this,R.string.collection_cancel));
                         } else {
-                            SnackBarUtils.showSnackBar(atvbookcoorl, "取消收藏失败!");
+                            SnackBarUtils.showSnackBar(atvbookcoorl,  UIUtils.getString(BookDetailsActivity.this,R.string.collection_cancel_fail));
                         }
 
                     } else {
@@ -324,9 +327,9 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
                         isCollection = true;
                         boolean b = collectionMovie();
                         if (b) {
-                            SnackBarUtils.showSnackBar(atvbookcoorl, "收藏成功!");
+                            SnackBarUtils.showSnackBar(atvbookcoorl,  UIUtils.getString(BookDetailsActivity.this,R.string.collection_success));
                         } else {
-                            SnackBarUtils.showSnackBar(atvbookcoorl, "收藏失败!");
+                            SnackBarUtils.showSnackBar(atvbookcoorl,  UIUtils.getString(BookDetailsActivity.this,R.string.collection_fail));
                         }
 
                     }
@@ -433,7 +436,7 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
      * 删除收藏的图书
      */
     private boolean deleteCollection() {
-        boolean isdelete = GreenDaoUtils.deleteBook(Long.valueOf(BookId));
+        boolean isdelete = mDaoUtils.deleteBook(BookId);
         return isdelete;
 
     }
@@ -443,7 +446,7 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
      */
     private boolean collectionMovie() {
         Book_db book_db = new Book_db();
-        book_db.setId(Long.valueOf(BookId));
+        book_db.setBook_id(BookId);
         book_db.setImgurl(imageUrl);
         book_db.setTitle(mBookBean.getTitle());
         String s = StringUtils.SpliceString(mBookBean.getAuthor());
@@ -454,7 +457,7 @@ public class BookDetailsActivity extends AppCompatActivity implements AppBarLayo
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         String time = dateFormat.format(now);
         book_db.setTime(time);
-        boolean b = GreenDaoUtils.insertBook(book_db);
+        boolean b = mDaoUtils.insertBook(book_db);
         return b;
 
     }

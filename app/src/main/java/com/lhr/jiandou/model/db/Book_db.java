@@ -11,8 +11,12 @@ import org.greenrobot.greendao.annotation.NotNull;
  */
 @Entity
 public class Book_db {
-    @Id
+    @Id(autoincrement = true)
     private Long id;
+    @NotNull
+    private String book_id;
+
+
     @NotNull
     private String title;
     @NotNull
@@ -26,10 +30,12 @@ public class Book_db {
 
     private String time;
 
-    @Generated(hash = 1914151776)
-    public Book_db(Long id, @NotNull String title, @NotNull String imgurl,
-            float rating, String author, String publisher, String time) {
+    @Generated(hash = 1026737697)
+    public Book_db(Long id, @NotNull String book_id, @NotNull String title,
+            @NotNull String imgurl, float rating, String author, String publisher,
+            String time) {
         this.id = id;
+        this.book_id = book_id;
         this.title = title;
         this.imgurl = imgurl;
         this.rating = rating;
@@ -97,4 +103,13 @@ public class Book_db {
     public void setRating(float rating) {
         this.rating = rating;
     }
+
+    public String getBook_id() {
+        return book_id;
+    }
+
+    public void setBook_id(String book_id) {
+        this.book_id = book_id;
+    }
+
 }

@@ -51,5 +51,8 @@
     <string name="finish">完成</string>
 
     <!--Collection-->
-
+    <string name="collection_success">收藏成功!</string>
+    <string name="collection_fail">收藏失败!</string>
+    <string name="collection_cancel">取消收藏成功!</string>
+    <string name="collection_cancel_fail">取消收藏失败!</string>
 </resources>

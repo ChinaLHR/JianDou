@@ -26,4 +26,8 @@
     <color name="color_tab_movie">#ffffff</color>
     <color name="color_tab_book">#8bc64a</color>
     <color name="color_tab_actor">#cddc39</color>
+
+    <!--Search color-->
+    <color name="color_search_bg">#E5E5E5</color>
+    <color name="color_search_text">#838B83</color>
 </resources>

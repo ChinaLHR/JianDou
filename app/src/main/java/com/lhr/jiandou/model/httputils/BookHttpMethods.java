@@ -86,6 +86,22 @@ public class BookHttpMethods {
                 .subscribe(subscriber);
 
     }
+    public void getBookByQ(Subscriber<List<BooksBean>> subscriber, String q, int start, int count) {
+        mBookService.getBooksByQ(q, start, count)
+                .map(new HttpResultFunc<List<BooksBean>>())
+                .onErrorReturn(new Func1<Throwable, List<BooksBean>>() {
+                    @Override
+                    public List<BooksBean> call(Throwable throwable) {
+                        return null;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+    }
+
+
 
     /**
      * 相同格式的Http请求数据统一进行预处理，将HttpResult的Data部分剥离出来给subseriber

@@ -1,6 +1,7 @@
 package com.lhr.jiandou.model.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by ChinaLHR on 2016/12/24.
@@ -10,18 +11,40 @@ import java.io.Serializable;
 public class BooksBean implements Serializable {
 
     private RatingBean rating;
+    private String subtitle;
+    private String pubdate;
     private String image;
-
     private String pages;
     private ImagesBean images;
-
     private String id;
-
+    private String publisher;
     private String title;
-
+    private String summary;
+    private List<String> author;
 
     public RatingBean getRating() {
         return rating;
+    }
+
+    public void setRating(RatingBean rating) {
+        this.rating = rating;
+    }
+
+    public String getSubtitle() {
+        return subtitle;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
 
@@ -29,6 +52,9 @@ public class BooksBean implements Serializable {
         return images;
     }
 
+    public void setImages(ImagesBean images) {
+        this.images = images;
+    }
 
     public String getId() {
         return id;
@@ -38,6 +64,13 @@ public class BooksBean implements Serializable {
         this.id = id;
     }
 
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
 
     public String getTitle() {
         return title;
@@ -48,16 +81,67 @@ public class BooksBean implements Serializable {
     }
 
 
-    public static class RatingBean implements Serializable {
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
+
+    public List<String> getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(List<String> author) {
+        this.author = author;
+    }
+
+    public String getPubdate() {
+        return pubdate;
+    }
+
+    public void setPubdate(String pubdate) {
+        this.pubdate = pubdate;
+    }
+
+    public String getPages() {
+        return pages;
+    }
+
+    public void setPages(String pages) {
+        this.pages = pages;
+    }
+
+    public static class RatingBean implements Serializable{
         /**
          * max : 10
-         * numRaters : 177888
-         * average : 8.0
+         * numRaters : 124973
+         * average : 8.8
          * min : 0
          */
 
+        private int max;
+        private int numRaters;
         private String average;
+        private int min;
 
+        public int getMax() {
+            return max;
+        }
+
+        public void setMax(int max) {
+            this.max = max;
+        }
+
+        public int getNumRaters() {
+            return numRaters;
+        }
+
+        public void setNumRaters(int numRaters) {
+            this.numRaters = numRaters;
+        }
 
         public String getAverage() {
             return average;
@@ -67,14 +151,20 @@ public class BooksBean implements Serializable {
             this.average = average;
         }
 
+        public int getMin() {
+            return min;
+        }
 
+        public void setMin(int min) {
+            this.min = min;
+        }
     }
 
-    public static class ImagesBean implements Serializable {
+    public static class ImagesBean implements Serializable{
         /**
-         * small : https://img3.doubanio.com/spic/s1228930.jpg
-         * large : https://img3.doubanio.com/lpic/s1228930.jpg
-         * medium : https://img3.doubanio.com/mpic/s1228930.jpg
+         * small : https://img1.doubanio.com/spic/s2768378.jpg
+         * large : https://img1.doubanio.com/lpic/s2768378.jpg
+         * medium : https://img1.doubanio.com/mpic/s2768378.jpg
          */
 
         private String small;
@@ -105,6 +195,5 @@ public class BooksBean implements Serializable {
             this.medium = medium;
         }
     }
-
 
 }

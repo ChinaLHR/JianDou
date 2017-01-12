@@ -57,6 +57,16 @@ public interface DouBanService {
     (@Query("start") int start, @Query("count") int count);
 
     /**
+     * 根据关键字查找电影
+     * https://api.douban.com/v2/movie/search?q=无敌&start=20&count=5
+     *
+     * @return
+     */
+    @GET("search")
+    Observable<MovieHttpResult<List<SubjectsBean>>> getMovieByQ
+    (@Query("q") String q, @Query("start") int start, @Query("count") int count);
+
+    /**
      * 根据tag获取图书
      * https://api.douban.com/v2/book/search?tag=日本文学&start=20&count=60
      *
@@ -78,4 +88,8 @@ public interface DouBanService {
     @GET("{BookId}")
     Observable<BookDetailsBean> getBookDetails
             (@Path("BookId") String BookId);
+
+    @GET("search")
+    Observable<BookHttpResult<List<BooksBean>>> getBooksByQ
+            (@Query("q") String q, @Query("start") int start, @Query("count") int count);
 }

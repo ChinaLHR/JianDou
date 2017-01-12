@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:padding="4dp"
     app:cardCornerRadius="2dp"
-    app:cardElevation="4dp"
+    app:cardElevation="2dp"
     android:id="@+id/item_movie_cardview"
     >
 

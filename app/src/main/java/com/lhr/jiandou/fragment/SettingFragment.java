@@ -11,10 +11,9 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 
 import com.lhr.jiandou.R;
 import com.lhr.jiandou.activity.MainActivity;
-import com.lhr.jiandou.utils.Constants;
-import com.lhr.jiandou.utils.LogUtils;
-import com.lhr.jiandou.utils.PreferncesUtils;
 import com.lhr.jiandou.utils.ClearCacheUtils;
+import com.lhr.jiandou.utils.Constants;
+import com.lhr.jiandou.utils.PreferncesUtils;
 import com.lhr.jiandou.utils.ToastUtils;
 
 import de.psdev.licensesdialog.LicensesDialog;
@@ -51,7 +50,6 @@ public class SettingFragment extends PreferenceFragmentCompat implements Prefere
                 case PREF_KEY_AUTO_IMG:
                     Intent intent = new Intent(MainActivity.ACTION_LOCAL_SEND);
                     LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
-                    LogUtils.e("点击了PREF_KEY_AUTO_IMG");
                     break;
 
 
@@ -85,7 +83,7 @@ public class SettingFragment extends PreferenceFragmentCompat implements Prefere
         if (nowtheme.equals("1")) {
             ThemePreference.setSummary("白天");
         } else {
-            ThemePreference.setSummary("夜晚");
+            ThemePreference.setSummary("晚上");
         }
 
 

@@ -9,8 +9,8 @@
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     android:layout_marginBottom="5dp"
-    app:cardCornerRadius="3dp"
-    app:cardElevation="3dp"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="2dp"
     >
 
     <LinearLayout
@@ -22,8 +22,8 @@
 
         <ImageView
             android:id="@+id/item_collection_img"
-            android:layout_width="110dp"
-            android:layout_height="130dp"
+            android:layout_width="100dp"
+            android:layout_height="125dp"
             android:layout_marginRight="10dp"
             android:scaleType="centerCrop"
             />

@@ -72,7 +72,6 @@ public class MoviePagerFragment extends BasePagerFragment {
             @Override
             public void onNext(List<SubjectsBean> subjectsBeen) {
                 if (subjectsBeen != null) {
-                    LogUtils.e("获取数据成功");
                     mAdapter.addDatas(subjectsBeen);
                 }
             }

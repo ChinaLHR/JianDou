@@ -174,6 +174,22 @@ public class MovieHttpMethods {
                 .subscribe(subscriber);
     }
 
+    public void getMovieByQ(Subscriber<List<SubjectsBean>> subscriber, String q, int start, int count) {
+        mDouBanService.getMovieByQ(q, start, count)
+                .map(new HttpResultFunc<List<SubjectsBean>>())
+                .onErrorReturn(new Func1<Throwable, List<SubjectsBean>>() {
+                    @Override
+                    public List<SubjectsBean> call(Throwable throwable) {
+                        return null;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+
+    }
+
     /**
      * 相同格式的Http请求数据统一进行预处理，将HttpResult的Data部分剥离出来给subseriber
      * T为真正需要的类型，也就是Data部分

@@ -49,7 +49,6 @@ public class LeaderboardTopFragment extends Fragment {
     private static final int RECORD_COUNT = 20;
     private int mStart = 0;
     public int position;
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

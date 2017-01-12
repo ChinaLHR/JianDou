@@ -25,6 +25,8 @@
             </intent-filter>
         </activity>
         <activity
+            android:theme="@style/AppTheme_NOTransluce"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:name=".activity.SearchActivity"
             android:screenOrientation="nosensor"
             />

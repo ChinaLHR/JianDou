@@ -328,7 +328,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         @Override
         protected void onPostExecute(List<String> list) {
 
-            if (list.size() >= 2) {
+
                 if (PreferncesUtils.getBoolean(MainActivity.this, Constants.PREF_KEY_AUTO_IMG, false)) {
                     Glide.with(MainActivity.this)
                             .load(list.get(1))
@@ -338,7 +338,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                 } else {
                     setDefaultNav();
                 }
-            }
+
         }
 
         @Override

@@ -1,9 +1,11 @@
 package com.lhr.jiandou.activity;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -17,6 +19,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Transition;
+import android.transition.TransitionSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,6 +55,7 @@ import java.util.List;
 
 import rx.Subscriber;
 
+import static android.app.ActivityOptions.makeSceneTransitionAnimation;
 import static com.lhr.jiandou.R.drawable.collection_false;
 
 /**
@@ -105,14 +112,31 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
         Intent intent = new Intent(activity, MovieDetailsActivity.class);
         intent.putExtra(KEY_MOVIE_ID, id);
         intent.putExtra(KEY_IMAGE_URL, imageUrl);
-        activity.startActivity(intent);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            activity.startActivity(intent,
+                    makeSceneTransitionAnimation(activity).toBundle());
+        } else {
+            activity.startActivity(intent);
+        }
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private Transition makeTransition() {
+        TransitionSet transition = new TransitionSet();
+        transition.addTransition(new Explode());
+        transition.addTransition(new Fade());
+        transition.setDuration(400);
+        return transition;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_moviedetails);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setEnterTransition(makeTransition());
+        }
+
         MovieId = getIntent().getStringExtra(KEY_MOVIE_ID);
         imageUrl = getIntent().getStringExtra(KEY_IMAGE_URL);
         mDaoUtils = MyApplication.getDbUtils();
@@ -303,9 +327,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                         isCollection = false;
                         boolean b = deleteCollection();
                         if (b) {
-                            SnackBarUtils.showSnackBar(activitymdcoorl,  UIUtils.getString(MovieDetailsActivity.this,R.string.collection_cancel));
+                            SnackBarUtils.showSnackBar(activitymdcoorl, UIUtils.getString(MovieDetailsActivity.this, R.string.collection_cancel));
                         } else {
-                            SnackBarUtils.showSnackBar(activitymdcoorl, UIUtils.getString(MovieDetailsActivity.this,R.string.collection_cancel_fail));
+                            SnackBarUtils.showSnackBar(activitymdcoorl, UIUtils.getString(MovieDetailsActivity.this, R.string.collection_cancel_fail));
                         }
 
                     } else {
@@ -313,9 +337,9 @@ public class MovieDetailsActivity extends AppCompatActivity implements AppBarLay
                         isCollection = true;
                         boolean b = collectionMovie();
                         if (b) {
-                            SnackBarUtils.showSnackBar(activitymdcoorl, UIUtils.getString(MovieDetailsActivity.this,R.string.collection_success));
+                            SnackBarUtils.showSnackBar(activitymdcoorl, UIUtils.getString(MovieDetailsActivity.this, R.string.collection_success));
                         } else {
-                            SnackBarUtils.showSnackBar(activitymdcoorl,  UIUtils.getString(MovieDetailsActivity.this,R.string.collection_fail));
+                            SnackBarUtils.showSnackBar(activitymdcoorl, UIUtils.getString(MovieDetailsActivity.this, R.string.collection_fail));
                         }
 
                     }

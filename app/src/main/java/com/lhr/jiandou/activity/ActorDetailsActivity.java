@@ -1,7 +1,9 @@
 package com.lhr.jiandou.activity;
 
-import android.content.Context;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -14,6 +16,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.Transition;
+import android.transition.TransitionSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +45,8 @@ import java.util.Date;
 import java.util.List;
 
 import rx.Subscriber;
+
+import static android.app.ActivityOptions.makeSceneTransitionAnimation;
 
 /**
  * Created by ChinaLHR on 2016/12/20.
@@ -84,17 +92,35 @@ public class ActorDetailsActivity extends AppCompatActivity {
     private android.support.design.widget.CoordinatorLayout atvactorcoor;
     private GreenDaoUtils mDaoUtils;
 
-    public static void toActivity(Context context, String id, String img) {
+    public static void toActivity(Activity context, String id, String img) {
         Intent intent = new Intent(context, ActorDetailsActivity.class);
         intent.putExtra(KEY_ACTOR_ID, id);
         intent.putExtra(KEY_ACTOR_IMG, img);
-        context.startActivity(intent);
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            context.startActivity(intent,
+                    makeSceneTransitionAnimation(context).toBundle());
+        } else {
+            context.startActivity(intent);
+        }
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private Transition makeTransition() {
+        TransitionSet transition = new TransitionSet();
+        transition.addTransition(new Slide());
+        transition.addTransition(new Fade());
+        transition.setDuration(400);
+        return transition;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actordetials);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setEnterTransition(makeTransition());
+        }
         actorId = getIntent().getStringExtra(KEY_ACTOR_ID);
         imageUrl = getIntent().getStringExtra(KEY_ACTOR_IMG);
         mDaoUtils = MyApplication.getDbUtils();
@@ -124,9 +150,9 @@ public class ActorDetailsActivity extends AppCompatActivity {
                         isCollection = false;
                         boolean b = deleteCollection();
                         if (b) {
-                            SnackBarUtils.showSnackBar(atvactorcoor, UIUtils.getString(ActorDetailsActivity.this,R.string.collection_cancel));
+                            SnackBarUtils.showSnackBar(atvactorcoor, UIUtils.getString(ActorDetailsActivity.this, R.string.collection_cancel));
                         } else {
-                            SnackBarUtils.showSnackBar(atvactorcoor,UIUtils.getString(ActorDetailsActivity.this,R.string.collection_cancel_fail));
+                            SnackBarUtils.showSnackBar(atvactorcoor, UIUtils.getString(ActorDetailsActivity.this, R.string.collection_cancel_fail));
                         }
 
 
@@ -135,9 +161,9 @@ public class ActorDetailsActivity extends AppCompatActivity {
                         isCollection = true;
                         boolean b = collectionMovie();
                         if (b) {
-                            SnackBarUtils.showSnackBar(atvactorcoor, UIUtils.getString(ActorDetailsActivity.this,R.string.collection_success));
+                            SnackBarUtils.showSnackBar(atvactorcoor, UIUtils.getString(ActorDetailsActivity.this, R.string.collection_success));
                         } else {
-                            SnackBarUtils.showSnackBar(atvactorcoor, UIUtils.getString(ActorDetailsActivity.this,R.string.collection_fail));
+                            SnackBarUtils.showSnackBar(atvactorcoor, UIUtils.getString(ActorDetailsActivity.this, R.string.collection_fail));
                         }
                     }
                     return true;

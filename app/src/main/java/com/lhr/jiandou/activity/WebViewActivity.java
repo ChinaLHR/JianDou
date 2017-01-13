@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
@@ -17,20 +16,19 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.lhr.jiandou.R;
 
 import static com.lhr.jiandou.R.id.atv_web_container;
-import static com.lhr.jiandou.R.id.web_browser;
-import static com.lhr.jiandou.R.id.web_refresh;
 
 /**
  * Created by ChinaLHR on 2016/12/31.
  * Email:13435500980@163.com
  */
 
-public class WebViewActivity extends AppCompatActivity {
+public class WebViewActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String WEB_URL = "web_url";
     private static final String WEB_TITLE = "web_title";
     private String mUrl;
@@ -39,6 +37,10 @@ public class WebViewActivity extends AppCompatActivity {
 
     private android.support.v7.widget.Toolbar atvwebtoolbar;
     private android.widget.ProgressBar atvwebpb;
+    private android.widget.ImageView webviewbtnclose;
+    private android.widget.ImageView webviewbtngo;
+    private android.widget.ImageView webviewbtnrefresh;
+    private android.widget.ImageView webviewbtnto;
 
     public void toWebActivity(Context context, String url, String title) {
         Intent intent = new Intent(context, WebViewActivity.class);
@@ -68,27 +70,6 @@ public class WebViewActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        atvwebtoolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()){
-                    case web_refresh:
-                        mwebview.reload();
-                        break;
-                    case web_browser:
-                        Intent intent = new Intent();
-                        intent.setAction(Intent.ACTION_VIEW);
-                        Uri uri = Uri.parse(mUrl);
-                        intent.setData(uri);
-                        if (intent.resolveActivity(getPackageManager()) != null){
-                            startActivity(intent);
-                        }
-                        break;
-                }
-                return true;
-            }
-        });
     }
 
     /**
@@ -98,8 +79,16 @@ public class WebViewActivity extends AppCompatActivity {
         mwebview = (WebView) findViewById(atv_web_container);
         this.atvwebpb = (ProgressBar) findViewById(R.id.atv_web_pb);
         this.atvwebtoolbar = (Toolbar) findViewById(R.id.atv_web_toolbar);
+        this.webviewbtnto = (ImageView) findViewById(R.id.webview_btn_to);
+        this.webviewbtnrefresh = (ImageView) findViewById(R.id.webview_btn_refresh);
+        this.webviewbtngo = (ImageView) findViewById(R.id.webview_btn_go);
+        this.webviewbtnclose = (ImageView) findViewById(R.id.webview_btn_close);
+        webviewbtnclose.setOnClickListener(this);
+        webviewbtngo.setOnClickListener(this);
+        webviewbtnrefresh.setOnClickListener(this);
+        webviewbtnto.setOnClickListener(this);
+
         atvwebtoolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
-        atvwebtoolbar.inflateMenu(R.menu.menu_webview);
         atvwebtoolbar.setTitle(mTitle);
         WebSettings settings = mwebview.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -113,6 +102,30 @@ public class WebViewActivity extends AppCompatActivity {
         mwebview.setWebChromeClient(new ChromeClient());
         mwebview.setWebViewClient(new ViewClient());
         mwebview.loadUrl(mUrl);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.webview_btn_close:
+                mwebview.goBack();
+                break;
+            case R.id.webview_btn_go:
+                mwebview.goForward();
+                break;
+            case R.id.webview_btn_refresh:
+                mwebview.reload();
+                break;
+            case R.id.webview_btn_to:
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_VIEW);
+                Uri uri = Uri.parse(mUrl);
+                intent.setData(uri);
+                if (intent.resolveActivity(getPackageManager()) != null){
+                    startActivity(intent);
+                }
+                break;
+        }
     }
 
     private class ChromeClient extends WebChromeClient {

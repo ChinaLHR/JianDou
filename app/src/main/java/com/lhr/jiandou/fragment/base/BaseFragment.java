@@ -13,10 +13,6 @@ public  class BaseFragment extends Fragment {
     public Activity mActivity;
 
 
-    /**
-     * 避免getActivity空指针
-     * @param context
-     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

@@ -46,7 +46,7 @@ public class GetNavImage {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                return mList;
+                return null;
             }
         }
         return null;

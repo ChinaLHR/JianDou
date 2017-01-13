@@ -71,7 +71,7 @@ public class MoviePagerFragment extends BasePagerFragment {
 
             @Override
             public void onNext(List<SubjectsBean> subjectsBeen) {
-                if (subjectsBeen != null) {
+                if (!subjectsBeen.isEmpty()) {
                     mAdapter.addDatas(subjectsBeen);
                 }
             }
@@ -134,16 +134,13 @@ public class MoviePagerFragment extends BasePagerFragment {
                 .subscribe(new Action1<List<SubjectsBean>>() {
                     @Override
                     public void call(List<SubjectsBean> subjectsBeen) {
-                        if (mdate != null) {
+                        if (mdate!=null) {
                             mAdapter.upDates(mdate);
+                        }else {
+                            loadMovieData();
                         }
                     }
                 });
-
-        if (mdate != null) {
-            mAdapter.upDates(mdate);
-        }
-
 
         mAdapter.setFooterView(footer);
         pagerbaserv.setAdapter(mAdapter);

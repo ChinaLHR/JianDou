@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimary"
-        app:titleTextColor="@color/gray_white_1000"
         app:titleTextAppearance="@style/ToolbarTextAppearanceText"
+        app:titleTextColor="@color/gray_white_1000"
         />
 
     <ProgressBar
@@ -22,13 +22,48 @@
         android:layout_height="3dp"
         android:max="100"
         android:progressTint="@color/colorAccent"/>
-
-
-
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
         <WebView
-            android:id="@+id/atv_web_container"
+        android:id="@+id/atv_web_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+        <LinearLayout
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/alpha_gray_800"
+            android:layout_gravity="bottom">
+            <ImageView
+                android:id="@+id/webview_btn_close"
+            android:src="@drawable/ic_webview_close_24dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/webview_btn_go"
+                android:src="@drawable/ic_webview_go_24dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/webview_btn_refresh"
+                android:src="@drawable/ic_webview_refresh_24dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:id="@+id/webview_btn_to"
+                android:src="@drawable/ic_webview_to_24dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </FrameLayout>
+
 
 
 </LinearLayout>

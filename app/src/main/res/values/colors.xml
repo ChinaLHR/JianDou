@@ -22,6 +22,7 @@
     <color name="colorAccent_Light">#e65600</color>
 
     <color name="alpha_settingbg">#77eaeaea</color>
+
     <!--select bottom color-->
     <color name="color_tab_movie">#ffffff</color>
     <color name="color_tab_book">#8bc64a</color>
@@ -30,4 +31,6 @@
     <!--Search color-->
     <color name="color_search_bg">#E5E5E5</color>
     <color name="color_search_text">#838B83</color>
+
+    <!--WebViewColor-->
 </resources>

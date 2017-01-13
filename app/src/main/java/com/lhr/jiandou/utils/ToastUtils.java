@@ -20,7 +20,7 @@ public class ToastUtils {
     }
 
     public static boolean isShow = true;
-    public static Toast toast;
+    public static Toast toast = null;
 
     /**
      * 显示Toast
@@ -40,6 +40,12 @@ public class ToastUtils {
             toast.setView(view);
             toast.setDuration(Toast.LENGTH_SHORT);
             toast.show();
+        }
+    }
+
+    public static void cancel() {
+        if (toast != null) {
+            toast.cancel();
         }
     }
 }

@@ -63,9 +63,6 @@ public abstract class BasePagerFragment extends Fragment {
 
         initData();
         initListener();
-        if (MyApplication.isNetworkAvailable(getActivity())) {
-            loadMovieData();
-        }
         return view;
 
     }

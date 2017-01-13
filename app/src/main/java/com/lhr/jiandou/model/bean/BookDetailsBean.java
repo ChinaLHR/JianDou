@@ -9,36 +9,6 @@ import java.util.List;
 
 public class BookDetailsBean {
 
-    /**
-     * rating : {"max":10,"numRaters":67063,"average":"7.6","min":0}
-     * subtitle :
-     * author : ["[日] 青山七惠"]
-     * pubdate : 2007-9
-     * tags : [{"count":14998,"name":"一个人的好天气","title":"一个人的好天气"},{"count":13148,"name":"日本文学","title":"日本文学"},{"count":12622,"name":"青山七惠","title":"青山七惠"},{"count":8275,"name":"日本","title":"日本"},{"count":6719,"name":"小说","title":"小说"},{"count":5323,"name":"青春","title":"青春"},{"count":5226,"name":"成长","title":"成长"},{"count":3410,"name":"芥川龙之介奖","title":"芥川龙之介奖"}]
-     * origin_title : ひとり日和
-     * image : https://img3.doubanio.com/mpic/s2755472.jpg
-     * binding : 平装
-     * translator : ["竺家荣"]
-     * catalog : 春天
-     夏天
-     秋天
-     冬天
-     迎接春天
-     * pages : 141
-     * images : {"small":"https://img3.doubanio.com/spic/s2755472.jpg","large":"https://img3.doubanio.com/lpic/s2755472.jpg","medium":"https://img3.doubanio.com/mpic/s2755472.jpg"}
-     * alt : https://book.douban.com/subject/2250587/
-     * id : 2250587
-     * publisher : 上海译文出版社
-     * isbn10 : 7532743519
-     * isbn13 : 9787532743513
-     * title : 一个人的好天气
-     * url : https://api.douban.com/v2/book/2250587
-     * alt_title : ひとり日和
-     * author_intro : 青山七惠是日本“80后”新锐女作家，1983年出生于埼玉县熊谷市，毕业于筑波大学图书馆信息专业，目前在东京新宿一家旅游公司工作，写作只能算是她的副职。2005年9月，青山凭借小说处女作《窗灯》一举摘得有“芥川奖摇篮”之称的第42届日本文艺奖，在日本文学界崭露头角；继而又在2007年1月，以第二部作品《一个人的好天气》摘得“芥川奖”，成为该奖历史上第三位年轻的女性得主。
-     * summary : 《一个人的好天气》描述了一个打零工的女孩如何与年长亲人相处，同时追寻自我、独立的故事，走向自立的一名女孩在工作、生活和恋爱中的种种际遇和心情令人揪心，小说写尽了做一名自由职业者（“飞特族”）的辛酸。内容折射出当前日本的一个社会问题，即许多年轻人不愿投入全职工作而四处打工，宁愿做自由职业者，他们不想长大，不愿担负责任，无法独立，害怕走出去看看这个世界，但是又不知道这种恐惧从何而来。据日本官方统计，15至34岁的短期雇工在1996年到2004年之间翻了一番，达21.4万人。调查也显示，打零工的人收入不稳，结婚生子的机率大减，这对少子化严重的日本来说是一大警讯。作者青山七惠在接受记者采访时说：“我想告诉他们，只要你肯迈出第一步，自然会有出路。”她希望自己的作品能帮助他们“迈出第一步”。
-     * series : {"id":"20830","title":"青山七惠作品"}
-     * price : 15.00元
-     */
 
     private RatingBean rating;
     private String subtitle;

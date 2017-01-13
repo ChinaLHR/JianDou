@@ -13,7 +13,6 @@ import com.lhr.jiandou.model.bean.BooksBean;
 import com.lhr.jiandou.model.httputils.BookHttpMethods;
 import com.lhr.jiandou.utils.CacheUtils;
 import com.lhr.jiandou.utils.Constants;
-import com.lhr.jiandou.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,15 +50,13 @@ public class BookPagerFragment extends BasePagerFragment {
                 .subscribe(new Action1<List<BooksBean>>() {
                     @Override
                     public void call(List<BooksBean> booksBeen) {
-                        if (mdate != null) {
+                        if (mdate!=null) {
                             mAdapter.upDates(mdate);
+                        }else {
+                            loadMovieData();
                         }
                     }
                 });
-
-        if (mdate != null) {
-            mAdapter.upDates(mdate);
-        }
         mAdapter.setFooterView(footer);
         pagerbaserv.setAdapter(mAdapter);
     }

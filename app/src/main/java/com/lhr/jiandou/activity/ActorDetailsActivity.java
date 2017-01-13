@@ -36,6 +36,8 @@ import com.lhr.jiandou.model.bean.ActorDetailsBean;
 import com.lhr.jiandou.model.db.Actor_db;
 import com.lhr.jiandou.model.db.GreenDaoUtils;
 import com.lhr.jiandou.model.httputils.MovieHttpMethods;
+import com.lhr.jiandou.utils.Constants;
+import com.lhr.jiandou.utils.PreferncesUtils;
 import com.lhr.jiandou.utils.SnackBarUtils;
 import com.lhr.jiandou.utils.UIUtils;
 import com.lhr.jiandou.utils.jsoupUtils.GetActor;
@@ -117,6 +119,16 @@ public class ActorDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /**
+         *启动Activity,设置主题
+         */
+        String nowtheme = PreferncesUtils.getString(this, Constants.PREF_KEY_THEME, "1");
+        if (nowtheme.equals("1")) {
+            setTheme(R.style.AppTheme);
+        } else {
+            setTheme(R.style.AppTheme_Light);
+
+        }
         setContentView(R.layout.activity_actordetials);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setEnterTransition(makeTransition());

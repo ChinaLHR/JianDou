@@ -102,11 +102,6 @@ public class BookHttpMethods {
     }
 
 
-
-    /**
-     * 相同格式的Http请求数据统一进行预处理，将HttpResult的Data部分剥离出来给subseriber
-     * T为真正需要的类型，也就是Data部分
-     */
     private class HttpResultFunc<T> implements Func1<BookHttpResult<T>, T> {
         @Override
         public T call(BookHttpResult<T> tBookHttpResult) {

@@ -40,10 +40,5 @@ public class UIUtils {
         return context.getResources().getColorStateList(id);
     }
 
-    // 获取尺寸
-    private static int getDimen(Context context,int id) {
-        return context.getResources().getDimensionPixelSize(id);
-    }
-
 
 }

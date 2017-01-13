@@ -36,6 +36,7 @@ import com.lhr.jiandou.utils.ToastUtils;
 import com.lhr.jiandou.utils.UIUtils;
 import com.lhr.jiandou.utils.jsoupUtils.GetNavImage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuItemClickListener {
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
     public static final String ACTION_LOCAL_SEND = "action.local.send";
     private static final String SAVE_STATE_TITLE = "title";
     private final LocalBroadcastReceiver localReceiver = new LocalBroadcastReceiver();
-    private List<String> navList;
+    private List<String> navList = new ArrayList<>();
     private mAsyncTask mAsy;
 
     @Override
@@ -266,6 +267,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
                     ToastUtils.show(MainActivity.this, "再按一次退出程序");
                     mExitTime = System.currentTimeMillis();
                 } else {
+                    ToastUtils.cancel();
                     finish();
                 }
             } else {
@@ -289,10 +291,9 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
             Boolean isopen = PreferncesUtils.getBoolean(context, Constants.PREF_KEY_AUTO_IMG, false);
             if (isopen == true) {
                 //开启自动更新图片
-                if (MyApplication.isNetworkAvailable(context)) {
+                if (!navList.isEmpty()) {
                     Glide.with(MainActivity.this)
                             .load(navList.get(1))
-                            .placeholder(R.drawable.nav_bg)
                             .into(nav_header_img);
                     nav_header_title.setText("每日一图：" + navList.get(0));
                 }
@@ -316,9 +317,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
 
     @Override
     protected void onPause() {
-        //判断是否有正在运行的AsyncTask
         if (mAsy != null && mAsy.getStatus() == AsyncTask.Status.RUNNING) {
-            //cancel方法只是将对应的AsynTask标记为cancel状态，并不是真正的取消
             mAsy.cancel(true);
         }
         super.onPause();
@@ -329,10 +328,10 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         protected void onPostExecute(List<String> list) {
 
 
-                if (PreferncesUtils.getBoolean(MainActivity.this, Constants.PREF_KEY_AUTO_IMG, false)) {
+                if (PreferncesUtils.getBoolean(MainActivity.this, Constants.PREF_KEY_AUTO_IMG, false&&!list.isEmpty())) {
+
                     Glide.with(MainActivity.this)
                             .load(list.get(1))
-                            .placeholder(R.drawable.nav_bg)
                             .into(nav_header_img);
                     nav_header_title.setText("每日一图：" + list.get(0));
                 } else {

@@ -1,5 +1,6 @@
 package com.lhr.jiandou.fragment.pagerfragment;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,6 +33,9 @@ import rx.schedulers.Schedulers;
 public class MoviePagerFragment extends BasePagerFragment {
     private List<SubjectsBean> mdate;
     private Subscriber<List<SubjectsBean>> mListSubscriber;
+
+    public MoviePagerFragment(){}
+    @SuppressLint("ValidFragment")
     public MoviePagerFragment(Observable<Integer> observable) {
         super(observable);
     }

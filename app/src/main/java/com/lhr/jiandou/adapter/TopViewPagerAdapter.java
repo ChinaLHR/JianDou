@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.lhr.jiandou.R;
 
 import java.util.List;
 
@@ -46,7 +45,6 @@ public class TopViewPagerAdapter extends PagerAdapter {
         view.setScaleType(ImageView.ScaleType.FIT_XY);
         Glide.with(mContext)
                 .load(mdate.get(position))
-                .error(R.mipmap.movie_vp_error)
                 .into(view);
         container.addView(view);
         return view;

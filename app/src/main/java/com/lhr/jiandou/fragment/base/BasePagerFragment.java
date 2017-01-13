@@ -1,5 +1,6 @@
 package com.lhr.jiandou.fragment.base;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -33,6 +34,8 @@ public abstract class BasePagerFragment extends Fragment {
     public SwipeRefreshLayout pagerbasefresh;
     public android.support.design.widget.FloatingActionButton pagerbasefab;
 
+    public BasePagerFragment(){}
+    @SuppressLint("ValidFragment")
     public BasePagerFragment(Observable<Integer> observable) {
         mSubscriber = new Subscriber<Integer>() {
             @Override

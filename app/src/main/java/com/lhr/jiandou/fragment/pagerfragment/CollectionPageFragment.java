@@ -1,5 +1,6 @@
 package com.lhr.jiandou.fragment.pagerfragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -59,6 +60,10 @@ public class CollectionPageFragment extends Fragment implements DbObservrt {
 
     private RecyclerView.LayoutManager mLayoutManager;
 
+
+    public CollectionPageFragment(){}
+
+    @SuppressLint("ValidFragment")
     public CollectionPageFragment(Observable<String> observable) {
         mSubscriber = new Subscriber<String>() {
             @Override

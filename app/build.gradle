@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'//GreenDao
 android {
     compileSdkVersion 24
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "23.0.3"
     defaultConfig {
         applicationId "com.lhr.jiandou"
         minSdkVersion 17

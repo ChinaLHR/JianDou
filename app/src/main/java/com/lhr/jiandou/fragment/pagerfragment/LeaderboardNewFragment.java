@@ -1,5 +1,6 @@
 package com.lhr.jiandou.fragment.pagerfragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -47,6 +48,9 @@ public class LeaderboardNewFragment extends Fragment {
     private RecyclerView pagerleadeaderboardrv;
     private android.support.design.widget.FloatingActionButton pagerleadeaderboardfab;
 
+    public LeaderboardNewFragment(){}
+
+    @SuppressLint("ValidFragment")
     public LeaderboardNewFragment(Observable<Integer> observable) {
         mSubscriber = new Subscriber<Integer>() {
             @Override

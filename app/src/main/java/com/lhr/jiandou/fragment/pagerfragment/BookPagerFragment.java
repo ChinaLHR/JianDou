@@ -1,5 +1,6 @@
 package com.lhr.jiandou.fragment.pagerfragment;
 
+import android.annotation.SuppressLint;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,10 +32,13 @@ import rx.schedulers.Schedulers;
 public class BookPagerFragment extends BasePagerFragment {
     private List<BooksBean> mdate;
     private Subscriber<List<BooksBean>> mListSubscriber;
+
+    public BookPagerFragment(){}
+
+    @SuppressLint("ValidFragment")
     public BookPagerFragment(Observable<Integer> observable) {
         super(observable);
     }
-
 
     @Override
     public void initRecyclerView() {

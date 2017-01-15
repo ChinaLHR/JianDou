@@ -328,7 +328,7 @@ public class MainActivity extends AppCompatActivity implements Toolbar.OnMenuIte
         protected void onPostExecute(List<String> list) {
 
 
-                if (PreferncesUtils.getBoolean(MainActivity.this, Constants.PREF_KEY_AUTO_IMG, false&&!list.isEmpty())) {
+                if (PreferncesUtils.getBoolean(MainActivity.this, Constants.PREF_KEY_AUTO_IMG, false)&&!list.isEmpty()) {
 
                     Glide.with(MainActivity.this)
                             .load(list.get(1))

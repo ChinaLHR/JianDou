@@ -46,9 +46,9 @@ public class GetNavImage {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                return null;
+                return mList;
             }
         }
-        return null;
+        return mList;
     }
 }

@@ -310,4 +310,10 @@ public class SearchActivity extends AppCompatActivity {
         searchpb.setVisibility(View.GONE);
     }
 
+    @Override
+    protected void onDestroy() {
+        if (booksub!=null) booksub.unsubscribe();
+        if (moviesub!=null)moviesub.unsubscribe();
+        super.onDestroy();
+    }
 }

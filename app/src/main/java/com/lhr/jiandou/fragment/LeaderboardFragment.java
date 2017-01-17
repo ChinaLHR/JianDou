@@ -76,13 +76,15 @@ public class LeaderboardFragment extends BaseFragment {
                     case MotionEvent.ACTION_DOWN:
                         // 停止广告自动轮播
                         // 删除handler的所有消息
-                        if (mHandler!=null){
-                        mHandler.removeCallbacksAndMessages(null);}
+                        if (mHandler != null) {
+                            mHandler.removeCallbacksAndMessages(null);
+                        }
                         break;
                     case MotionEvent.ACTION_UP:
                         //启动广告
-                        if (mHandler!=null){
-                        mHandler.sendEmptyMessageDelayed(0, 3000);}
+                        if (mHandler != null) {
+                            mHandler.sendEmptyMessageDelayed(0, 3000);
+                        }
                         break;
                 }
                 return false;
@@ -125,9 +127,9 @@ public class LeaderboardFragment extends BaseFragment {
 
         @Override
         public Fragment getItem(int position) {
-            if (position==2){
+            if (position == 2) {
                 return new LeaderboardTopFragment();
-            }else{
+            } else {
                 return new LeaderboardNewFragment(Observable.just(position));
             }
         }
@@ -160,7 +162,8 @@ public class LeaderboardFragment extends BaseFragment {
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-            if (mList != null) {
+
+            if (!mList.isEmpty()) {
                 initViews();
                 TopViewPagerAdapter adapter = new TopViewPagerAdapter(getActivity(), mList);
                 leaderboardtopvp.setAdapter(adapter);

@@ -10,7 +10,6 @@
 <img src="https://raw.githubusercontent.com/ChinaLHR/JianDou/master/app_display_jpg/p2.jpg" width = "300" height = "500" alt="p2"/>
 <img src="https://raw.githubusercontent.com/ChinaLHR/JianDou/master/app_display_jpg/p3.jpg" width = "300" height = "500" alt="p3"/>
 <img src="https://raw.githubusercontent.com/ChinaLHR/JianDou/master/app_display_jpg/p4.jpg" width = "300" height = "500" alt="p4"/>
-<img src="https://raw.githubusercontent.com/ChinaLHR/JianDou/master/app_display_jpg/p5.jpg" width = "300" height = "500" alt="p5"/>
 <img src="https://raw.githubusercontent.com/ChinaLHR/JianDou/master/app_display_jpg/p6.jpg" width = "300" height = "500" alt="p6"/>
 <img src="https://raw.githubusercontent.com/ChinaLHR/JianDou/master/app_display_jpg/p7.jpg" width = "300" height = "500" alt="p7"/>
 <img src="https://raw.githubusercontent.com/ChinaLHR/JianDou/master/app_display_jpg/p8.jpg" width = "300" height = "500" alt="p8"/>
@@ -28,7 +27,7 @@
 ## 声明
 > 感谢[豆瓣API](https://developers.douban.com/wiki/?title=api_v2)提供的API接口，部分数据为Jsoup解析HTML获取，原作公司拥有所有权利。本程序仅供测试学习，用于其他用途所造成的纠纷与本人无关。部分图标资源来自网络，如有侵权请联系我删除。
 
->此程序为本人基于Material design，RxJava与Retrofit的练习之作，其中还有很多不足与缺陷，如果遇到前联系本人邮箱或提交lssues
+>此程序为本人基于Material design，RxJava与Retrofit的练习之作，其中还有很多不足与缺陷，如果遇到请联系本人邮箱或提交lssues
 
 
 License

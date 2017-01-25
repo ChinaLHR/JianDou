@@ -33,11 +33,12 @@ public class GetVPImage {
                 .compile("[http|https]+[://]+[0-9A-Za-z:/[-]_#[?][=][.][&]]*");
         if (doc != null) {
             if (doc != null) {
-                Elements s1 = doc.select("[class = headslider]");
+                Elements s1 = doc.select("[id = indexTopSlide]");
                 Elements s2 = s1.select("dl");
                 Elements s3 = s2.select("dd");
-                for (int i = 0; i < s3.size(); i++) {
-                    Matcher matcher = pattern.matcher(s3.get(i).attr("style"));
+                Elements s4 = s3.select("div");
+                for (int i = 0; i < s4.size(); i++) {
+                    Matcher matcher = pattern.matcher(s4.get(i).attr("style"));
                     while (matcher.find()) {
                         mList.add(matcher.group());
                     }
